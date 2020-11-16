@@ -5,9 +5,9 @@ const editor = new Editor()
 
 // register tools
 editor.registerTool(new AddRect())
+editor.setCurrentTool('addRect')
+editor.bindToolEvent()
 
-
-editor.setTool('addRect')
 
 /**
  * const editorBuilder = new Editor.builder()

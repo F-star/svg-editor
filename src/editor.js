@@ -26,6 +26,7 @@ class Editor {
     // svgRoot.style.height = '600px'
     svgRoot.setAttribute('width', 1000)
     svgRoot.setAttribute('height', 600)
+    this.svgRoot = svgRoot
     
     const svgBg = document.createElementNS('http://www.w3.org/2000/svg', 'svg')
     svgBg.setAttribute('width', 400)
@@ -44,6 +45,7 @@ class Editor {
     svgContent.setAttribute('x', 300)
     svgContent.setAttribute('y', 150)
     svgContent.style.overflow = 'visible'
+    this.svgContent = svgContent
 
     const layer = document.createElementNS('http://www.w3.org/2000/svg', 'g')
     this.currentLayer = layer
@@ -56,27 +58,51 @@ class Editor {
     svgRoot.appendChild(svgContent)
     document.body.appendChild(stage)
 
-    svgRoot.addEventListener('mousedown', function(e) {
-      console.log(e)
-      const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle')
-      circle.setAttribute('r', 6)
-      circle.setAttribute('cx', e.offsetX - svgContent.getAttribute('x'))
-      circle.setAttribute('cy', e.offsetY - svgContent.getAttribute('y'))
-      svgContent.appendChild(circle)
-    })
+    // svgRoot.addEventListener('mousedown', function(e) {
+    //   console.log(e)
+    //   const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle')
+    //   circle.setAttribute('r', 6)
+    //   circle.setAttribute('cx', e.offsetX - svgContent.getAttribute('x'))
+    //   circle.setAttribute('cy', e.offsetY - svgContent.getAttribute('y'))
+    //   svgContent.appendChild(circle)
+    // })
 
-    const currentState = 'go'
+    // const currentState = 'go'
   }
   getCurrentLayer() {
     return this.currentLayer
   }
 
-  setTool(name) {
+  // tool 相关方法
+  setCurrentTool(name) {
     this.currentTool = this.tools[name]
   }
   registerTool(tool) {
-    this.tools[tool.name()] = this.tool
+    this.tools[tool.name()] = tool
     tool.setEditor(this) // 依赖注入
+  }
+  bindToolEvent() {
+    const createToolEvent = e => {
+      const x = e.offsetX - this.svgContent.getAttribute('x')
+      const y = e.offsetY - this.svgContent.getAttribute('y')
+
+      return {
+        getPosition: () => ({x, y}),
+        origin: e,
+      }
+    }
+
+    // 鼠标按下事件
+    this.svgRoot.addEventListener('mousedown', (e) => {
+      const toolEvent = createToolEvent(e)
+      this.currentTool.start(toolEvent)
+    }, false)
+
+    // 鼠标释放事件
+    this.svgRoot.addEventListener('mouseup', (e) => {
+      const toolEvent = createToolEvent(e)
+      this.currentTool.end(toolEvent)
+    }, false)
   }
 
 }

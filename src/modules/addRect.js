@@ -2,26 +2,43 @@
 
 // Module.register('DragTree', function() {}
 
+import { NS } from "../constants"
+
 class AddRect {
   constructor() {
     this.editor = null
   }
-  setEditor(editor) { // 依赖注入
-    this.editor = editor
-  }
   name() {
     return 'addRect'
   }
-  start(e) {
-    const { x, y } = e.getPostion()
+  setEditor(editor) { // 依赖注入
+    this.editor = editor
   }
-  // 这里写个 命令。
-  add() {
-
+  start(e) {
+    const { x, y } = e.getPosition()
+    this.startX = x
+    this.startY = y
   }
   end(e) {
-    const { x, y } = e.getPostion()
-    const currentLayer = this.editor.currentLayer()
+    const { x: endX, y: endY } = e.getPosition()
+    let x, y, w, h
+    w = Math.abs(endX - this.startX)
+    h = Math.abs(endY - this.startY)
+    if (w < 2 || h < 2) {
+      // TODO: 弹出输入宽高的弹窗
+      console.log('宽度或高度小于 2，不进行正方形的绘制')
+      return
+    }
+    x = Math.min(endX, this.startX)
+    y = Math.min(endY, this.startY)
+
+
+    const rect = document.createElementNS(NS.SVG, 'rect')
+    rect.setAttribute('x', x)
+    rect.setAttribute('y', y)
+    rect.setAttribute('width', w)
+    rect.setAttribute('height', h)
+    this.editor.getCurrentLayer().appendChild(rect)
   }
 }
 
