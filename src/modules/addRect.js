@@ -14,12 +14,12 @@ class AddRect {
   }
   start(e) {
     const { x, y } = e.getPostion()
+  }
+  // 这里写个 命令。
+  add() {
 
   }
-  move() {
-
-  }
-  end(e, editor) {
+  end(e) {
     const { x, y } = e.getPostion()
     const currentLayer = this.editor.currentLayer()
   }
