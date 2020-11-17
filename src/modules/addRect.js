@@ -40,6 +40,9 @@ class AddRect {
     rect.setAttribute('height', h)
     this.editor.getCurrentLayer().appendChild(rect)
   }
+  command() {
+    
+  }
 }
 
 export default AddRect

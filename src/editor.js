@@ -105,6 +105,15 @@ class Editor {
     }, false)
   }
 
+  // 命令相关
+  setCommandManager(commandManager) {
+    this.commandManager = commandManager
+  }
+  executeCommand(name, ...params) {
+    const name = name.toLower()
+    const commandManager = this.commandManager.getCommand(name)
+  }
+
 }
 
 export default Editor
