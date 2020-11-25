@@ -28,7 +28,6 @@ class CommandManager {
 
     this.undoStack.push(command)
     this.redoStack = []
-    console.log(this.undoStack)
   }
   undo() {
     if (this.undoStack.length === 0) {
@@ -45,6 +44,7 @@ class CommandManager {
       return
     }
     const command = this.redoStack.pop()
+    this.undoStack.push(command)
     command.redo()
   }
 
