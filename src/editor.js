@@ -111,11 +111,21 @@ class Editor {
   // 命令相关
   setCommandManager(commandManager) {
     this.commandManager = commandManager
+    commandManager.setEditor(this)
   }
   executeCommand(name, ...params) {
+    if (name == 'undo') {
+      this.commandManager.undo()
+      return
+    }
+    if (name == 'redo') {
+      this.commandManager.redo()
+      return
+    }
     this.commandManager.execute(name, ...params)
   }
 
 }
+
 
 export default Editor

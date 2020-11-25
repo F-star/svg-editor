@@ -18,6 +18,20 @@ editor.setCurrentTool('addRect')
 editor.bindToolEvent()
 
 
+const undoBtn = document.createElement('button')
+undoBtn.innerText = '撤回'
+undoBtn.onclick = function() {
+  editor.executeCommand('undo')
+}
+document.body.appendChild(undoBtn)
+
+
+const redoBtn = document.createElement('button')
+redoBtn.innerText = '重做'
+redoBtn.onclick = function() {
+  editor.executeCommand('redo')
+}
+document.body.appendChild(redoBtn)
 
 /**
  * 理想 api 使用例子

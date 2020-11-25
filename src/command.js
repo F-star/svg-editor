@@ -27,6 +27,7 @@ class AddRectCommand extends BaseCommand {
 
     this.prevSibling = rect.previousElementSibling 
     this.parent = rect.parentElement
+    this.element = rect
   }
 
   static name() {
@@ -34,15 +35,15 @@ class AddRectCommand extends BaseCommand {
   }
 
   redo() {
-    this.element.remove()
-  }
-
-  undo() {
     if (this.prevSibling) {
       this.parent.insertBefore(this.element, this.prevSibling)
     } else {
       this.parent.appendChild(this.element)
     }
+  }
+
+  undo() {
+    this.element.remove()
   }
 }
 
