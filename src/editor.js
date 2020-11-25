@@ -92,13 +92,16 @@ class Editor {
       }
     }
 
-    // 鼠标按下事件
     this.svgRoot.addEventListener('mousedown', (e) => {
       const toolEvent = createToolEvent(e)
       this.currentTool.start(toolEvent)
     }, false)
 
-    // 鼠标释放事件
+    this.svgRoot.addEventListener('mousemove', (e) => {
+      const toolEvent = createToolEvent(e)
+      this.currentTool.move(toolEvent)
+    }, false)
+    
     this.svgRoot.addEventListener('mouseup', (e) => {
       const toolEvent = createToolEvent(e)
       this.currentTool.end(toolEvent)
@@ -110,7 +113,7 @@ class Editor {
     this.commandManager = commandManager
   }
   executeCommand(name, ...params) {
-    const name = name.toLower()
+    name = name.toLower()
     const commandManager = this.commandManager.getCommand(name)
   }
 

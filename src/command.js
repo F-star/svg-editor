@@ -21,9 +21,17 @@ class CommandManager {
   redo() {}
 }
 
-class Move extends Command {
-  execute() {
-
+class addRect extends Command {
+  constructor() {
+    this.params = {}
+  }
+  execute(x, y, w, h) {
+    const rect = document.createElementNS(NS.SVG, 'rect')
+    rect.setAttribute('x', x)
+    rect.setAttribute('y', y)
+    rect.setAttribute('width', w)
+    rect.setAttribute('height', h)
+    this.editor.getCurrentLayer().appendChild(rect)
   }
 }
 

@@ -19,6 +19,9 @@ class AddRect {
     this.startX = x
     this.startY = y
   }
+  move() {
+
+  }
   end(e) {
     const { x: endX, y: endY } = e.getPosition()
     let x, y, w, h
