@@ -36,15 +36,13 @@ class AddRect {
     y = Math.min(endY, this.startY)
 
 
-    const rect = document.createElementNS(NS.SVG, 'rect')
-    rect.setAttribute('x', x)
-    rect.setAttribute('y', y)
-    rect.setAttribute('width', w)
-    rect.setAttribute('height', h)
-    this.editor.getCurrentLayer().appendChild(rect)
-  }
-  command() {
-    
+    // const rect = document.createElementNS(NS.SVG, 'rect')
+    // rect.setAttribute('x', x)
+    // rect.setAttribute('y', y)
+    // rect.setAttribute('width', w)
+    // rect.setAttribute('height', h)
+    // this.editor.getCurrentLayer().appendChild(rect)
+    this.editor.executeCommand('addRect', x, y, w, h)
   }
 }
 

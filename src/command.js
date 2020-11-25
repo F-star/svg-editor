@@ -1,48 +1,57 @@
+import { NS } from "./constants"
 
-
-class Command {
-  execute(name, ...args) {
-    throw new Error('请实现 execute 方法')
+class BaseCommand {
+  undo() {
+    throw new Error('请实现 undo 方法')
   }
-  // beforeExec() {}
-
+  redo() {
+    throw new Error('请实现 redo 方法')
+  }
 }
 
 /**
- * CommandManager.undo()
- * CommandManager.redo()
+ * addRect
+ * 
+ * 创建矩形
  */
-class CommandManager {
-  constructor() {
-    this.redoStack = []
-    this.undoStack = []
-  }
-  undo() {}
-  redo() {}
-}
-
-class addRect extends Command {
-  constructor() {
-    this.params = {}
-  }
-  execute(x, y, w, h) {
+class AddRectCommand extends BaseCommand {
+  constructor(editor, x, y, w, h) {
+    super()
+    // TODO: 使用编辑器使用的颜色等样式
     const rect = document.createElementNS(NS.SVG, 'rect')
     rect.setAttribute('x', x)
     rect.setAttribute('y', y)
     rect.setAttribute('width', w)
     rect.setAttribute('height', h)
-    this.editor.getCurrentLayer().appendChild(rect)
+    editor.getCurrentLayer().appendChild(rect)
+
+    this.prevSibling = rect.previousElementSibling 
+    this.parent = rect.parentElement
+  }
+
+  static name() {
+    return 'addRect'
+  }
+
+  redo() {
+    this.element.remove()
+  }
+
+  undo() {
+    if (this.prevSibling) {
+      this.parent.insertBefore(this.element, this.prevSibling)
+    } else {
+      this.parent.appendChild(this.element)
+    }
   }
 }
 
-function creatCommand(name) {
-  if (name == 'move') return new CommandClassList.Move()
-}
+// 类的静态方法
+// AddRectCommand.name = function() {
+//   return 'addRect'
+// }
 
-function exeCommand(name, ...args) {
-  const command = creatCommand(name)
-}
 
-/**
- * Editor.exeCommand('move', 1, 2)
- */ 
+export {
+  AddRectCommand,
+}

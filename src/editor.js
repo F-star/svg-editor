@@ -113,8 +113,7 @@ class Editor {
     this.commandManager = commandManager
   }
   executeCommand(name, ...params) {
-    name = name.toLower()
-    const commandManager = this.commandManager.getCommand(name)
+    this.commandManager.execute(name, ...params)
   }
 
 }
