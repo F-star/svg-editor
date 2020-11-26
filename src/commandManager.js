@@ -22,7 +22,6 @@ class CommandManager {
   execute(name, ...args) {
     name = name.toLowerCase()
     const CommandClass = this.commandClasses[name]
-    console.log(name)
 
     const command = new CommandClass(this.editor, ...args) // 创建 command 实例
 
@@ -52,7 +51,6 @@ class CommandManager {
   resigterCommandClass(commandClass) {
     name = commandClass.name().toLowerCase()
     this.commandClasses[name] = commandClass
-    console.log(this.commandClasses)
   }
 }
 

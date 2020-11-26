@@ -9,51 +9,67 @@ class Editor {
     const containerWidth = 1000
     const containerHeight = 600
 
-    const stage = document.createElement('div')
-    stage.classList.add('svg-stage')
-    stage.style.width = '800px'
-    stage.style.height = '550px'
+    const viewport = document.createElement('div')
+    viewport.id = 'viewport'
+    viewport.style.width = '800px'
+    viewport.style.height = '550px'
     
     const svgContainer = document.createElement('div')
+    svgContainer.id = 'svg-container'
     svgContainer.style.backgroundColor = '#ddd'
     svgContainer.style.width = '800px'
     svgContainer.style.height = '550px'
     svgContainer.style.overflow = 'scroll'
 
     const svgRoot = document.createElementNS('http://www.w3.org/2000/svg', 'svg')
+    svgRoot.id = 'svg-root'
     svgRoot.setAttribute('width', 1000)
     svgRoot.setAttribute('height', 600)
     this.svgRoot = svgRoot
-    
-    const svgBg = document.createElementNS('http://www.w3.org/2000/svg', 'svg')
-    svgBg.setAttribute('width', 400)
-    svgBg.setAttribute('height', 300)
-    svgBg.setAttribute('x', 300)
-    svgBg.setAttribute('y', 150)
+
+    const svgStage = document.createElementNS('http://www.w3.org/2000/svg', 'svg')
+    svgStage.id = 'svg-stage'
+    svgStage.setAttribute('width', 400)
+    svgStage.setAttribute('height', 300)
+    svgStage.setAttribute('x', 300)
+    svgStage.setAttribute('y', 150)
+    svgStage.style.overflow = 'visible'
+    this.svgStage = svgStage
+
+    const svgBg = document.createElementNS('http://www.w3.org/2000/svg', 'g')
+    svgBg.id = 'background'
+    // svgBg.setAttribute('width', 400)
+    // svgBg.setAttribute('height', 300)
+    svgBg.setAttribute('x', 0)
+    svgBg.setAttribute('y', 0)
 
     const bgRect = document.createElementNS('http://www.w3.org/2000/svg', 'rect')
     bgRect.setAttribute('width', '100%')
     bgRect.setAttribute('height', '100%')
     bgRect.setAttribute('fill', '#fff')
 
-    const svgContent = document.createElementNS('http://www.w3.org/2000/svg', 'svg')
-    svgContent.setAttribute('width', 400)
-    svgContent.setAttribute('height', 300)
-    svgContent.setAttribute('x', 300)
-    svgContent.setAttribute('y', 150)
-    svgContent.style.overflow = 'visible'
+    const svgContent = document.createElementNS('http://www.w3.org/2000/svg', 'g')
+    svgContent.id = 'content'
+    // svgContent.setAttribute('width', 400)
+    // svgContent.setAttribute('height', 300)
+    svgContent.setAttribute('x', 0)
+    svgContent.setAttribute('y', 0)
     this.svgContent = svgContent
 
     const layer = document.createElementNS('http://www.w3.org/2000/svg', 'g')
+    layer.id = 'layer-1'
     this.currentLayer = layer
 
-    stage.appendChild(svgContainer)
+    viewport.appendChild(svgContainer)
     svgContainer.appendChild(svgRoot)
+    svgRoot.appendChild(svgStage)
+
+    svgStage.appendChild(svgBg)
     svgBg.appendChild(bgRect)
-    svgRoot.appendChild(svgBg)
+    svgStage.appendChild(svgContent)
     svgContent.appendChild(layer)
-    svgRoot.appendChild(svgContent)
-    document.body.appendChild(stage)
+
+    document.body.appendChild(viewport)
   }
   getCurrentLayer() {
     return this.currentLayer
@@ -69,8 +85,8 @@ class Editor {
   }
   bindToolEvent() {
     const createToolEvent = e => {
-      const x = e.offsetX - this.svgContent.getAttribute('x')
-      const y = e.offsetY - this.svgContent.getAttribute('y')
+      const x = e.offsetX - this.svgStage.getAttribute('x')
+      const y = e.offsetY - this.svgStage.getAttribute('y')
 
       return {
         getPosition: () => ({x, y}),
