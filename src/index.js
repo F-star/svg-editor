@@ -10,7 +10,6 @@ const editor = new Editor()
 // register commands
 const commandManager = new CommandManager()
 commandManager.resigterCommandClass(AddRectCommand) // 创建矩形元素命令
-
 // register tools
 editor.setCommandManager(commandManager)
 editor.registerTool(new AddRect())
@@ -18,8 +17,10 @@ editor.setCurrentTool('addRect')
 editor.bindToolEvent()
 
 
+
+// 按钮绑定事件
 const undoBtn = document.createElement('button')
-undoBtn.innerText = '撤回'
+undoBtn.innerText = 'undo'
 undoBtn.onclick = function() {
   editor.executeCommand('undo')
 }
@@ -27,7 +28,7 @@ document.body.appendChild(undoBtn)
 
 
 const redoBtn = document.createElement('button')
-redoBtn.innerText = '重做'
+redoBtn.innerText = 'redo'
 redoBtn.onclick = function() {
   editor.executeCommand('redo')
 }

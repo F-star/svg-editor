@@ -20,7 +20,7 @@ class AddRect {
     this.startY = y
   }
   move() {
-
+    // TODO: 显示辅助线
   }
   end(e) {
     const { x: endX, y: endY } = e.getPosition()
@@ -35,13 +35,6 @@ class AddRect {
     x = Math.min(endX, this.startX)
     y = Math.min(endY, this.startY)
 
-
-    // const rect = document.createElementNS(NS.SVG, 'rect')
-    // rect.setAttribute('x', x)
-    // rect.setAttribute('y', y)
-    // rect.setAttribute('width', w)
-    // rect.setAttribute('height', h)
-    // this.editor.getCurrentLayer().appendChild(rect)
     this.editor.executeCommand('addRect', x, y, w, h)
   }
 }

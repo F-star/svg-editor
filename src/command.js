@@ -2,17 +2,17 @@ import { NS } from "./constants"
 
 class BaseCommand {
   undo() {
-    throw new Error('请实现 undo 方法')
+    throw new Error('please override undo method')
   }
   redo() {
-    throw new Error('请实现 redo 方法')
+    throw new Error('please override redo method')
   }
 }
 
 /**
  * addRect
  * 
- * 创建矩形
+ * add rect svg element
  */
 class AddRectCommand extends BaseCommand {
   constructor(editor, x, y, w, h) {
@@ -46,12 +46,6 @@ class AddRectCommand extends BaseCommand {
     this.element.remove()
   }
 }
-
-// 类的静态方法
-// AddRectCommand.name = function() {
-//   return 'addRect'
-// }
-
 
 export {
   AddRectCommand,

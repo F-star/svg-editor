@@ -15,15 +15,12 @@ class Editor {
     stage.style.height = '550px'
     
     const svgContainer = document.createElement('div')
-    // svgContainer.classList.add('svg-svgContainer')
     svgContainer.style.backgroundColor = '#ddd'
     svgContainer.style.width = '800px'
     svgContainer.style.height = '550px'
     svgContainer.style.overflow = 'scroll'
 
     const svgRoot = document.createElementNS('http://www.w3.org/2000/svg', 'svg')
-    // svgRoot.style.width = '1000px'
-    // svgRoot.style.height = '600px'
     svgRoot.setAttribute('width', 1000)
     svgRoot.setAttribute('height', 600)
     this.svgRoot = svgRoot
@@ -57,29 +54,18 @@ class Editor {
     svgContent.appendChild(layer)
     svgRoot.appendChild(svgContent)
     document.body.appendChild(stage)
-
-    // svgRoot.addEventListener('mousedown', function(e) {
-    //   console.log(e)
-    //   const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle')
-    //   circle.setAttribute('r', 6)
-    //   circle.setAttribute('cx', e.offsetX - svgContent.getAttribute('x'))
-    //   circle.setAttribute('cy', e.offsetY - svgContent.getAttribute('y'))
-    //   svgContent.appendChild(circle)
-    // })
-
-    // const currentState = 'go'
   }
   getCurrentLayer() {
     return this.currentLayer
   }
 
-  // tool 相关方法
+  // tool relatived methods
   setCurrentTool(name) {
     this.currentTool = this.tools[name]
   }
   registerTool(tool) {
     this.tools[tool.name()] = tool
-    tool.setEditor(this) // 依赖注入
+    tool.setEditor(this) // dependency injection
   }
   bindToolEvent() {
     const createToolEvent = e => {
@@ -124,7 +110,6 @@ class Editor {
     }
     this.commandManager.execute(name, ...params)
   }
-
 }
 
 
