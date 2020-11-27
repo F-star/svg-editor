@@ -1,3 +1,4 @@
+import { GuideLine } from "./layer/guideLine"
 
 class Editor {
   constructor() {
@@ -69,6 +70,10 @@ class Editor {
     svgStage.appendChild(svgContent)
     svgContent.appendChild(layer)
 
+
+    this.guideLine = new GuideLine()
+    this.guideLine.mount(svgStage)
+
     document.body.appendChild(viewport)
   }
   getCurrentLayer() {
@@ -95,16 +100,19 @@ class Editor {
     }
 
     this.svgRoot.addEventListener('mousedown', (e) => {
+      this.isPressed = true // TODO:
       const toolEvent = createToolEvent(e)
       this.currentTool.start(toolEvent)
     }, false)
 
     this.svgRoot.addEventListener('mousemove', (e) => {
+      if (!this.isPressed) return
       const toolEvent = createToolEvent(e)
       this.currentTool.move(toolEvent)
     }, false)
     
     this.svgRoot.addEventListener('mouseup', (e) => {
+      this.isPressed = false
       const toolEvent = createToolEvent(e)
       this.currentTool.end(toolEvent)
     }, false)
