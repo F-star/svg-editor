@@ -3,6 +3,7 @@
 // Module.register('DragTree', function() {}
 
 import { NS } from "../constants"
+import { getBoxBy2points } from "../util"
 
 class AddRect {
   constructor() {
@@ -20,37 +21,25 @@ class AddRect {
     this.startY = y
   }
   move(e) {
-    // TODO: 显示辅助线
     const { x: endX, y: endY } = e.getPosition()
-    let x, y, w, h
-    w = Math.abs(endX - this.startX)
-    h = Math.abs(endY - this.startY)
-    if (w < 2 || h < 2) {
-      // TODO: 弹出输入宽高的弹窗
-      console.log('宽度或高度小于 2，不进行正方形的绘制')
-      return
-    }
-    x = Math.min(endX, this.startX)
-    y = Math.min(endY, this.startY)
-
+    const { x, y, w, h } = getBoxBy2points(this.startX, this.startY, endX, endY)
     this.editor.guideLine.rectGuide.drawRect(x, y, w, h)
   }
   end(e) {
     this.editor.guideLine.rectGuide.clear()
 
     const { x: endX, y: endY } = e.getPosition()
-    let x, y, w, h
-    w = Math.abs(endX - this.startX)
-    h = Math.abs(endY - this.startY)
+    const { x, y, w, h } = getBoxBy2points(this.startX, this.startY, endX, endY)
     if (w < 2 || h < 2) {
       // TODO: 弹出输入宽高的弹窗
-      console.log('宽度或高度小于 2，不进行正方形的绘制')
+      console.log('宽度或高度小于 2，不进行矩形的绘制')
       return
     }
-    x = Math.min(endX, this.startX)
-    y = Math.min(endY, this.startY)
-
     this.editor.executeCommand('addRect', x, y, w, h)
+  }
+  // end outside the viewport
+  endOutside() {
+
   }
 }
 

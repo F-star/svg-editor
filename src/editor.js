@@ -4,6 +4,8 @@ class Editor {
   constructor() {
     this.tools = {}
     this.currentTool = 'select'
+    this.options = null
+    this.commandManager = null
 
     const canvasWidth = 400
     const canvasHeight = 300
@@ -79,7 +81,6 @@ class Editor {
   getCurrentLayer() {
     return this.currentLayer
   }
-
   // tool relatived methods
   setCurrentTool(name) {
     this.currentTool = this.tools[name]
@@ -87,6 +88,9 @@ class Editor {
   registerTool(tool) {
     this.tools[tool.name()] = tool
     tool.setEditor(this) // dependency injection
+  }
+  setOptions(options) {
+    this.options = options
   }
   bindToolEvent() {
     const createToolEvent = e => {
@@ -133,6 +137,21 @@ class Editor {
       return
     }
     this.commandManager.execute(name, ...params)
+  }
+}
+
+// TODO:
+/**
+ * context class
+ * 
+ * used for tool event
+ */
+class EditorContext {
+  constructor() {
+    this.isPressed = false
+  }
+  getPosition() {
+
   }
 }
 

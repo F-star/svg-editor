@@ -3,6 +3,7 @@ import Editor from './editor.js'
 import AddRect from './modules/addRect.js'
 
 import { AddRectCommand } from './command.js'
+import { EditorOptions } from './editorOptions.js'
 
 const editor = new Editor()
 
@@ -10,6 +11,11 @@ const editor = new Editor()
 // register commands
 const commandManager = new CommandManager()
 commandManager.resigterCommandClass(AddRectCommand) // 创建矩形元素命令
+
+// options
+
+editor.setOptions(new EditorOptions())
+
 // register tools
 editor.setCommandManager(commandManager)
 editor.registerTool(new AddRect())
