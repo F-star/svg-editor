@@ -3,7 +3,7 @@
 // Module.register('DragTree', function() {}
 
 import { NS } from "../constants"
-import { getBoxBy2points } from "../util"
+import { getBoxBy2points } from "../util/math"
 
 class AddRect {
   constructor() {

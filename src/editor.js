@@ -7,27 +7,30 @@ class Editor {
     this.options = null
     this.commandManager = null
 
-    const canvasWidth = 400
-    const canvasHeight = 300
-    const containerWidth = 1000
-    const containerHeight = 600
+    // const contentWidth = 400
+    // const contentHeight = 300
+    // const stageWidth = 1000 // 正在纠结命名
+    // const stageHeight = 600
+    const viewportWidth = 800
+    const viewportHeight = 550
 
     const viewport = document.createElement('div')
     viewport.id = 'viewport'
-    viewport.style.width = '800px'
-    viewport.style.height = '550px'
+    viewport.style.width = viewportWidth + 'px'
+    viewport.style.height = viewportHeight + 'px'
     
     const svgContainer = document.createElement('div')
     svgContainer.id = 'svg-container'
     svgContainer.style.backgroundColor = '#ddd'
-    svgContainer.style.width = '800px'
-    svgContainer.style.height = '550px'
+    svgContainer.style.width = viewportWidth + 'px'
+    svgContainer.style.height = viewportHeight + 'px'
     svgContainer.style.overflow = 'scroll'
 
     const svgRoot = document.createElementNS('http://www.w3.org/2000/svg', 'svg')
     svgRoot.id = 'svg-root'
     svgRoot.setAttribute('width', 1000)
     svgRoot.setAttribute('height', 600)
+    svgRoot.setAttribute('viewBox', '0 0 1000 600')
     this.svgRoot = svgRoot
 
     const svgStage = document.createElementNS('http://www.w3.org/2000/svg', 'svg')
