@@ -21,8 +21,7 @@ class RectGuide {
     this.container.id = 'rect-guide'
     parent.appendChild(this.container)
 
-    this.outline = document.createElementNS(NS.SVG, 'rect')
-    // set stroke of outline
+    this.outline = document.createElementNS(NS.SVG, 'path')
     this.outline.setAttribute('fill', 'none')
     this.outline.setAttribute('stroke', '#f04')
 
@@ -33,10 +32,15 @@ class RectGuide {
     this.outline.style.display = 'none'
   }
   drawRect(x, y, w, h) {
-    this.outline.setAttribute('x', x)
+
+    // why don't I use rect, just solve the condition when width or height is 0 the outline is disapper
+    const d = `M ${x} ${y} L ${x+w} ${y} L ${x+w} ${y+h} L ${x} ${y+h} Z`
+    this.outline.setAttribute('d', d)
+
+    /* this.outline.setAttribute('x', x)
     this.outline.setAttribute('y', y)
     this.outline.setAttribute('width', w)
-    this.outline.setAttribute('height', h)
+    this.outline.setAttribute('height', h) */
     this.outline.style.display = ''
   }
 }

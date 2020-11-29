@@ -6,6 +6,7 @@ class Editor {
     this.currentTool = 'select'
     this.options = null
     this.commandManager = null
+    this.zoomManager = null
 
     // const contentWidth = 400
     // const contentHeight = 300
@@ -97,9 +98,9 @@ class Editor {
   }
   bindToolEvent() {
     const createToolEvent = e => {
-      const x = e.offsetX - this.svgStage.getAttribute('x')
-      const y = e.offsetY - this.svgStage.getAttribute('y')
-
+      const zoom = this.getZoom()
+      const x = e.offsetX / zoom - this.svgStage.getAttribute('x')
+      const y = e.offsetY / zoom - this.svgStage.getAttribute('y')
       return {
         getPosition: () => ({x, y}),
         origin: e,
@@ -140,6 +141,15 @@ class Editor {
       return
     }
     this.commandManager.execute(name, ...params)
+  }
+
+  // zoom
+  setZoomManager(zoomManager) {
+    zoomManager.setEditor(this)
+    this.zoomManager = zoomManager
+  }
+  getZoom() { // 封装
+    return this.zoomManager.getZoom()
   }
 }
 

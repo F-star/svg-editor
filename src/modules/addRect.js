@@ -30,9 +30,9 @@ class AddRect {
 
     const { x: endX, y: endY } = e.getPosition()
     const { x, y, w, h } = getBoxBy2points(this.startX, this.startY, endX, endY)
-    if (w < 2 || h < 2) {
-      // TODO: 弹出输入宽高的弹窗
-      console.log('宽度或高度小于 2，不进行矩形的绘制')
+    if (w < 2 && h < 2) {
+      // TODO: open a dialog to input width and height
+      console.log('width and height both less equal to 2，drawing nothing')
       return
     }
     this.editor.executeCommand('addRect', x, y, w, h)
