@@ -1,6 +1,7 @@
 import CommandManager from './commandManager.js'
 import Editor from './editor.js'
 import AddRect from './modules/addRect.js'
+import { DragCanvas } from './modules/dragCanvas.js'
 
 import { AddRectCommand } from './command.js'
 import { EditorOptions } from './editorOptions.js'
@@ -17,7 +18,8 @@ editor.setOptions(new EditorOptions())
 // register tools
 editor.setCommandManager(commandManager)
 editor.registerTool(new AddRect())
-editor.setCurrentTool('addRect')
+editor.registerTool(new DragCanvas())
+editor.setCurrentTool('dragCanvas')
 editor.bindToolEvent()
 // zoom
 editor.setZoomManager(new ZoomManager())

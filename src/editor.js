@@ -26,6 +26,7 @@ class Editor {
     svgContainer.style.width = viewportWidth + 'px'
     svgContainer.style.height = viewportHeight + 'px'
     svgContainer.style.overflow = 'scroll'
+    this.svgContainer = svgContainer
 
     const svgRoot = document.createElementNS('http://www.w3.org/2000/svg', 'svg')
     svgRoot.id = 'svg-root'
@@ -109,19 +110,19 @@ class Editor {
 
     this.svgRoot.addEventListener('mousedown', (e) => {
       this.isPressed = true // TODO:
-      const toolEvent = createToolEvent(e)
+      const toolEvent = new ToolEvent(e, this)
       this.currentTool.start(toolEvent)
     }, false)
 
     this.svgRoot.addEventListener('mousemove', (e) => {
       if (!this.isPressed) return
-      const toolEvent = createToolEvent(e)
+      const toolEvent = new ToolEvent(e, this)
       this.currentTool.move(toolEvent)
     }, false)
     
     this.svgRoot.addEventListener('mouseup', (e) => {
       this.isPressed = false
-      const toolEvent = createToolEvent(e)
+      const toolEvent = new ToolEvent(e, this)
       this.currentTool.end(toolEvent)
     }, false)
   }
@@ -153,8 +154,8 @@ class Editor {
   }
 }
 
-// TODO:
 /**
+ * TODO:
  * context class
  * 
  * used for tool event
@@ -165,6 +166,32 @@ class EditorContext {
   }
   getPosition() {
 
+  }
+}
+
+class ToolEvent {
+  constructor(e, editor) {
+    this.origin = e
+
+
+    const zoom = editor.getZoom()
+    this.x = e.offsetX / zoom - editor.svgStage.getAttribute('x')
+    this.y = e.offsetY / zoom - editor.svgStage.getAttribute('y')
+
+    this.offsetX = editor.svgContainer.scrollLeft
+    this.offsetY = editor.svgContainer.scrollRight
+  }
+  getPosition() {
+    return {
+      x: this.x,
+      y: this.y,
+    }
+  }
+  getOffset() {
+    return {
+      x: this.offsetX,
+      y: this.offsetY,
+    }
   }
 }
 
