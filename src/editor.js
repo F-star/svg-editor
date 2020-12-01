@@ -1,3 +1,4 @@
+import { EditorEventContext } from "./editorEventContext"
 import { GuideLine } from "./layer/guideLine"
 
 class Editor {
@@ -7,6 +8,7 @@ class Editor {
     this.options = null
     this.commandManager = null
     this.zoomManager = null
+    this.ctx = null
 
     // const contentWidth = 400
     // const contentHeight = 300
@@ -98,35 +100,6 @@ class Editor {
   setOptions(options) {
     this.options = options
   }
-  bindToolEvent() {
-    const createToolEvent = e => {
-      const zoom = this.getZoom()
-      const x = e.offsetX / zoom - this.svgStage.getAttribute('x')
-      const y = e.offsetY / zoom - this.svgStage.getAttribute('y')
-      return {
-        getPosition: () => ({x, y}),
-        origin: e,
-      }
-    }
-
-    this.svgRoot.addEventListener('mousedown', (e) => {
-      this.isPressed = true // TODO:
-      const toolEvent = new ToolEvent(e, this)
-      this.currentTool.start(toolEvent)
-    }, false)
-
-    this.svgRoot.addEventListener('mousemove', (e) => {
-      if (!this.isPressed) return
-      const toolEvent = new ToolEvent(e, this)
-      this.currentTool.move(toolEvent)
-    }, false)
-    
-    this.svgRoot.addEventListener('mouseup', (e) => {
-      this.isPressed = false
-      const toolEvent = new ToolEvent(e, this)
-      this.currentTool.end(toolEvent)
-    }, false)
-  }
 
   // 命令相关
   setCommandManager(commandManager) {
@@ -153,48 +126,55 @@ class Editor {
   getZoom() { // 封装
     return this.zoomManager.getZoom()
   }
-}
 
-/**
- * TODO:
- * context class
- * 
- * used for tool event
- */
-class EditorContext {
-  constructor() {
-    this.isPressed = false
-  }
-  getPosition() {
-
-  }
-}
-
-class ToolEvent {
-  constructor(e, editor) {
-    this.origin = e
-
-
-    const zoom = editor.getZoom()
-    this.x = e.offsetX / zoom - editor.svgStage.getAttribute('x')
-    this.y = e.offsetY / zoom - editor.svgStage.getAttribute('y')
-
-    this.offsetX = editor.svgContainer.scrollLeft
-    this.offsetY = editor.svgContainer.scrollTop
-  }
-  getPosition() {
+  getScroll() {
     return {
-      x: this.x,
-      y: this.y,
+      x: this.svgContainer.scrollLeft,
+      y: this.svgContainer.scrollTop,
     }
   }
-  getOffset() {
+  setScroll(x, y) {
+    this.svgContainer.scrollLeft = x
+    this.svgContainer.scrollTop = y
+  }
+  getContentOffset() {
     return {
-      x: this.offsetX,
-      y: this.offsetY,
+      x: this.svgStage.getAttribute('x'),
+      y: this.svgStage.getAttribute('y'),
     }
   }
-}
 
+  bindToolEvent() {
+    this.svgRoot.addEventListener('mousedown', e => {
+      const ctx = new EditorEventContext(this, e)
+      this.ctx = ctx
+      this.currentTool.start(ctx)
+    }, false)
+
+    this.svgRoot.addEventListener('mousemove', e => {
+      const ctx = this.ctx
+
+      if (!ctx) return // if ctx exits, present mousedown event emit just before
+      ctx.setOriginEvent(e)
+      ctx.pressMouse()
+      this.currentTool.move(ctx)
+    }, false)
+    
+    this.svgRoot.addEventListener('mouseup', e => {
+      // this.ctx.releaseMouse()
+      const ctx = this.ctx
+      // ctx.setOriginEvent(e) // the offsetX and offsetY in mouseup and the last mousemove is not equal ?? 
+      this.currentTool.end(ctx)
+      ctx.isEndInside = true
+    }, false)
+
+    window.addEventListener('mouseup', e => {
+      if (this.ctx && this.ctx.isEndInside == false) {
+        this.currentTool.endOutside(this.ctx)
+      }
+      this.ctx = null
+    }, false)
+  }
+}
 
 export default Editor

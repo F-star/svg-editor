@@ -11,21 +11,19 @@ class AddRect {
   setEditor(editor) { // 依赖注入
     this.editor = editor
   }
-  start(e) {
-    const { x, y } = e.getPosition()
-    this.startX = x
-    this.startY = y
-  }
-  move(e) {
-    const { x: endX, y: endY } = e.getPosition()
-    const { x, y, w, h } = getBoxBy2points(this.startX, this.startY, endX, endY)
+  start(ctx) {}
+  move(ctx) {
+    const { x: endX, y: endY } = ctx.getPos()
+    const { x: startX, y: startY } = ctx.getStartPos()
+    const { x, y, w, h } = getBoxBy2points(startX, startY, endX, endY)
     this.editor.guideLine.rectGuide.drawRect(x, y, w, h)
   }
-  end(e) {
+  end(ctx) {
     this.editor.guideLine.rectGuide.clear()
 
-    const { x: endX, y: endY } = e.getPosition()
-    const { x, y, w, h } = getBoxBy2points(this.startX, this.startY, endX, endY)
+    const { x: endX, y: endY } = ctx.getPos()
+    const { x: startX, y: startY } = ctx.getStartPos()
+    const { x, y, w, h } = getBoxBy2points(startX, startY, endX, endY)
     if (w < 2 && h < 2) {
       // TODO: open a dialog to input width and height
       console.log('width and height both less equal to 2，drawing nothing')
@@ -33,9 +31,9 @@ class AddRect {
     }
     this.editor.executeCommand('addRect', x, y, w, h)
   }
-  // end outside the viewport
+  // mousedown outside viewport
   endOutside() {
-
+    this.editor.guideLine.rectGuide.clear()
   }
 }
 

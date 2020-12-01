@@ -1,35 +1,28 @@
 
 export class DragCanvas {
+  constructor() {
+    this.startOffsetX = 0
+    this.startOffsetY = 0
+  }
   name() {
     return 'dragCanvas'
   }
   setEditor(editor) { // 依赖注入
     this.editor = editor
   }
-  start(e) {
-    console.log('dragCanvas start')
-    const pos = e.getPosition()
-    this.startX = pos.x
-    this.startY = pos.y
-
-    const offset = e.getOffset()
-    console.log(offset)
-    this.startOffsetX = offset.x
-    this.startOffsetY = offset.y
+  beforeActive() {
+    // do something before switch to current tool
   }
-  move(e) {
-
-    // FIXME: if scrollTop has changed, getPosition() can't get right value
-    // because it use `offsetX` property.
-    const { x, y } = e.getPosition()
-    const dx = x - this.startX
-    const dy = y - this.startY
+  start(ctx) {
+    const scroll = this.editor.getScroll()
+    this.startOffsetX = scroll.x
+    this.startOffsetY = scroll.y
+  }
+  move(ctx) {
     const zoom = this.editor.getZoom()
-
-    this.editor.svgContainer.scrollLeft = (this.startOffsetX - dx) * zoom
-    this.editor.svgContainer.scrollTop = (this.startOffsetY - dy) * zoom
+    const { x: dx, y: dy } = ctx.getDiffPos()
+    this.editor.setScroll(this.startOffsetX - dx, this.startOffsetY - dy)
   }
-  end() {
-
-  }
+  end() {}
+  endOutside() {}
 }

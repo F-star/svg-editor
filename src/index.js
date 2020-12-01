@@ -19,6 +19,7 @@ editor.setOptions(new EditorOptions())
 editor.setCommandManager(commandManager)
 editor.registerTool(new AddRect())
 editor.registerTool(new DragCanvas())
+// editor.setCurrentTool('addRect')
 editor.setCurrentTool('dragCanvas')
 editor.bindToolEvent()
 // zoom

@@ -11,3 +11,10 @@ run project:
 npm i
 npm run dev
 ```
+
+The simply features has added(of course with some bugs):
+
+- redo/undo
+- add rect
+- drag canvas
+- zoom
