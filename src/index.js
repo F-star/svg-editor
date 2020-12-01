@@ -25,7 +25,10 @@ editor.bindToolEvent()
 editor.setZoomManager(new ZoomManager())
 
 
-// bind event in button
+/** 
+ * bind event in button
+ */ 
+
 // undo
 const undoBtn = document.createElement('button')
 undoBtn.innerText = 'undo'
@@ -44,7 +47,6 @@ document.body.appendChild(redoBtn)
 const zoomInBtn = document.createElement('button')
 zoomInBtn.innerText = 'zoomIn'
 zoomInBtn.onclick = function() {
-  console.log(editor)
   editor.zoomManager.zoomIn()
 }
 document.body.appendChild(zoomInBtn)
@@ -52,10 +54,23 @@ document.body.appendChild(zoomInBtn)
 const zoomOutBtn = document.createElement('button')
 zoomOutBtn.innerText = 'zoomOut'
 zoomOutBtn.onclick = function() {
-  console.log(editor)
   editor.zoomManager.zoomOut()
 }
 document.body.appendChild(zoomOutBtn)
+// select drawRect tool
+const drawRectToolBtn = document.createElement('button')
+drawRectToolBtn.innerText = 'drawRect'
+drawRectToolBtn.onclick = function() {
+  editor.setCurrentTool('addRect')
+}
+document.body.appendChild(drawRectToolBtn)
+// select dragcanvas tool
+const dragCanvasToolBtn = document.createElement('button')
+dragCanvasToolBtn.innerText = 'dragCanvas'
+dragCanvasToolBtn.onclick = function() {
+  editor.setCurrentTool('dragCanvas')
+}
+document.body.appendChild(dragCanvasToolBtn)
 
 /**
  * 理想 api 使用例子

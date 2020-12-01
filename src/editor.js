@@ -17,6 +17,7 @@ class Editor {
 
     const viewport = document.createElement('div')
     viewport.id = 'viewport'
+    viewport.style.border = '1px solid #000'
     viewport.style.width = viewportWidth + 'px'
     viewport.style.height = viewportHeight + 'px'
     
@@ -179,7 +180,7 @@ class ToolEvent {
     this.y = e.offsetY / zoom - editor.svgStage.getAttribute('y')
 
     this.offsetX = editor.svgContainer.scrollLeft
-    this.offsetY = editor.svgContainer.scrollRight
+    this.offsetY = editor.svgContainer.scrollTop
   }
   getPosition() {
     return {
