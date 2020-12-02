@@ -6,6 +6,7 @@ import { DragCanvas } from './modules/dragCanvas.js'
 import { AddRectCommand } from './command.js'
 import { EditorOptions } from './editorOptions.js'
 import { ZoomManager } from './modules/zoom.js'
+import { Select } from './modules/select.js'
 
 const editor = new Editor()
 
@@ -19,8 +20,9 @@ editor.setOptions(new EditorOptions())
 editor.setCommandManager(commandManager)
 editor.registerTool(new AddRect())
 editor.registerTool(new DragCanvas())
+editor.registerTool(new Select())
 // editor.setCurrentTool('addRect')
-editor.setCurrentTool('dragCanvas')
+editor.setCurrentTool('select')
 editor.bindToolEvent()
 // zoom
 editor.setZoomManager(new ZoomManager())
@@ -72,6 +74,13 @@ dragCanvasToolBtn.onclick = function() {
   editor.setCurrentTool('dragCanvas')
 }
 document.body.appendChild(dragCanvasToolBtn)
+// select tool
+const selectToolBtn = document.createElement('button')
+selectToolBtn.innerText = 'select'
+selectToolBtn.onclick = function() {
+  editor.setCurrentTool('select')
+}
+document.body.appendChild(selectToolBtn)
 
 /**
  * 理想 api 使用例子

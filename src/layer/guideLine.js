@@ -4,10 +4,10 @@
 
 const { NS } = require("../constants");
 
-class GuideLine{
+export class GuideLine{
   constructor() {
     this.container = document.createElementNS(NS.SVG, 'g')
-    this.container.id = 'guideline-layout'
+    this.container.id = 'guide-layout'
     this.rectGuide = new RectGuide(this.container)
   }
   mount(el) {
@@ -43,8 +43,4 @@ class RectGuide {
     this.outline.setAttribute('height', h) */
     this.outline.style.display = ''
   }
-}
-
-export {
-  GuideLine
 }
