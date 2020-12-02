@@ -3,7 +3,7 @@ import Editor from './editor.js'
 import AddRect from './modules/addRect.js'
 import { DragCanvas } from './modules/dragCanvas.js'
 
-import { AddRectCommand } from './command.js'
+import { AddRectCommand, Move } from './command.js'
 import { EditorOptions } from './editorOptions.js'
 import { ZoomManager } from './modules/zoom.js'
 import { Select } from './modules/select.js'
@@ -13,7 +13,8 @@ const editor = new Editor()
 
 // register commands
 const commandManager = new CommandManager()
-commandManager.resigterCommandClass(AddRectCommand) // 创建矩形元素命令
+commandManager.resigterCommandClass(AddRectCommand)
+commandManager.resigterCommandClass(Move)
 // options
 editor.setOptions(new EditorOptions())
 // register tools

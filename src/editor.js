@@ -144,6 +144,19 @@ class Editor {
     }
   }
 
+  isContentElement(el) {
+    while (el) {
+      if (el.parentElement == this.svgContent) {
+        return true
+      }
+      if (el.parentElement == this.svgRoot) {
+        return false
+      }
+      el = el.parentElement
+    }
+    return false
+  }
+
   bindToolEvent() {
     this.svgRoot.addEventListener('mousedown', e => {
       const ctx = new EditorEventContext(this, e)

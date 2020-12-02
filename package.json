@@ -9,7 +9,7 @@
     "build": "webpack"
   },
   "keywords": [],
-  "author": "",
+  "author": "fstar",
   "license": "ISC",
   "devDependencies": {
     "clean-webpack-plugin": "^3.0.0",

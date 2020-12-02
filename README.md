@@ -1,20 +1,21 @@
 svg-editor
 ---
 
-a simple svg editor.
+A simple web svg editor.
 
-developing...
+Developing...
 
-run project:
+Run project:
 
 ```sh
 npm i
 npm run dev
 ```
 
-The simply features has added(of course with some bugs):
+The simple features has added(of course with some bugs):
 
 - redo/undo
 - add rect
 - drag canvas
 - zoom
+- select(only can move rect)

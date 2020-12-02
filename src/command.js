@@ -14,7 +14,7 @@ class BaseCommand {
  * 
  * add rect svg element
  */
-class AddRectCommand extends BaseCommand {
+export class AddRectCommand extends BaseCommand {
   constructor(editor, x, y, w, h) {
     super()
     // TODO: 使用编辑器使用的颜色等样式
@@ -56,6 +56,32 @@ class AddRectCommand extends BaseCommand {
   }
 }
 
-export {
-  AddRectCommand,
+
+export class Move extends BaseCommand {
+  constructor(editor, el, x, y) {
+    super()
+
+    this.afterX = x
+    this.afterY = y
+    this.beforeX = parseFloat(el.getAttribute('x'))
+    this.beforeY = parseFloat(el.getAttribute('y'))
+    this.el = el
+
+    el.setAttribute('x', x)
+    el.setAttribute('y', y)
+  }
+
+  static name() {
+    return 'move'
+  }
+
+  redo() {
+    this.el.setAttribute('x', this.afterX)
+    this.el.setAttribute('y', this.afterY)
+  }
+
+  undo() {
+    this.el.setAttribute('x', this.beforeX)
+    this.el.setAttribute('y', this.beforeY)
+  }
 }
