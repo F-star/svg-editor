@@ -24,10 +24,9 @@ export class AddRectCommand extends BaseCommand {
     rect.setAttribute('width', w)
     rect.setAttribute('height', h)
 
-
-    const fill = editor.options.get('fill')
-    const stroke = editor.options.get('stroke')
-    const strokeWidth = editor.options.get('strokeWidth')
+    const fill = editor.setting.get('fill')
+    const stroke = editor.setting.get('stroke')
+    const strokeWidth = editor.setting.get('strokeWidth')
     rect.setAttribute('fill', fill)
     rect.setAttribute('stroke', stroke)
     rect.setAttribute('stroke-width', strokeWidth)

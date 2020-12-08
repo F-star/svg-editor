@@ -3,12 +3,10 @@ import { GuideLine } from "./layer/guideLine"
 
 class Editor {
   constructor() {
-    this.tools = {}
-    this.currentTool = 'select'
-    this.options = null
+    this.setting = null
     this.commandManager = null
     this.zoomManager = null
-    this.ctx = null
+
 
     // const contentWidth = 400
     // const contentHeight = 300
@@ -89,16 +87,19 @@ class Editor {
   getCurrentLayer() {
     return this.currentLayer
   }
+
+  setToolManager(toolManager) {
+    this.toolManager = toolManager
+  }
   // tool relatived methods
   setCurrentTool(name) {
-    this.currentTool = this.tools[name]
+    this.toolManager.setCurrentTool(name)
   }
   registerTool(tool) {
-    this.tools[tool.name()] = tool
-    tool.setEditor(this) // dependency injection
+    this.toolManager.registerTool(tool)
   }
-  setOptions(options) {
-    this.options = options
+  setSetting(setting) {
+    this.setting = setting
   }
 
   // 命令相关

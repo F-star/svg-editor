@@ -1,7 +1,7 @@
 
-export class EditorOptions {
+export class EditorSetting {
   constructor() {
-    this.options = {
+    this.setting = {
       fill: '#fff',
       stroke: '#000',
       strokeWidth: '2px',
@@ -11,15 +11,15 @@ export class EditorOptions {
     }
   }
   setFill(val) {
-    this.options.fill = val
+    this.setting.fill = val
   }
   setStroke(val) {
-    this.options.fill = val
+    this.setting.fill = val
   }
   set(name, val) {
-    this.options[name] = val
+    this.setting[name] = val
   }
   get(name) {
-    return this.options[name]
+    return this.setting[name]
   }
 }

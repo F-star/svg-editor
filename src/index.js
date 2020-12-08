@@ -4,27 +4,31 @@ import AddRect from './modules/addRect.js'
 import { DragCanvas } from './modules/dragCanvas.js'
 
 import { AddRectCommand, Move } from './command.js'
-import { EditorOptions } from './editorOptions.js'
+import { EditorSetting } from './editorSetting.js'
 import { ZoomManager } from './modules/zoom.js'
 import { Select } from './modules/select.js'
+import { ToolManager } from './toolManager.js'
 
 const editor = new Editor()
-
 
 // register commands
 const commandManager = new CommandManager()
 commandManager.resigterCommandClass(AddRectCommand)
 commandManager.resigterCommandClass(Move)
-// options
-editor.setOptions(new EditorOptions())
-// register tools
+// setting
+editor.setSetting(new EditorSetting())
+
 editor.setCommandManager(commandManager)
-editor.registerTool(new AddRect())
-editor.registerTool(new DragCanvas())
-editor.registerTool(new Select())
-// editor.setCurrentTool('addRect')
-editor.setCurrentTool('select')
-editor.bindToolEvent()
+// register tools
+
+const toolManager = new ToolManager(editor)
+editor.setToolManager(toolManager)
+toolManager.registerTool(new AddRect())
+toolManager.registerTool(new DragCanvas())
+toolManager.registerTool(new Select())
+// toolManager.setCurrentTool('addRect')
+toolManager.setCurrentTool('select')
+toolManager.bindToolEvent()
 // zoom
 editor.setZoomManager(new ZoomManager())
 

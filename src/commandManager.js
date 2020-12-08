@@ -16,7 +16,7 @@ class CommandManager {
     this.undoStack = []
     this.commandClasses = {}
   }
-  setEditor(editor) { // 依赖注入
+  setEditor(editor) {
     this.editor = editor
   }
   execute(name, ...args) {
