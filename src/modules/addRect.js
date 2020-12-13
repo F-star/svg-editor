@@ -16,7 +16,7 @@ class AddRect {
     const { x: endX, y: endY } = ctx.getPos()
     const { x: startX, y: startY } = ctx.getStartPos()
     const { x, y, w, h } = getBoxBy2points(startX, startY, endX, endY)
-    this.editor.guideLine.rectGuide.drawRect(x, y, w, h)
+    this.editor.guideLine.rectGuide.renderRect(x, y, w, h)
   }
   end(ctx) {
     this.editor.guideLine.rectGuide.clear()

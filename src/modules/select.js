@@ -1,3 +1,4 @@
+import { FSVG } from "../element"
 import { getBoxBy2points } from "../util/math"
 
 /**
@@ -15,7 +16,7 @@ import { getBoxBy2points } from "../util/math"
 export class Select {
   constructor() {
     this.editor = null
-    this.selectedElement = null
+    this.selectedEls = []
 
     this.outlineStartX = 0
     this.outlineStartY = 0
@@ -26,30 +27,34 @@ export class Select {
   setEditor(editor) {
     this.editor = editor
   }
+  hasSelectedElsWhenStart() {
+    return this.selectedEls.length == 0
+  }
   start(ctx) {
     const targetElement = ctx.originEvent.target
     if (!this.editor.isContentElement(targetElement)) {
       return
     }
 
-    this.selectedElement = targetElement
-    const x = parseFloat(targetElement.getAttribute('x'))
-    const y = parseFloat(targetElement.getAttribute('y'))
-    const w = parseFloat(targetElement.getAttribute('width'))
-    const h = parseFloat(targetElement.getAttribute('height'))
+    const targetFElement = new FSVG.Rect(targetElement) // 暂时只是 rect TODO: 改为通用写法
+    this.selectedEls = [ targetFElement ] // 鼠标按下时，就选中了一个元素
+    const x = parseFloat(targetFElement.getAttr('x'))
+    const y = parseFloat(targetFElement.getAttr('y'))
+    const w = parseFloat(targetFElement.getAttr('width'))
+    const h = parseFloat(targetFElement.getAttr('height'))
     
     this.outlineStartX = x
     this.outlineStartY = y
 
-    this.editor.guideLine.rectGuide.drawRect(x, y, w, h)
+    this.editor.guideLine.rectGuide.renderRect(x, y, w, h)
   }
   move(ctx) {
-    if (!this.selectedElement) {
+    if (this.hasSelectedElsWhenStart()) { // 移动选中的元素
       // select no element, draw select rect
       const { x: endX, y: endY } = ctx.getPos()
       const { x: startX, y: startY } = ctx.getStartPos()
       const { x, y, w, h } = getBoxBy2points(startX, startY, endX, endY)
-      this.editor.guideLine.rectGuide.drawRect(x, y, w, h)
+      this.editor.guideLine.rectGuide.renderRect(x, y, w, h)
       return
     }
 
@@ -57,10 +62,10 @@ export class Select {
     const rectGuide = this.editor.guideLine.rectGuide
     const w = rectGuide.getWidth()
     const h = rectGuide.getHeight()
-    rectGuide.drawRect(this.outlineStartX + dx, this.outlineStartY + dy, w, h)
+    rectGuide.renderRect(this.outlineStartX + dx, this.outlineStartY + dy, w, h)
   }
-  end() {
-    if (!this.selectedElement) {
+  end(ctx) {
+    if (this.hasSelectedElsWhenStart()) {
       this.editor.guideLine.rectGuide.clear()
       // TODO: active frame by select rect.
 
@@ -69,15 +74,14 @@ export class Select {
     const rectGuide = this.editor.guideLine.rectGuide
     rectGuide.clear()
 
-    const x = rectGuide.getX()
-    const y = rectGuide.getY()
     
-    this.editor.executeCommand('move', this.selectedElement, x, y)
-    this.selectedElement = null
+    const { x: dx, y: dy } = ctx.getDiffPos()
+    this.editor.executeCommand('dmove', this.selectedEls, dx, dy)
+    this.selectedEls = []
   }
   // mousedown outside viewport
   endOutside() {
     this.editor.guideLine.rectGuide.clear()
-    this.selectedElement = null
+    this.selectedEls = []
   }
 }

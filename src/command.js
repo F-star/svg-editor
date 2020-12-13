@@ -55,32 +55,33 @@ export class AddRectCommand extends BaseCommand {
   }
 }
 
-
-export class Move extends BaseCommand {
-  constructor(editor, el, x, y) {
+export class DMove extends BaseCommand {
+  constructor(editor, els, dx, dy) {
     super()
 
-    this.afterX = x
-    this.afterY = y
-    this.beforeX = parseFloat(el.getAttribute('x'))
-    this.beforeY = parseFloat(el.getAttribute('y'))
-    this.el = el
+    this.dx = dx
+    this.dy = dy
+    this.els = els
 
-    el.setAttribute('x', x)
-    el.setAttribute('y', y)
+    this.els.forEach(el => {
+      el.dmove(this.dx, this.dy)
+    })
+    
   }
 
   static name() {
-    return 'move'
+    return 'dmove'
   }
 
   redo() {
-    this.el.setAttribute('x', this.afterX)
-    this.el.setAttribute('y', this.afterY)
+    this.els.forEach(el => {
+      el.dmove(this.dx, this.dy)
+    })
   }
 
   undo() {
-    this.el.setAttribute('x', this.beforeX)
-    this.el.setAttribute('y', this.beforeY)
+    this.els.forEach(el => {
+      el.dmove(-this.dx, -this.dy)
+    })
   }
 }

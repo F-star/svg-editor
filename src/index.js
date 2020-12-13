@@ -3,7 +3,7 @@ import Editor from './editor.js'
 import AddRect from './modules/addRect.js'
 import { DragCanvas } from './modules/dragCanvas.js'
 
-import { AddRectCommand, Move } from './command.js'
+import { AddRectCommand, DMove } from './command.js'
 import { EditorSetting } from './editorSetting.js'
 import { ZoomManager } from './modules/zoom.js'
 import { Select } from './modules/select.js'
@@ -14,7 +14,7 @@ const editor = new Editor()
 // register commands
 const commandManager = new CommandManager()
 commandManager.resigterCommandClass(AddRectCommand)
-commandManager.resigterCommandClass(Move)
+commandManager.resigterCommandClass(DMove)
 // setting
 editor.setSetting(new EditorSetting())
 
@@ -65,9 +65,9 @@ zoomOutBtn.onclick = function() {
   editor.zoomManager.zoomOut()
 }
 document.body.appendChild(zoomOutBtn)
-// select drawRect tool
+// select addRect tool
 const drawRectToolBtn = document.createElement('button')
-drawRectToolBtn.innerText = 'drawRect'
+drawRectToolBtn.innerText = 'addRect'
 drawRectToolBtn.onclick = function() {
   editor.setCurrentTool('addRect')
 }
