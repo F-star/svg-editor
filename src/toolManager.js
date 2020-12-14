@@ -4,12 +4,15 @@ export class ToolManager {
   constructor(editor) {
     this.editor = editor
     this.tools = {}
-    this.currentTool = 'select'
+    this.currentTool = null
 
     this.ctx = null // tool context
   }
   setCurrentTool(name) {
     this.currentTool = this.tools[name]
+  }
+  getCurrentToolName() {
+    return this.currentTool.name()
   }
   registerTool(tool) {
     this.tools[tool.name()] = tool

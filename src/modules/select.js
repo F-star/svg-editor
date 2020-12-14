@@ -28,7 +28,7 @@ export class Select {
     this.editor = editor
   }
   hasSelectedElsWhenStart() {
-    return this.selectedEls.length == 0
+    return this.selectedEls.length > 0
   }
   start(ctx) {
     const targetElement = ctx.originEvent.target
@@ -42,14 +42,14 @@ export class Select {
     const y = parseFloat(targetFElement.getAttr('y'))
     const w = parseFloat(targetFElement.getAttr('width'))
     const h = parseFloat(targetFElement.getAttr('height'))
-    
+
     this.outlineStartX = x
     this.outlineStartY = y
 
     this.editor.guideLine.rectGuide.renderRect(x, y, w, h)
   }
   move(ctx) {
-    if (this.hasSelectedElsWhenStart()) { // 移动选中的元素
+    if (!this.hasSelectedElsWhenStart()) { // draw selecting area
       // select no element, draw select rect
       const { x: endX, y: endY } = ctx.getPos()
       const { x: startX, y: startY } = ctx.getStartPos()
@@ -65,10 +65,9 @@ export class Select {
     rectGuide.renderRect(this.outlineStartX + dx, this.outlineStartY + dy, w, h)
   }
   end(ctx) {
-    if (this.hasSelectedElsWhenStart()) {
+    if (!this.hasSelectedElsWhenStart()) { // finished drawn selecting area
       this.editor.guideLine.rectGuide.clear()
       // TODO: active frame by select rect.
-
       return
     }
     const rectGuide = this.editor.guideLine.rectGuide
@@ -77,6 +76,7 @@ export class Select {
     
     const { x: dx, y: dy } = ctx.getDiffPos()
     this.editor.executeCommand('dmove', this.selectedEls, dx, dy)
+    this.editor.activedElManager.setEls(this.selectedEls) // set global actived elements
     this.selectedEls = []
   }
   // mousedown outside viewport

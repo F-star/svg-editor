@@ -1,3 +1,4 @@
+import { ActivedElManager } from "./activedElManager"
 import { EditorEventContext } from "./editorEventContext"
 import { GuideLine } from "./layer/guideLine"
 
@@ -6,6 +7,7 @@ class Editor {
     this.setting = null
     this.commandManager = null
     this.zoomManager = null
+    this.activedElManager = new ActivedElManager(this)
 
 
     // const contentWidth = 400
@@ -156,38 +158,6 @@ class Editor {
       el = el.parentElement
     }
     return false
-  }
-
-  bindToolEvent() {
-    this.svgRoot.addEventListener('mousedown', e => {
-      const ctx = new EditorEventContext(this, e)
-      this.ctx = ctx
-      this.currentTool.start(ctx)
-    }, false)
-
-    this.svgRoot.addEventListener('mousemove', e => {
-      const ctx = this.ctx
-
-      if (!ctx) return // if ctx exits, present mousedown event emit just before
-      ctx.setOriginEvent(e)
-      ctx.pressMouse()
-      this.currentTool.move(ctx)
-    }, false)
-    
-    this.svgRoot.addEventListener('mouseup', e => {
-      // this.ctx.releaseMouse()
-      const ctx = this.ctx
-      // ctx.setOriginEvent(e) // the offsetX and offsetY in mouseup and the last mousemove is not equal ?? 
-      this.currentTool.end(ctx)
-      ctx.isEndInside = true
-    }, false)
-
-    window.addEventListener('mouseup', e => {
-      if (this.ctx && this.ctx.isEndInside == false) {
-        this.currentTool.endOutside(this.ctx)
-      }
-      this.ctx = null
-    }, false)
   }
 }
 

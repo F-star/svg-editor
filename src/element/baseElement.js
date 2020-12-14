@@ -1,6 +1,6 @@
 
 /**
- * 对 rect 元素的简单封装
+ * 对 SVG 元素的简单封装
  */
 
 export class FElement {
@@ -15,5 +15,8 @@ export class FElement {
   }
   getAttr(prop) {
     return this.el_.getAttribute(prop)
+  }
+  getBBox() {
+    return this.el_.getBBox()
   }
 }

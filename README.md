@@ -5,6 +5,8 @@ A simple web svg editor.
 
 Developing...
 
+Try the editor: https://f-star.github.io/svg-editor/dist/
+
 Run project:
 
 ```sh
@@ -19,3 +21,10 @@ The simple features has added(of course with some bugs):
 - drag canvas
 - zoom
 - select(only can move rect)
+
+To do recently:
+
+- actived elements
+- delete elements
+- select fill and stroke color
+- UI
