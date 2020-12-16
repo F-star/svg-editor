@@ -2,9 +2,9 @@
 const { NS } = require("../constants");
 
 /**
- * <rect> outline
+ * select area
  */
-export class RectGuide {
+export class SelectArea {
   constructor(parent) {
     this.x = 0
     this.y = 0
@@ -12,12 +12,14 @@ export class RectGuide {
     this.h = 0
 
     this.container = document.createElementNS(NS.SVG, 'g')
-    this.container.id = 'rect-guide'
+    this.container.id = 'select-area'
     parent.appendChild(this.container)
 
     this.outline = document.createElementNS(NS.SVG, 'path')
     this.outline.setAttribute('fill', 'none')
-    this.outline.setAttribute('stroke', '#f04')
+    this.outline.setAttribute('stroke', '#054')
+    this.outline.setAttribute('vector-effect', 'non-scaling-stroke')
+    this.outline.setAttribute('stroke-dasharray', '4px')
 
     this.container.appendChild(this.outline)
   }
@@ -25,7 +27,7 @@ export class RectGuide {
     // parent.innerHTML = ''
     this.outline.style.display = 'none'
   }
-  renderRect(x, y, w, h) {
+  drawRect(x, y, w, h) {
     this.x = x
     this.y = y
     this.w = w

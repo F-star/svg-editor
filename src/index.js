@@ -18,12 +18,8 @@ function activeBtn(name) {
   if (name == undefined) return
 
   const toolBar = document.querySelector('#tool-bar')
-  // toolBtns = Array.prototype.slice.call(toolBtns)
-  
   const toolBtns = Array.prototype.slice.call(toolBar.children)
-  console.log(toolBtns)
   toolBtns.forEach(item => {
-    console.log(item)
     item.classList.remove('active')
   })
   document.getElementById(name).classList.add('active')
@@ -47,12 +43,13 @@ editor.setToolManager(toolManager)
 toolManager.registerTool(new AddRect())
 toolManager.registerTool(new DragCanvas())
 toolManager.registerTool(new Select())
-// toolManager.setCurrentTool('addRect')
+
 editor.toolManager.onSwitchTool(name => {
   console.log('switched tool:', name)
   activeBtn(name)
 })
-toolManager.setCurrentTool('select')
+
+toolManager.setCurrentTool('addRect')
 toolManager.bindToolEvent()
 // zoom
 editor.setZoomManager(new ZoomManager())

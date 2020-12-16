@@ -46,7 +46,7 @@ export class Select {
     this.outlineStartX = x
     this.outlineStartY = y
 
-    this.editor.guideLine.rectGuide.renderRect(x, y, w, h)
+    this.editor.hudManager.outlineHud.drawRect(x, y, w, h)
   }
   move(ctx) {
     if (!this.hasSelectedElsWhenStart()) { // draw selecting area
@@ -54,34 +54,36 @@ export class Select {
       const { x: endX, y: endY } = ctx.getPos()
       const { x: startX, y: startY } = ctx.getStartPos()
       const { x, y, w, h } = getBoxBy2points(startX, startY, endX, endY)
-      this.editor.guideLine.rectGuide.renderRect(x, y, w, h)
+      this.editor.hudManager.selectArea.drawRect(x, y, w, h)
       return
     }
 
     const { x: dx, y: dy } = ctx.getDiffPos()
-    const rectGuide = this.editor.guideLine.rectGuide
-    const w = rectGuide.getWidth()
-    const h = rectGuide.getHeight()
-    rectGuide.renderRect(this.outlineStartX + dx, this.outlineStartY + dy, w, h)
+    const outlineHud = this.editor.hudManager.outlineHud
+    const w = outlineHud.getWidth()
+    const h = outlineHud.getHeight()
+    outlineHud.drawRect(this.outlineStartX + dx, this.outlineStartY + dy, w, h)
   }
   end(ctx) {
     if (!this.hasSelectedElsWhenStart()) { // finished drawn selecting area
-      this.editor.guideLine.rectGuide.clear()
+      this.editor.hudManager.selectArea.clear()
       // TODO: active frame by select rect.
+      this.editor.activedElsManager.clear()
       return
     }
-    const rectGuide = this.editor.guideLine.rectGuide
-    rectGuide.clear()
+    this.editor.hudManager.outlineHud.clear()
 
     
     const { x: dx, y: dy } = ctx.getDiffPos()
     this.editor.executeCommand('dmove', this.selectedEls, dx, dy)
-    this.editor.activedElManager.setEls(this.selectedEls) // set global actived elements
+    this.editor.activedElsManager.setEls(this.selectedEls) // set global actived elements
     this.selectedEls = []
   }
   // mousedown outside viewport
   endOutside() {
-    this.editor.guideLine.rectGuide.clear()
+    this.editor.hudManager.outlineHud.clear()
+    this.editor.hudManager.selectArea.clear()
+    this.editor.activedElsManager.clear()
     this.selectedEls = []
   }
 }

@@ -1,13 +1,13 @@
-import { ActivedElManager } from "./activedElManager"
+import { ActivedElsManager } from "./activedElsManager"
 import { EditorEventContext } from "./editorEventContext"
-import { GuideLine } from "./layer/guideLine"
+import { HudManager } from "./layer/hudManager"
 
 class Editor {
   constructor() {
     this.setting = null
     this.commandManager = null
     this.zoomManager = null
-    this.activedElManager = new ActivedElManager(this)
+    this.activedElsManager = new ActivedElsManager(this)
 
 
     // const contentWidth = 400
@@ -82,8 +82,8 @@ class Editor {
     svgContent.appendChild(layer)
 
 
-    this.guideLine = new GuideLine()
-    this.guideLine.mount(svgStage)
+    this.hudManager = new HudManager()
+    this.hudManager.mount(svgStage)
 
     // document.body.appendChild(viewport)
   }
