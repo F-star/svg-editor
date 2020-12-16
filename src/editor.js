@@ -22,6 +22,7 @@ class Editor {
     viewport.style.border = '1px solid #000'
     viewport.style.width = viewportWidth + 'px'
     viewport.style.height = viewportHeight + 'px'
+    this.viewport = viewport
     
     const svgContainer = document.createElement('div')
     svgContainer.id = 'svg-container'
@@ -84,7 +85,11 @@ class Editor {
     this.guideLine = new GuideLine()
     this.guideLine.mount(svgStage)
 
-    document.body.appendChild(viewport)
+    // document.body.appendChild(viewport)
+  }
+  mount(selector) {
+    const mountNode = document.querySelector(selector)
+    mountNode.appendChild(this.viewport)
   }
   getCurrentLayer() {
     return this.currentLayer

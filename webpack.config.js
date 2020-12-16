@@ -18,7 +18,7 @@ module.exports = {
   plugins: [
     new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
-      title: 'SVG Editor',
+      template: 'src/index.html'
     }),
   ]
 }

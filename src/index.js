@@ -9,6 +9,27 @@ import { ZoomManager } from './modules/zoom.js'
 import { Select } from './modules/select.js'
 import { ToolManager } from './toolManager.js'
 
+function activeBtn(name) {
+  name = {
+    'select': 'btn-select',
+    'addRect': 'btn-add-rect',
+    'dragCanvas': 'btn-drag-canvas',
+  }[name]
+  if (name == undefined) return
+
+  const toolBar = document.querySelector('#tool-bar')
+  // toolBtns = Array.prototype.slice.call(toolBtns)
+  
+  const toolBtns = Array.prototype.slice.call(toolBar.children)
+  console.log(toolBtns)
+  toolBtns.forEach(item => {
+    console.log(item)
+    item.classList.remove('active')
+  })
+  document.getElementById(name).classList.add('active')
+}
+
+
 const editor = new Editor()
 
 // register commands
@@ -27,65 +48,49 @@ toolManager.registerTool(new AddRect())
 toolManager.registerTool(new DragCanvas())
 toolManager.registerTool(new Select())
 // toolManager.setCurrentTool('addRect')
+editor.toolManager.onSwitchTool(name => {
+  console.log('switched tool:', name)
+  activeBtn(name)
+})
 toolManager.setCurrentTool('select')
 toolManager.bindToolEvent()
 // zoom
 editor.setZoomManager(new ZoomManager())
 
+editor.mount('#editor-area')
+
 
 /** 
  * bind event in button
  */ 
-
 // undo
-const undoBtn = document.createElement('button')
-undoBtn.innerText = 'undo'
-undoBtn.onclick = function() {
+document.querySelector('#btn-undo').onclick = () => {
   editor.executeCommand('undo')
 }
-document.body.appendChild(undoBtn)
 // redo
-const redoBtn = document.createElement('button')
-redoBtn.innerText = 'redo'
-redoBtn.onclick = function() {
+document.querySelector('#btn-redo').onclick = function() {
   editor.executeCommand('redo')
 }
-document.body.appendChild(redoBtn)
 // zoomIn
-const zoomInBtn = document.createElement('button')
-zoomInBtn.innerText = 'zoomIn'
-zoomInBtn.onclick = function() {
+document.querySelector('#btn-zoom-in').onclick = function() {
   editor.zoomManager.zoomIn()
 }
-document.body.appendChild(zoomInBtn)
 // zoomOut
-const zoomOutBtn = document.createElement('button')
-zoomOutBtn.innerText = 'zoomOut'
-zoomOutBtn.onclick = function() {
+document.querySelector('#btn-zoom-out').onclick = function() {
   editor.zoomManager.zoomOut()
 }
-document.body.appendChild(zoomOutBtn)
 // select addRect tool
-const drawRectToolBtn = document.createElement('button')
-drawRectToolBtn.innerText = 'addRect'
-drawRectToolBtn.onclick = function() {
+document.querySelector('#btn-add-rect').onclick = function() {
   editor.setCurrentTool('addRect')
 }
-document.body.appendChild(drawRectToolBtn)
 // select dragcanvas tool
-const dragCanvasToolBtn = document.createElement('button')
-dragCanvasToolBtn.innerText = 'dragCanvas'
-dragCanvasToolBtn.onclick = function() {
+document.querySelector('#btn-drag-canvas').onclick = function() {
   editor.setCurrentTool('dragCanvas')
 }
-document.body.appendChild(dragCanvasToolBtn)
 // select tool
-const selectToolBtn = document.createElement('button')
-selectToolBtn.innerText = 'select'
-selectToolBtn.onclick = function() {
+document.querySelector('#btn-select').onclick = function() {
   editor.setCurrentTool('select')
 }
-document.body.appendChild(selectToolBtn)
 
 /**
  * 理想 api 使用例子

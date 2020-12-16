@@ -5,11 +5,16 @@ export class ToolManager {
     this.editor = editor
     this.tools = {}
     this.currentTool = null
+    this.invokeWhenSwitch = () => {}
 
     this.ctx = null // tool context
   }
   setCurrentTool(name) {
     this.currentTool = this.tools[name]
+    this.invokeWhenSwitch(this.getCurrentToolName())
+  }
+  onSwitchTool(fn) {
+    this.invokeWhenSwitch = fn
   }
   getCurrentToolName() {
     return this.currentTool.name()
