@@ -1,10 +1,9 @@
-import CommandManager from './commandManager.js'
+
 import Editor from './editor.js'
 import AddRect from './modules/addRect.js'
 import { DragCanvas } from './modules/dragCanvas.js'
-
-import { AddRectCommand, DMove } from './command.js'
-import { EditorSetting } from './editorSetting.js'
+import CommandManager from './command/commandManager.js'
+import { EditorSetting } from './setting/editorSetting.js'
 import { ZoomManager } from './modules/zoom.js'
 import { Select } from './modules/select.js'
 import { ToolManager } from './toolManager.js'
@@ -28,14 +27,11 @@ function activeBtn(name) {
 
 const editor = new Editor()
 window.editor = editor // debug in devtool
-// register commands
-const commandManager = new CommandManager()
-commandManager.resigterCommandClass(AddRectCommand)
-commandManager.resigterCommandClass(DMove)
-// setting
-editor.setSetting(new EditorSetting())
 
+const commandManager = new CommandManager(editor)
 editor.setCommandManager(commandManager)
+
+editor.setSetting(new EditorSetting())
 // register tools
 
 const toolManager = new ToolManager(editor)
@@ -90,11 +86,35 @@ document.querySelector('#btn-select').onclick = function() {
 }
 
 
-// get active element fill value
+// fill value control
 const fillTextNode = document.querySelector('#element-info-fill')
+fillTextNode.innerHTML = editor.setting.get('fill')
 editor.setting.bindEvent('fill', val => {
   fillTextNode.innerHTML = val
 })
+document.querySelector('#set-fill-btn').onclick = function() {
+  const fill = window.prompt('Please input valid color value（like #ffce43）', editor.setting.get('fill'))
+  if (!fill) return
+  fillTextNode.innerHTML = fill
+
+  editor.setting.setFill(fill)
+  editor.activedElsManager.setElsAttr('fill', fill)
+}
+
+// stroke value control
+const strokeTextNode = document.querySelector('#element-info-stroke')
+strokeTextNode.innerHTML = editor.setting.get('stroke')
+editor.setting.bindEvent('stroke', val => {
+  strokeTextNode.innerHTML = val
+})
+document.querySelector('#set-stroke-btn').onclick = function() {
+  const stroke = window.prompt('Please input valid color value（like #ffce43）', editor.setting.get('stroke'))
+  if (!stroke) return
+  strokeTextNode.innerHTML = stroke
+
+  editor.setting.setStroke(stroke)
+  editor.activedElsManager.setElsAttr('stroke', stroke)
+}
 
 /**
  * 理想 api 使用例子

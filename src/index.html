@@ -4,16 +4,25 @@
   <meta charset="UTF-8">
   <title>SVG Editor</title>
   <style>
+    #action-bar {
+      font-size: 14px;
+    }
+    #action-bar div {
+      margin-top: 2px;
+      margin-bottom: 2px;
+    }
     #action-bar button {
-      margin: 2px 0;
       border: 1px solid #000;
       border-radius: 6px;
-      font-size: 14px;
-      line-height: 20px;
+      /* line-height: 1px; */
     }
     #tool-bar .active {
       background-color: #054;
       color: #fff;
+    }
+
+    .color-bar button {
+      margin-left: 5px;
     }
   </style>
 </head>
@@ -21,6 +30,7 @@
   <div id="editor-area"></div>
   <div id="action-bar">
     <div id="tool-bar">
+      tool: 
       <button id="btn-add-rect">add rect</button>
       <button id="btn-drag-canvas">drag canvas</button>
       <button id="btn-select">select</button>
@@ -31,8 +41,12 @@
       <button style="margin-left: 40px;" id="btn-zoom-in">zoom in</button>
       <button id="btn-zoom-out">zoom out</button>
     </div>
-    <div id="element-info">
-      fill: <span id="element-info-fill"></span><button>change</button>
+
+    <div class="color-bar">
+      fill: <span id="element-info-fill"></span><button id="set-fill-btn">change</button>
+    </div>
+    <div class="color-bar">
+      stroke: <span id="element-info-stroke"></span><button id="set-stroke-btn">change</button>
     </div>
   </div>
 </body>

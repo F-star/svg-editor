@@ -112,7 +112,6 @@ class Editor {
   // 命令相关
   setCommandManager(commandManager) {
     this.commandManager = commandManager
-    commandManager.setEditor(this)
   }
   executeCommand(name, ...params) {
     if (name == 'undo') {

@@ -21,10 +21,10 @@ The simple features has added(of course with some bugs):
 - drag canvas
 - zoom
 - select(only can move rect)
+- actived elements
+- select fill and stroke color
 
 To do recently:
 
-- actived elements
 - delete elements
-- select fill and stroke color
 - UI

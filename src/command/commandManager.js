@@ -1,20 +1,22 @@
-
-
-
-
 /**
- * CommandManager
+ * CommandManager Class
  * 
- * 命令管理了
  * 
  * CommandManager.undo()
  * CommandManager.redo()
  */
+
+import { AddRectCommand, DMove } from "./commands"
+
 class CommandManager {
-  constructor() {
+  constructor(editor) {
+    this.editor = editor
     this.redoStack = []
     this.undoStack = []
     this.commandClasses = {}
+
+    this.resigterCommandClass(AddRectCommand)
+    this.resigterCommandClass(DMove)
   }
   setEditor(editor) {
     this.editor = editor
@@ -46,11 +48,13 @@ class CommandManager {
     this.undoStack.push(command)
     command.redo()
   }
-
   // 注册命令类到命令管理对象中。
   resigterCommandClass(commandClass) {
     name = commandClass.name().toLowerCase()
     this.commandClasses[name] = commandClass
+  }
+  afterUndo() {
+
   }
 }
 

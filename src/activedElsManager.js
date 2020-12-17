@@ -22,7 +22,6 @@ export class ActivedElsManager {
   }
   contains(el) {
     // TODO:
-
   }
   getbbox() {
     // TODO:
@@ -44,13 +43,16 @@ export class ActivedElsManager {
   }
   setSettingFill() {
     const els = this.els
-    const setting = this.editor.setting
 
     const fills = els.map(el => {
       return el.getAttr('fill')
     })
 
-
-    setting.setFill(fills[0]) // FIXME:
+    this.editor.setting.setFill(fills[0]) // FIXME:
+  }
+  setElsAttr(name, val) {
+    this.els.forEach(el => {
+      el.setAttr(name, val)
+    })
   }
 }

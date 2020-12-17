@@ -1,4 +1,4 @@
-import { NS } from "./constants"
+import { NS } from "../constants"
 
 class BaseCommand {
   undo() {
