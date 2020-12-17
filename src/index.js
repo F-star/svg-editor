@@ -27,7 +27,7 @@ function activeBtn(name) {
 
 
 const editor = new Editor()
-
+window.editor = editor // debug in devtool
 // register commands
 const commandManager = new CommandManager()
 commandManager.resigterCommandClass(AddRectCommand)
@@ -88,6 +88,13 @@ document.querySelector('#btn-drag-canvas').onclick = function() {
 document.querySelector('#btn-select').onclick = function() {
   editor.setCurrentTool('select')
 }
+
+
+// get active element fill value
+const fillTextNode = document.querySelector('#element-info-fill')
+editor.setting.bindEvent('fill', val => {
+  fillTextNode.innerHTML = val
+})
 
 /**
  * 理想 api 使用例子

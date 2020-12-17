@@ -12,6 +12,7 @@ export class ActivedElsManager {
     // console.log(this.editor.toolManager.getCurrentToolName())
     // TODO: highlight outline, according to current tool
     this.heighligthEls()
+    this.setSettingFill()
   }
   clear() {
     this.els = []
@@ -40,5 +41,16 @@ export class ActivedElsManager {
       // console.log(box)
       hudManager.outlineHud.drawRect(x, y, width, height)
     })
+  }
+  setSettingFill() {
+    const els = this.els
+    const setting = this.editor.setting
+
+    const fills = els.map(el => {
+      return el.getAttr('fill')
+    })
+
+
+    setting.setFill(fills[0]) // FIXME:
   }
 }

@@ -22,8 +22,8 @@ module.exports = {
       template: 'src/index.html'
     }),
   ],
-  optimization: {
+  /* optimization: {
     minimize: true,
     minimizer: [new TerserPlugin()],
-  },
+  }, */
 }
