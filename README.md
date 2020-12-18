@@ -26,5 +26,6 @@ The simple features has added(of course with some bugs):
 
 To do recently:
 
+- shortcut
 - delete elements
 - UI

@@ -1,6 +1,7 @@
 import { ActivedElsManager } from "./activedElsManager"
 import { EditorEventContext } from "./editorEventContext"
 import { HudManager } from "./layer/hudManager"
+import { Shortcut } from "./shortcutManager"
 
 class Editor {
   constructor() {
@@ -8,7 +9,7 @@ class Editor {
     this.commandManager = null
     this.zoomManager = null
     this.activedElsManager = new ActivedElsManager(this)
-
+    this.shortcut = new Shortcut(this)
 
     // const contentWidth = 400
     // const contentHeight = 300
