@@ -15,10 +15,10 @@ export class Rect extends FElement {
       this.el_ = x
     } else {
       this.el_ = document.createElementNS(NS.SVG, 'rect')
-      this.el_.setAttr('x', x)
-      this.el_.setAttr('y', y)
-      this.el_.setAttr('width', w)
-      this.el_.setAttr('height', h)
+      this.setAttr('x', x)
+      this.setAttr('y', y)
+      this.setAttr('width', w)
+      this.setAttr('height', h)
     }
   }
   getPos() {

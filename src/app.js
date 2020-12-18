@@ -115,6 +115,14 @@ document.querySelector('#set-stroke-btn').onclick = function() {
   editor.setting.setStroke(stroke)
   editor.activedElsManager.setElsAttr('stroke', stroke)
 }
+// register shortcut
+editor.shortcut.register('Undo', 'Cmd+Z', () => {
+  editor.executeCommand('undo')
+})
+editor.shortcut.register('Redo', 'Cmd+Shift+Z', () => {
+  editor.executeCommand('redo')
+})
+document.querySelector('#shortcut').innerHTML = editor.shortcut.formatPrint()
 
 /**
  * 理想 api 使用例子

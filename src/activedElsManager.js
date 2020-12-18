@@ -8,6 +8,7 @@ export class ActivedElsManager {
     this.els = []
   }
   setEls(els) {
+    if (!Array.isArray(els)) els = [els]
     this.els = els
     // console.log(this.editor.toolManager.getCurrentToolName())
     // TODO: highlight outline, according to current tool

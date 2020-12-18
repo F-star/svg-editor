@@ -32,21 +32,23 @@ class CommandManager {
   }
   undo() {
     if (this.undoStack.length === 0) {
-      console.log('到头了，无法继续撤回')
+      console.log('undo stack is empty, can not undo')
       return
     }
     const command = this.undoStack.pop()
     this.redoStack.push(command)
     command.undo()
+    command.afterUndo()
   }
   redo() {
     if (this.redoStack.length === 0) {
-      console.log('到头了，无法继续重做')
+      console.log('redo stack is empty, can not redo')
       return
     }
     const command = this.redoStack.pop()
     this.undoStack.push(command)
     command.redo()
+    command.afterRedo()
   }
   // 注册命令类到命令管理对象中。
   resigterCommandClass(commandClass) {

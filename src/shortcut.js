@@ -6,28 +6,36 @@ export class Shortcut {
 
     window.addEventListener('keydown', e => {
       const pressKeyName = getPressKeyName(e)
-      console.log(pressKeyName)
-      // console.log(e)
+
+      const fn = this.registeredFns[pressKeyName]
+      if (fn) {
+        e.preventDefault()
+        fn.fn(e)
+      }
+      
     }, false)
   }
-  // register shortcut
-  // 
   // this.register('undo', 'Ctrl+Z', () => { editor.execCommand('undo') })
-  register(desc, shortcutName, fn) {
+  register(cmdName, shortcutName, fn) {
     // TODO: valid shortcutName
-    if (!this.registeredFns[shortcutName]) this.registeredFns[shortcutName] = []
-    this.registeredFns.push(
-      {
-        name: desc,
-        fn,
-      }
-    )
+    this.registeredFns[shortcutName] = { cmdName, fn }
+    
   }
+  formatPrint() {
+    const arr = []
+    for (let shortcutName in this.registeredFns) {
+      const cmdName = this.registeredFns[shortcutName].cmdName
+      arr.push(cmdName + ': ' + shortcutName)
+    }
+    return arr.join(', ')
+  }
+  
 }
 
 function getPressKeyName(e) {
   const pressedKeys = []
   if (e.ctrlKey) pressedKeys.push('Ctrl')
+  if (e.metaKey) pressedKeys.push('Cmd')
   if (e.shiftKey) pressedKeys.push('Shift')
   // only check A~Z
   // TODO: resolve all key

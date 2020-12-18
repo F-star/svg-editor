@@ -1,7 +1,7 @@
 import { ActivedElsManager } from "./activedElsManager"
 import { EditorEventContext } from "./editorEventContext"
 import { HudManager } from "./layer/hudManager"
-import { Shortcut } from "./shortcutManager"
+import { Shortcut } from "./shortcut"
 
 class Editor {
   constructor() {
