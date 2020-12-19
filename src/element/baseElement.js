@@ -19,4 +19,7 @@ export class FElement {
   getBBox() {
     return this.el_.getBBox()
   }
-}
+  remove() {
+    return this.el_.remove()
+  }
+ }

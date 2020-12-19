@@ -1,4 +1,3 @@
-import { NS } from "../constants"
 import { FSVG } from "../element"
 
 class BaseCommand {
@@ -62,17 +61,39 @@ export class removeElements extends BaseCommand {
   constructor(editor, els) {
     super()
     this.editor = editor
+    this.els = els
 
-    // TODO:
+    const size = els.length
+    this.parents = new Array(size)
+    this.nextSiblings = new Array(size)
+    this.els.forEach((el, idx) => {
+      this.nextSiblings[idc] = el.el().nextElementSibling 
+      this.parents[idx] = el.el().parentElement
+    })
+
+
+    this.execute()
   }
   static name() {
     return 'removeElements'
   }
+  execute() { // private
+    this.els.forEach(item => {
+      item.remove()
+    })
+  }
   redo() {
-    
+    this.execute()
   }
   undo() {
-
+    this.els.forEach((element, idx) => {
+      const el = element.el()
+      if (this.nextSiblings[idx]) {
+        this.parents[idx].insertBefore(el, this.nextSiblings[idx])
+      } else {
+        this.parents[idx].appendChild(el)
+      }
+    })
   }
 }
 
