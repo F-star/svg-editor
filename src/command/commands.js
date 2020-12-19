@@ -17,11 +17,10 @@ class BaseCommand {
  * 
  * add rect svg element
  */
-export class AddRectCommand extends BaseCommand {
+export class AddRect extends BaseCommand {
   constructor(editor, x, y, w, h) {
     super()
     this.editor = editor
-    // TODO: 使用编辑器使用的颜色等样式
     const rect = new FSVG.Rect(x, y, w, h)
 
     const fill = editor.setting.get('fill')
@@ -56,6 +55,24 @@ export class AddRectCommand extends BaseCommand {
   }
   afterRedo() {
     this.editor.activedElsManager.setEls(this.rect)
+  }
+}
+
+export class removeElements extends BaseCommand {
+  constructor(editor, els) {
+    super()
+    this.editor = editor
+
+    // TODO:
+  }
+  static name() {
+    return 'removeElements'
+  }
+  redo() {
+    
+  }
+  undo() {
+
   }
 }
 

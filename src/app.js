@@ -84,7 +84,10 @@ document.querySelector('#btn-drag-canvas').onclick = function() {
 document.querySelector('#btn-select').onclick = function() {
   editor.setCurrentTool('select')
 }
-
+// delete selected elements
+document.querySelector('#btn-delete').onclick = function() {
+  editor.activedElsManager.remove()
+}
 
 // fill value control
 const fillTextNode = document.querySelector('#element-info-fill')

@@ -15,6 +15,14 @@ export class ActivedElsManager {
     this.heighligthEls()
     this.setSettingFill()
   }
+  isEmpty() {
+    return this.els.length == 0
+  }
+  remove() {
+    if (this.isEmpty()) return
+    this.editor.executeCommand('removeElements', this.els)
+    this.clear()
+  }
   clear() {
     this.els = []
     // clear outline
@@ -24,7 +32,7 @@ export class ActivedElsManager {
   contains(el) {
     // TODO:
   }
-  getbbox() {
+  getMergeBBox() {
     // TODO:
     /* let x, y, w, h
     this.els.forEach(el => {
@@ -52,6 +60,7 @@ export class ActivedElsManager {
     this.editor.setting.setFill(fills[0]) // FIXME:
   }
   setElsAttr(name, val) {
+    if (this.isEmpty()) return
     this.editor.executeCommand('setAttr', this.els, name, val)
   }
 }

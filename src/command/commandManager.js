@@ -6,7 +6,7 @@
  * CommandManager.redo()
  */
 
-import { AddRectCommand, DMove, SetAttr } from "./commands"
+import { AddRect, DMove, removeElements, SetAttr } from "./commands"
 
 class CommandManager {
   constructor(editor) {
@@ -15,9 +15,10 @@ class CommandManager {
     this.undoStack = []
     this.commandClasses = {}
 
-    this.resigterCommandClass(AddRectCommand)
+    this.resigterCommandClass(AddRect)
     this.resigterCommandClass(DMove)
     this.resigterCommandClass(SetAttr)
+    this.resigterCommandClass(removeElements)
   }
   setEditor(editor) {
     this.editor = editor
