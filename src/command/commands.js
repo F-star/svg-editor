@@ -59,6 +59,11 @@ export class AddRectCommand extends BaseCommand {
   }
 }
 
+/**
+ * DMove
+ * 
+ * dmove elements
+ */
 export class DMove extends BaseCommand {
   constructor(editor, els, dx, dy) {
     super()
@@ -89,5 +94,37 @@ export class DMove extends BaseCommand {
   }
   afterUndo() {
     this.editor.activedElsManager.setEls(this.els)
+  }
+}
+
+/**
+ * setAttr
+ */
+export class SetAttr extends BaseCommand {
+  constructor(editor, els, attrName, val) {
+    super()
+    this.editor = editor
+    if (!Array.isArray(els)) els = [els]
+    this.els = els
+    this.attrName = attrName
+    this.beforeVal = this.els.map(el => el.getAttr(attrName))
+    this.afterVal = val
+
+    this.els.forEach(el => {
+      el.setAttr(attrName, val)
+    })
+  }
+  static name() {
+    return 'setAttr'
+  }
+  redo() {
+    this.els.forEach(el => {
+      el.setAttr(this.attrName, this.afterVal)
+    })
+  }
+  undo() {
+    this.els.forEach((el, i) => {
+      el.setAttr(this.attrName, this.beforeVal[i])
+    })
   }
 }

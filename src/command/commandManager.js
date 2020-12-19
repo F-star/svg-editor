@@ -6,7 +6,7 @@
  * CommandManager.redo()
  */
 
-import { AddRectCommand, DMove } from "./commands"
+import { AddRectCommand, DMove, SetAttr } from "./commands"
 
 class CommandManager {
   constructor(editor) {
@@ -17,6 +17,7 @@ class CommandManager {
 
     this.resigterCommandClass(AddRectCommand)
     this.resigterCommandClass(DMove)
+    this.resigterCommandClass(SetAttr)
   }
   setEditor(editor) {
     this.editor = editor
@@ -52,10 +53,10 @@ class CommandManager {
   }
   // 注册命令类到命令管理对象中。
   resigterCommandClass(commandClass) {
-    name = commandClass.name().toLowerCase()
+    const name = commandClass.name().toLowerCase()
     this.commandClasses[name] = commandClass
   }
-  afterUndo() {
+  afterAnyUndo() {
 
   }
 }

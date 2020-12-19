@@ -23,9 +23,9 @@ The simple features has added(of course with some bugs):
 - select(only can move rect)
 - actived elements
 - select fill and stroke color
+- shortcut
 
 To do recently:
 
-- shortcut
 - delete elements
 - UI

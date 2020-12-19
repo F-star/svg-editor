@@ -119,7 +119,13 @@ document.querySelector('#set-stroke-btn').onclick = function() {
 editor.shortcut.register('Undo', 'Cmd+Z', () => {
   editor.executeCommand('undo')
 })
+editor.shortcut.register('Undo', 'Ctrl+Z', () => {
+  editor.executeCommand('undo')
+})
 editor.shortcut.register('Redo', 'Cmd+Shift+Z', () => {
+  editor.executeCommand('redo')
+})
+editor.shortcut.register('Redo', 'Ctrl+Shift+Z', () => {
   editor.executeCommand('redo')
 })
 document.querySelector('#shortcut').innerHTML = editor.shortcut.formatPrint()

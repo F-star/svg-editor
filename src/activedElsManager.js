@@ -52,8 +52,6 @@ export class ActivedElsManager {
     this.editor.setting.setFill(fills[0]) // FIXME:
   }
   setElsAttr(name, val) {
-    this.els.forEach(el => {
-      el.setAttr(name, val)
-    })
+    this.editor.executeCommand('setAttr', this.els, name, val)
   }
 }
