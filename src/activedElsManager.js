@@ -15,13 +15,14 @@ export class ActivedElsManager {
     this.heighligthEls()
     this.setSettingFill()
   }
+  getEls() {
+    return this.els
+  }
   isEmpty() {
     return this.els.length == 0
   }
-  remove() {
-    if (this.isEmpty()) return
-    this.editor.executeCommand('removeElements', this.els)
-    this.clear()
+  isNoEmpty() {
+    return this.els.length > 0
   }
   clear() {
     this.els = []
@@ -60,7 +61,8 @@ export class ActivedElsManager {
     this.editor.setting.setFill(fills[0]) // FIXME:
   }
   setElsAttr(name, val) {
-    if (this.isEmpty()) return
-    this.editor.executeCommand('setAttr', this.els, name, val)
+    if (this.isNoEmpty()) {
+      this.editor.executeCommand('setAttr', this.els, name, val)
+    }
   }
 }

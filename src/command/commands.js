@@ -56,31 +56,33 @@ export class AddRect extends BaseCommand {
     this.editor.activedElsManager.setEls(this.rect)
   }
 }
-
-export class removeElements extends BaseCommand {
-  constructor(editor, els) {
+/**
+ * remove elements
+ */
+export class removeSelectedElements extends BaseCommand {
+  constructor(editor) {
     super()
     this.editor = editor
-    this.els = els
 
-    const size = els.length
+    this.els = this.editor.activedElsManager.getEls()
+
+    const size = this.els.length
     this.parents = new Array(size)
     this.nextSiblings = new Array(size)
     this.els.forEach((el, idx) => {
-      this.nextSiblings[idc] = el.el().nextElementSibling 
+      this.nextSiblings[idx] = el.el().nextElementSibling 
       this.parents[idx] = el.el().parentElement
     })
-
-
     this.execute()
   }
   static name() {
-    return 'removeElements'
+    return 'removeSelectedElements'
   }
   execute() { // private
     this.els.forEach(item => {
       item.remove()
     })
+    this.editor.activedElsManager.clear()
   }
   redo() {
     this.execute()
@@ -94,6 +96,8 @@ export class removeElements extends BaseCommand {
         this.parents[idx].appendChild(el)
       }
     })
+
+    this.editor.activedElsManager.setEls(this.els)
   }
 }
 

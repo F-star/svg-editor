@@ -6,7 +6,7 @@
  * CommandManager.redo()
  */
 
-import { AddRect, DMove, removeElements, SetAttr } from "./commands"
+import { AddRect, DMove, removeSelectedElements, SetAttr } from "./commands"
 
 class CommandManager {
   constructor(editor) {
@@ -18,15 +18,14 @@ class CommandManager {
     this.resigterCommandClass(AddRect)
     this.resigterCommandClass(DMove)
     this.resigterCommandClass(SetAttr)
-    this.resigterCommandClass(removeElements)
+    this.resigterCommandClass(removeSelectedElements)
   }
   setEditor(editor) {
     this.editor = editor
   }
   execute(name, ...args) {
-    name = name.toLowerCase()
     const CommandClass = this.commandClasses[name]
-
+    if (!CommandClass) throw new Error(`editor has not the ${name} command`)
     const command = new CommandClass(this.editor, ...args) // 创建 command 实例
 
     this.undoStack.push(command)
@@ -54,7 +53,7 @@ class CommandManager {
   }
   // 注册命令类到命令管理对象中。
   resigterCommandClass(commandClass) {
-    const name = commandClass.name().toLowerCase()
+    const name = commandClass.name()
     this.commandClasses[name] = commandClass
   }
   afterAnyUndo() {

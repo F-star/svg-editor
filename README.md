@@ -24,9 +24,10 @@ The simple features has added(of course with some bugs):
 - actived elements
 - select fill and stroke color
 - shortcut
+- delete elements
 
 To do recently:
 
-- delete elements
-- raise layer
+- selectArea select multiple elements
+- change Elements layer
 - UI

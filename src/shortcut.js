@@ -1,3 +1,7 @@
+/**
+ * editor global shortcut
+ */
+import { isDebug } from "./devConfig"
 
 export class Shortcut {
   constructor(editor) {
@@ -6,9 +10,13 @@ export class Shortcut {
 
     window.addEventListener('keydown', e => {
       const pressKeyName = getPressKeyName(e)
-
       const fn = this.registeredFns[pressKeyName]
       if (fn) {
+        /** debug */
+        if(isDebug) {
+          console.log(pressKeyName)
+        }
+        /** debug end */
         e.preventDefault()
         fn.fn(e)
       }
@@ -39,7 +47,12 @@ function getPressKeyName(e) {
   if (e.shiftKey) pressedKeys.push('Shift')
   // only check A~Z
   // TODO: resolve all key
-  if (/Key./.test(e.code)) pressedKeys.push(e.code[e.code.length - 1])
+  if (/Key./.test(e.code)) {
+    pressedKeys.push(e.code[e.code.length - 1])
+  }
+  else {
+    pressedKeys.push(e.code)
+  }
   const name = pressedKeys.join('+')
   return name
 }

@@ -86,7 +86,9 @@ document.querySelector('#btn-select').onclick = function() {
 }
 // delete selected elements
 document.querySelector('#btn-delete').onclick = function() {
-  editor.activedElsManager.remove()
+  if (editor.activedElsManager.isNoEmpty()) {
+    editor.executeCommand('removeSelectedElements')
+  }
 }
 
 // fill value control
@@ -130,6 +132,11 @@ editor.shortcut.register('Redo', 'Cmd+Shift+Z', () => {
 })
 editor.shortcut.register('Redo', 'Ctrl+Shift+Z', () => {
   editor.executeCommand('redo')
+})
+editor.shortcut.register('Delete', 'Backspace', () => {
+  if (editor.activedElsManager.isNoEmpty()) {
+    editor.executeCommand('removeSelectedElements')
+  }
 })
 document.querySelector('#shortcut').innerHTML = editor.shortcut.formatPrint()
 
