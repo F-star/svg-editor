@@ -2,6 +2,7 @@
  * 激活元素管理类
  */
 
+import { FSVG } from "./element"
 import { getElementsInBox } from "./util/common"
 
 export class ActivedElsManager {
@@ -49,14 +50,16 @@ export class ActivedElsManager {
   }
   // heightlight the elements
   heighligthEls() {
-    // TODO:
     const els = this.els
     const hudManager = this.editor.hudManager
-    els.forEach(el => {
-      const {x, y, width, height} = el.getBBox()
-      // console.log(box)
-      hudManager.outlineHud.drawRect(x, y, width, height)
-    })
+
+    const firstBox = new FSVG.Box(els[0].getBBox())
+    const mergedBox = els.reduce(pre, curEl => {
+      curBox = curEl.getBBox()
+      return pre.merge(new FSVG.Box(curBox))
+    }, firstBox)
+
+    hudManager.outlineHud.drawRect(mergedBox.x, mergedBox.y, mergedBox.width, mergedBox.height)
   }
   setSettingFill() {
     const els = this.els
