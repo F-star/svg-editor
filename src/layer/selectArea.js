@@ -25,6 +25,7 @@ export class SelectArea {
   }
   clear() {
     // parent.innerHTML = ''
+    this.x = this.y = this.w = this.h = 0
     this.outline.style.display = 'none'
   }
   drawRect(x, y, w, h) {

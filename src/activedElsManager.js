@@ -22,9 +22,17 @@ export class ActivedElsManager {
     return this.els
   }
   setElsInBox(box) {
+    if (box.width === 0 || box.height === 0) {
+      this.clear()
+      return
+    }
+
     const elsInBox = getElementsInBox(box, this.editor.svgContent)
-    if (elsInBox.length === 0) this.clear()
-    else this.setEls(elsInBox)
+    if (elsInBox.length === 0) {
+      this.clear()
+    } else {
+      this.setEls(elsInBox)
+    }
   }
   isEmpty() {
     return this.els.length == 0
@@ -54,8 +62,8 @@ export class ActivedElsManager {
     const hudManager = this.editor.hudManager
 
     const firstBox = new FSVG.Box(els[0].getBBox())
-    const mergedBox = els.reduce(pre, curEl => {
-      curBox = curEl.getBBox()
+    const mergedBox = els.reduce((pre, curEl) => {
+      const curBox = curEl.getBBox()
       return pre.merge(new FSVG.Box(curBox))
     }, firstBox)
 

@@ -34,6 +34,8 @@ export class AddRect extends BaseCommand {
     this.nextSibling = rect.el().nextElementSibling 
     this.parent = rect.el().parentElement
     this.rect = rect
+
+    this.editor.activedElsManager.setEls(this.rect)
   }
   static name() {
     return 'addRect'
@@ -45,15 +47,11 @@ export class AddRect extends BaseCommand {
     } else {
       this.parent.appendChild(el)
     }
+    this.editor.activedElsManager.setEls(this.rect)
   }
   undo() {
     this.rect.el().remove()
-  }
-  afterUndo() {
     this.editor.activedElsManager.clear()
-  }
-  afterRedo() {
-    this.editor.activedElsManager.setEls(this.rect)
   }
 }
 /**
@@ -88,14 +86,15 @@ export class removeSelectedElements extends BaseCommand {
     this.execute()
   }
   undo() {
-    this.els.forEach((element, idx) => {
+    for (let idx = this.els.length - 1; idx >= 0; idx--) {
+      const element = this.els[idx]
       const el = element.el()
       if (this.nextSiblings[idx]) {
         this.parents[idx].insertBefore(el, this.nextSiblings[idx])
       } else {
         this.parents[idx].appendChild(el)
       }
-    })
+    }
 
     this.editor.activedElsManager.setEls(this.els)
   }
