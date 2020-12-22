@@ -66,9 +66,11 @@ export class Select {
   }
   end(ctx) {
     if (!this.hasSelectedElsWhenStart()) { // finished drawn selecting area
+      const box = this.editor.hudManager.selectArea.getBox()
       this.editor.hudManager.selectArea.clear()
-      // TODO: active frame by select rect.
-      this.editor.activedElsManager.clear()
+
+      this.editor.activedElsManager.setElsInBox(box)
+
       return
     }
     this.editor.hudManager.outlineHud.clear()

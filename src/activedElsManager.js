@@ -2,6 +2,8 @@
  * 激活元素管理类
  */
 
+import { getElementsInBox } from "./util/common"
+
 export class ActivedElsManager {
   constructor(editor) {
     this.editor = editor
@@ -17,6 +19,11 @@ export class ActivedElsManager {
   }
   getEls() {
     return this.els
+  }
+  setElsInBox(box) {
+    const elsInBox = getElementsInBox(box, this.editor.svgContent)
+    if (elsInBox.length === 0) this.clear()
+    else this.setEls(elsInBox)
   }
   isEmpty() {
     return this.els.length == 0

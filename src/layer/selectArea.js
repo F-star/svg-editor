@@ -47,4 +47,14 @@ export class SelectArea {
   getHeight() { return this.h }
   getX() { return this.x }
   getY() { return this.y }
+  getBox() {
+    return {
+      x: this.x,
+      y: this.y,
+      width: this.w,
+      height: this.h,
+      w: this.w,
+      h: this.h,
+    }
+  }
 }

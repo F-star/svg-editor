@@ -28,6 +28,6 @@ The simple features has added(of course with some bugs):
 
 To do recently:
 
-- selectArea select multiple elements
+- select multiple elements
 - change Elements layer
 - UI
