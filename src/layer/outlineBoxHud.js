@@ -1,12 +1,11 @@
+/**
+ * elements outline box
+ * 
+ */
 
-
-  
 const { NS } = require("../constants");
 
-/**
- * <rect> outline
- */
-export class OutlineHud {
+export class OutlineBoxHud {
   constructor(parent) {
     this.x = 0
     this.y = 0
@@ -14,7 +13,7 @@ export class OutlineHud {
     this.h = 0
 
     this.container = document.createElementNS(NS.SVG, 'g')
-    this.container.id = 'outline-hud'
+    this.container.id = 'outline-box-hud'
     parent.appendChild(this.container)
 
     this.outline = document.createElementNS(NS.SVG, 'path')

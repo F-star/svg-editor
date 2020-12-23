@@ -2,7 +2,7 @@
  * guide line layer
  */
 
-import { OutlineHud } from "./outlineHud";
+import { OutlineBoxHud } from "./outlineBoxHud";
 import { SelectArea } from "./selectArea";
 const { NS } = require("../constants");
 
@@ -12,7 +12,7 @@ export class HudManager{
     this.container.id = 'huds'
 
     this.selectArea = new SelectArea(this.container)
-    this.outlineHud = new OutlineHud(this.container)
+    this.outlineBoxHud = new OutlineBoxHud(this.container)
   }
   mount(el) {
     el.appendChild(this.container)

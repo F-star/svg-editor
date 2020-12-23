@@ -36,20 +36,25 @@ export class Select {
       return
     }
 
-    const targetFElement = new FSVG.Rect(targetElement) // 暂时只是 rect TODO: 改为通用写法
-    this.selectedEls = [ targetFElement ] // 鼠标按下时，就选中了一个元素
-    const x = parseFloat(targetFElement.getAttr('x'))
-    const y = parseFloat(targetFElement.getAttr('y'))
-    const w = parseFloat(targetFElement.getAttr('width'))
-    const h = parseFloat(targetFElement.getAttr('height'))
+    const targetFElement = FSVG.create(targetElement)
+    const activedElsManager = this.editor.activedElsManager
+    
+    if (activedElsManager.contains(targetElement)) {
+      activedElsManager.heighligthEls()
+    } else {
+      activedElsManager.setEls(targetFElement)
+    }
 
-    this.outlineStartX = x
-    this.outlineStartY = y
+    this.selectedEls = activedElsManager.getEls()
 
-    this.editor.hudManager.outlineHud.drawRect(x, y, w, h)
+    const outlineBoxHud = this.editor.hudManager.outlineBoxHud
+
+    this.outlineStartX = outlineBoxHud.getX()
+    this.outlineStartY = outlineBoxHud.getY()
   }
   move(ctx) {
-    if (!this.hasSelectedElsWhenStart()) { // draw selecting area
+    // draw selecting area
+    if (!this.hasSelectedElsWhenStart()) { 
       // select no element, draw select rect
       const { x: endX, y: endY } = ctx.getPos()
       const { x: startX, y: startY } = ctx.getStartPos()
@@ -58,11 +63,12 @@ export class Select {
       return
     }
 
+    // move selected elements
     const { x: dx, y: dy } = ctx.getDiffPos()
-    const outlineHud = this.editor.hudManager.outlineHud
-    const w = outlineHud.getWidth()
-    const h = outlineHud.getHeight()
-    outlineHud.drawRect(this.outlineStartX + dx, this.outlineStartY + dy, w, h)
+    const outlineBoxHud = this.editor.hudManager.outlineBoxHud
+    const w = outlineBoxHud.getWidth()
+    const h = outlineBoxHud.getHeight()
+    outlineBoxHud.drawRect(this.outlineStartX + dx, this.outlineStartY + dy, w, h)
   }
   end(ctx) {
     if (!this.hasSelectedElsWhenStart()) { // finished drawn selecting area
@@ -73,7 +79,7 @@ export class Select {
 
       return
     }
-    this.editor.hudManager.outlineHud.clear()
+    this.editor.hudManager.outlineBoxHud.clear()
 
     
     const { x: dx, y: dy } = ctx.getDiffPos()
@@ -83,7 +89,7 @@ export class Select {
   }
   // mousedown outside viewport
   endOutside() {
-    this.editor.hudManager.outlineHud.clear()
+    this.editor.hudManager.outlineBoxHud.clear()
     this.editor.hudManager.selectArea.clear()
     this.editor.activedElsManager.clear()
     this.selectedEls = []

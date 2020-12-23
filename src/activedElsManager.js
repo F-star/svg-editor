@@ -44,10 +44,15 @@ export class ActivedElsManager {
     this.els = []
     // clear outline
     const hudManager = this.editor.hudManager
-    hudManager.outlineHud.clear()
+    hudManager.outlineBoxHud.clear()
   }
   contains(el) {
-    // TODO:
+    for (let i = 0; i < this.els.length; i++) {
+      if (this.els[i].el() === el) {
+        return true
+      }
+    }
+    return false
   }
   getMergeBBox() {
     // TODO:
@@ -67,7 +72,7 @@ export class ActivedElsManager {
       return pre.merge(new FSVG.Box(curBox))
     }, firstBox)
 
-    hudManager.outlineHud.drawRect(mergedBox.x, mergedBox.y, mergedBox.width, mergedBox.height)
+    hudManager.outlineBoxHud.drawRect(mergedBox.x, mergedBox.y, mergedBox.width, mergedBox.height)
   }
   setSettingFill() {
     const els = this.els
