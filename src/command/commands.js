@@ -1,6 +1,6 @@
 import { FSVG } from "../element"
 
-class BaseCommand {
+export class BaseCommand {
   undo() {
     throw new Error('please override undo method')
   }

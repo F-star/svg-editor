@@ -90,6 +90,12 @@ document.querySelector('#btn-delete').onclick = function() {
     editor.executeCommand('removeSelectedElements')
   }
 }
+// front elements
+document.querySelector('#btn-front').onclick = function() {
+  if (editor.activedElsManager.isNoEmpty()) {
+    editor.executeCommand('front')
+  }
+}
 
 // fill value control
 const fillTextNode = document.querySelector('#element-info-fill')

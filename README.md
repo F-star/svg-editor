@@ -25,9 +25,10 @@ The simple features has added(of course with some bugs):
 - select fill and stroke color
 - shortcut
 - delete elements
+- select multiple elements
 
 To do recently:
 
-- select multiple elements
-- change Elements layer
+- arranging elements(front, frontward, backwar, back)
+- element breadcrumb 
 - UI
