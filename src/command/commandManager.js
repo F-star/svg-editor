@@ -6,7 +6,7 @@
  * CommandManager.redo()
  */
 
-import { ArrangingFront } from "./arranging"
+import { ArrangingBack, ArrangingFront } from "./arranging"
 import { AddRect, DMove, removeSelectedElements, SetAttr } from "./commands"
 
 class CommandManager {
@@ -21,7 +21,7 @@ class CommandManager {
     this.resigterCommandClass(SetAttr)
     this.resigterCommandClass(removeSelectedElements)
     this.resigterCommandClass(ArrangingFront)
-    
+    this.resigterCommandClass(ArrangingBack)
   }
   setEditor(editor) {
     this.editor = editor

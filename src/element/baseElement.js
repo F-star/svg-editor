@@ -34,11 +34,42 @@ export class FElement {
     if (n == null) return n
     return FSVG.create(n)
   }
+  previousSibling() {
+    const n = this.el_.previousSibling
+    if (n == null) return n
+    return FSVG.create(n)
+  }
   append(el) {
     this.el_.appendChild(el.el())
   }
   front() {
     const parent = this.el_.parentElement
     parent.appendChild(this.el_)
+  }
+  back() {
+    const parent = this.el_.parentElement
+    const firstChild = parent.children[0]
+    if (firstChild) {
+      parent.insertBefore(this.el_, firstChild)
+    }
+  }
+  before(referElement) {
+    if (referElement.el) {
+      referElement = referElement.el()
+    }
+    const parent = referElement.parentElement
+    parent.insertBefore(this.el_, referElement)
+  }
+  after(referElement) {
+    if (referElement.el) {
+      referElement = referElement.el()
+    }
+    const parent = referElement.parentElement
+    const nextSibling = referElement.nextSibling
+    if (nextSibling) {
+      parent.insertBefore(this.el_, nextSibling)
+    } else {
+      parent.appendChild(this.el_)
+    }
   }
  }

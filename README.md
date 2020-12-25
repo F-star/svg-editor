@@ -30,5 +30,6 @@ The simple features has added(of course with some bugs):
 To do recently:
 
 - arranging elements(front, frontward, backwar, back)
-- element breadcrumb 
+- layer
+- element breadcrumb
 - UI

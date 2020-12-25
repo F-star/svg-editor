@@ -96,6 +96,11 @@ document.querySelector('#btn-front').onclick = function() {
     editor.executeCommand('front')
   }
 }
+document.querySelector('#btn-back').onclick = function() {
+  if (editor.activedElsManager.isNoEmpty()) {
+    editor.executeCommand('back')
+  }
+}
 
 // fill value control
 const fillTextNode = document.querySelector('#element-info-fill')
