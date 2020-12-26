@@ -90,3 +90,33 @@ export class ArrangingBack extends BaseCommand {
     }
   }
 }
+
+export class ArrangingForward extends BaseCommand {
+  constructor(editor, els) {
+    super()
+    if (els === undefined) {
+      this.els = editor.activedElsManager.getEls()
+    } else {
+      this.els = els
+    }
+    
+    if (this.els.length === 0) {
+      throw new Error('elements can not be empty.')
+    }
+
+
+    for (let i = this.els.length - 1; i >= 0; i--) {
+      const el = this.els[i]
+      
+    }
+  }
+  static name() {
+    return 'forward'
+  }
+  undo() {
+
+  }
+  redo() {
+
+  }
+}

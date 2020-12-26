@@ -48,9 +48,22 @@ export class FElement {
   }
   back() {
     const parent = this.el_.parentElement
-    const firstChild = parent.children[0]
+    const firstChild = parent.firstElementChild
     if (firstChild) {
       parent.insertBefore(this.el_, firstChild)
+    }
+  }
+  forward() {
+    const parent = this.el_.parentElement
+    const nextSibling = referElement.nextSibling
+    if (nextSibling) {
+      parent.insertBefore(nextSibling, this.el_)
+    }
+  }
+  backward() {
+    const previousSibling = referElement.previousSibling
+    if (previousSibling) {
+      this.before(previousSibling)
     }
   }
   before(referElement) {
