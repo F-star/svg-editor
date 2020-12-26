@@ -64,18 +64,19 @@ export class ArrangingBack extends BaseCommand {
     }
 
     this.previousSiblings = new Array(this.els.length)
-    for (let i = 0; i < this.els.length; i++) {
+    for (let i = this.els.length - 1; i >= 0; i--) {
       const el = this.els[i]
       this.previousSiblings[i] = el.previousSibling()
-      el.back()
     }
+
+    this.exec()
   }
   static name() {
     return 'back'
   }
   undo() {
     const size = this.els.length
-    for (let i = size - 1; i >= 0; i--) {
+    for (let i = 0; i < size; i++) {
       const el = this.els[i]
       const nextSibling = this.previousSiblings[i]
       if (nextSibling !== null) {
@@ -84,7 +85,10 @@ export class ArrangingBack extends BaseCommand {
     }
   }
   redo() {
-    for (let i = 0; i < this.els.length; i++) {
+    this.exec()
+  }
+  exec() {
+    for (let i = this.els.length - 1; i >= 0; i--) {
       const el = this.els[i]
       el.back()
     }
@@ -104,19 +108,26 @@ export class ArrangingForward extends BaseCommand {
       throw new Error('elements can not be empty.')
     }
 
-
-    for (let i = this.els.length - 1; i >= 0; i--) {
-      const el = this.els[i]
-      
-    }
+    this.exec()
   }
   static name() {
     return 'forward'
   }
+  exec() {
+    let prev = null
+    for (let i = this.els.length - 1; i >= 0; i--) {
+      const el = this.els[i]
+      const nextSibling = el.el().nextSibling
+      if (prev !== null && nextSibling === prev) {
+        // do nothing
+      } else if (nextSibling) {
+        el.after(nextSibling)
+      }
+      prev = el.el()
+    }
+  }
   undo() {
-
+    // TODO:
   }
-  redo() {
-
-  }
+  redo() { this.exec() }
 }
