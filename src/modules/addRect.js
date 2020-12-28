@@ -5,11 +5,17 @@ class AddRect {
   constructor() {
     this.editor = null
   }
+  setEditor(editor) { // 依赖注入
+    this.editor = editor
+  }
   name() {
     return 'addRect'
   }
-  setEditor(editor) { // 依赖注入
-    this.editor = editor
+  cursorNormal() {
+    return 'crosshair'
+  }
+  cursorPress() {
+    return 'crosshair'
   }
   start(ctx) {}
   move(ctx) {

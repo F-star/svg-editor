@@ -109,6 +109,9 @@ class Editor {
   setSetting(setting) {
     this.setting = setting
   }
+  setCursor(val) {
+    this.svgRoot.style.cursor = val
+  }
 
   // 命令相关
   setCommandManager(commandManager) {

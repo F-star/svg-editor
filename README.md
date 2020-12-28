@@ -27,11 +27,13 @@ The simple features has added(of course with some bugs):
 - delete elements
 - select multiple elements
 - arranging elements(front, frontward, backwar, back)
+- different tool cursors
 
 To do recently:
 
-- different tool cursors
+- record coordinate when move
 - zoom center position
 - layer
 - element breadcrumb
+- draw bezier curve
 - UI

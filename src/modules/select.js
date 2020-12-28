@@ -21,11 +21,17 @@ export class Select {
     this.outlineStartX = 0
     this.outlineStartY = 0
   }
+  setEditor(editor) {
+    this.editor = editor
+  }
   name() {
     return 'select'
   }
-  setEditor(editor) {
-    this.editor = editor
+  cursorNormal() {
+    return 'default'
+  }
+  cursorPress() {
+    return 'default'
   }
   hasSelectedElsWhenStart() {
     return this.selectedEls.length > 0

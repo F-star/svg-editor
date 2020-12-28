@@ -11,7 +11,12 @@ export class ToolManager {
   }
   setCurrentTool(name) {
     this.currentTool = this.tools[name]
-    this.invokeWhenSwitch(this.getCurrentToolName())
+    // set normal cursor
+    const cursor = this.currentTool.cursorNormal()
+    this.editor.setCursor(cursor)
+
+    const toolName = this.getCurrentToolName()
+    this.invokeWhenSwitch(toolName)
   }
   onSwitchTool(fn) {
     this.invokeWhenSwitch = fn
@@ -27,9 +32,14 @@ export class ToolManager {
   bindToolEvent() {
     const svgRoot = this.editor.svgRoot
 
+
     svgRoot.addEventListener('mousedown', e => {
       const ctx = new EditorEventContext(this.editor, e)
       this.ctx = ctx
+
+      const cursor = this.currentTool.cursorPress()
+      this.editor.setCursor(cursor)
+
       this.currentTool.start(ctx)
     }, false)
 
@@ -46,6 +56,9 @@ export class ToolManager {
       // this.ctx.releaseMouse()
       const ctx = this.ctx
       // ctx.setOriginEvent(e) // the offsetX and offsetY in mouseup and the last mousemove is not equal ?? 
+      const cursor = this.currentTool.cursorNormal()
+      this.editor.setCursor(cursor)
+      
       this.currentTool.end(ctx)
       ctx.isEndInside = true
     }, false)

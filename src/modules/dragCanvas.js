@@ -1,14 +1,21 @@
 
 export class DragCanvas {
   constructor() {
+    this.editor = null
     this.startOffsetX = 0
     this.startOffsetY = 0
+  }
+  setEditor(editor) { // 依赖注入
+    this.editor = editor
   }
   name() {
     return 'dragCanvas'
   }
-  setEditor(editor) { // 依赖注入
-    this.editor = editor
+  cursorNormal() {
+    return 'grab'
+  }
+  cursorPress() {
+    return 'grabbing'
   }
   beforeActive() {
     // do something before switch to current tool
