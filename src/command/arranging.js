@@ -95,6 +95,9 @@ export class ArrangingBack extends BaseCommand {
   }
 }
 
+/**
+ * forward elements
+ */
 export class ArrangingForward extends BaseCommand {
   constructor(editor, els) {
     super()
@@ -114,20 +117,79 @@ export class ArrangingForward extends BaseCommand {
     return 'forward'
   }
   exec() {
-    let prev = null
+    let lastForwardedEl = null
     for (let i = this.els.length - 1; i >= 0; i--) {
       const el = this.els[i]
       const nextSibling = el.el().nextSibling
-      if (prev !== null && nextSibling === prev) {
+      if (lastForwardedEl !== null && nextSibling === lastForwardedEl) {
         // do nothing
       } else if (nextSibling) {
         el.after(nextSibling)
       }
-      prev = el.el()
+      lastForwardedEl = el.el()
     }
   }
   undo() {
-    // TODO:
+    let lastBackwardedEl = null
+    for (let i = 0; i < this.els.length; i++) {
+      const el = this.els[i]
+      const previousSibling = el.el().previousSibling
+      if (lastBackwardedEl !== null && previousSibling === lastBackwardedEl) {
+        // do nothing
+      } else if (previousSibling) {
+        el.before(previousSibling)
+      }
+      lastBackwardedEl = el.el()
+    }
+  }
+  redo() { this.exec() }
+}
+
+/**
+ * backward elements
+ */
+export class ArrangingBackward extends BaseCommand {
+  constructor(editor, els) {
+    super()
+    if (els === undefined) {
+      this.els = editor.activedElsManager.getEls()
+    } else {
+      this.els = els
+    }
+    if (this.els.length === 0) {
+      throw new Error('elements can not be empty.')
+    }
+
+    this.exec()
+  }
+  static name() {
+    return 'backward'
+  }
+  exec() {
+    let lastBackwardedEl = null
+    for (let i = 0; i < this.els.length; i++) {
+      const el = this.els[i]
+      const previousSibling = el.el().previousSibling
+      if (lastBackwardedEl !== null && previousSibling === lastBackwardedEl) {
+        // do nothing
+      } else if (previousSibling) {
+        el.before(previousSibling)
+      }
+      lastBackwardedEl = el.el()
+    }
+  }
+  undo() {
+    let lastForwardedEl = null
+    for (let i = this.els.length - 1; i >= 0; i--) {
+      const el = this.els[i]
+      const nextSibling = el.el().nextSibling
+      if (lastForwardedEl !== null && nextSibling === lastForwardedEl) {
+        // do nothing
+      } else if (nextSibling) {
+        el.after(nextSibling)
+      }
+      lastForwardedEl = el.el()
+    }
   }
   redo() { this.exec() }
 }

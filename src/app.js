@@ -101,6 +101,11 @@ document.querySelector('#btn-forward').onclick = function() {
     editor.executeCommand('forward')
   }
 }
+document.querySelector('#btn-backward').onclick = function() {
+  if (editor.activedElsManager.isNoEmpty()) {
+    editor.executeCommand('backward')
+  }
+}
 document.querySelector('#btn-back').onclick = function() {
   if (editor.activedElsManager.isNoEmpty()) {
     editor.executeCommand('back')
