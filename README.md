@@ -31,9 +31,9 @@ The simple features has added(of course with some bugs):
 
 To do recently:
 
+- draw bezier curve
 - record coordinate when move
 - zoom center position
 - layer
 - element breadcrumb
-- draw bezier curve
 - UI
