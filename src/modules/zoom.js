@@ -1,6 +1,6 @@
 /** zoom */
 
-const { getViewBox } = require("../util/svg")
+import { getViewBox } from "../util/svg"
 
 export class ZoomManager {
   constructor() {
@@ -23,7 +23,8 @@ export class ZoomManager {
     this.editor.svgRoot.setAttribute('width', width)
     this.editor.svgRoot.setAttribute('height', height)
   }
-  zoomIn() {
+  zoomIn(cx, cy) {
+    // TODO:
     const currentZoom = this.getZoom()
     this.setZoom(currentZoom + 0.1)
   }

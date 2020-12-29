@@ -1,35 +1,71 @@
 
+// referrence http://paperjs.org/reference/path/
+class Path {
+  constructor(el) {
+    this.el_ = el
+    this.pathItem = null
+  }
+}
+
+// describe path
 class PathItem {
   constructor() {
     this.segItems = []
     this.d = ''
+    this.isClosed = false
   }
   addSeg(seg) {
     this.segItems.push(seg)
-    const len = this.segItems.length
-    if (len === 1) {
-      this.d = `M ${seg.x} ${seg.y}`
-    } else {
-      const prev = this.segItems[len - 2]
-      // FIXME:
-      this.d += `C ${prev.handleOut.x} ${prev.handleOut.y} ${seg.handleIn.x} ${seg.handleIn.y} ${seg.x} ${seg.y}`
-    }
   }
   removeLastSeg() {
     return this.segItems.pop()
-    
+  }
+  close() {
+    this.isClosed = true
+  }
+  cancelClose() {
+    this.isClosed = false
+  }
+  updateSeg(index, seg) {
+    return this.segItems.splice(index, 1, seg)
   }
   getPathD() {
-    return this.d
+    if (this.segItems.length === 0) {
+      return ''
+    }
+    let d
+    const first = this.segItems[0]
+    d = `M ${first.x} ${first.y}`
+    for (let i = 1; i < this.segItems.length; i++) {
+      const { x, y, handleIn } = this.segItems[i]
+      const x2 = handleIn ? handleIn.x : x
+      const y2 = handleIn ? handleIn.y : y
+
+      const prev = this.segItems[i - 1]
+      const x1 = prev.handleOut ? prev.handleOut.x : prev.x
+      const y1 = prev.handleOut ? prev.handleOut.y : prev.y
+
+      const c = `C ${x1} ${y1} ${x2} ${y2} ${x} ${y}`
+      d += c
+    }
+    return d
   }
 }
 
-class PathSegment {
+class Segment {
   constructor(x, y, handleIn, handleOut) {
     this.x = x
     this.y = y
     this.handleIn = handleIn
     this.handleOut = handleOut
   }
+}
 
+class PathOutline {
+  constructor() {
+    this.pathItems = []
+  }
+  draw() {
+    
+  }
 }

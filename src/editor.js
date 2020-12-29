@@ -1,6 +1,6 @@
 import { ActivedElsManager } from "./activedElsManager"
 import { EditorEventContext } from "./editorEventContext"
-import { HudManager } from "./layer/hudManager"
+import { HudManager } from "./editorLayer/hudManager"
 import { Shortcut } from "./shortcut"
 
 class Editor {
@@ -10,7 +10,7 @@ class Editor {
     this.zoomManager = null
     this.activedElsManager = new ActivedElsManager(this)
     this.shortcut = new Shortcut(this)
-
+    this.toolManager = null
     // const contentWidth = 400
     // const contentHeight = 300
     // const stageWidth = 1000 // 正在纠结命名
@@ -168,5 +168,30 @@ class Editor {
     return false
   }
 }
+
+// TODO:
+/* class Viewport {
+  constructor(editor) {
+    this.editor = editor
+    this.el_ = null
+
+  }
+  getScroll() {
+    return {
+      x: this.svgContainer.scrollLeft,
+      y: this.svgContainer.scrollTop,
+    }
+  }
+  setScroll(x, y) {
+    this.svgContainer.scrollLeft = x
+    this.svgContainer.scrollTop = y
+  }
+  getContentOffset() {
+    return {
+      x: this.svgStage.getAttribute('x'),
+      y: this.svgStage.getAttribute('y'),
+    }
+  }
+} */
 
 export default Editor

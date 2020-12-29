@@ -24,6 +24,12 @@ export class FElement {
   remove() {
     return this.el_.remove()
   }
+  equal(el) {
+    if (el.el) {
+      el = el.el()
+    }
+    return this.el_ === el
+  }
 
   /** DOM methods */
   parent() {
