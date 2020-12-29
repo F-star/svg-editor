@@ -37,3 +37,16 @@ To do recently:
 - layer
 - element breadcrumb
 - UI
+
+---
+
+Code construction:
+
+```
+editor
+  setting
+  toolManager
+  commandManager
+  activedElsManager
+  ...
+```
