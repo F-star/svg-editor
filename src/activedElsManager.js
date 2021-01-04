@@ -16,7 +16,10 @@ export class ActivedElsManager {
     // console.log(this.editor.toolManager.getCurrentToolName())
     // TODO: highlight outline, according to current tool
     this.heighligthEls()
-    this.setSettingFill()
+
+    this.setSetting('fill')
+    this.setSetting('stroke')
+    this.setSetting('stroke-width')
   }
   getEls() {
     return this.els
@@ -74,17 +77,18 @@ export class ActivedElsManager {
 
     hudManager.outlineBoxHud.drawRect(mergedBox.x, mergedBox.y, mergedBox.width, mergedBox.height)
   }
-  setSettingFill() {
+  setSetting(name) {
     const els = this.els
 
-    const fills = els.map(el => {
-      return el.getAttr('fill')
+    const vals = els.map(el => {
+      return el.getAttr(name)
     })
 
-    this.editor.setting.setFill(fills[0]) // FIXME:
+    this.editor.setting.set(name, vals[0]) // FIXME:
   }
   setElsAttr(name, val) {
     if (this.isNoEmpty()) {
+      console.log(name, val)
       this.editor.executeCommand('setAttr', this.els, name, val)
     }
   }

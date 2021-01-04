@@ -12,7 +12,7 @@ export class EditorSetting {
     this.bindedEventFns = {}
     this.setFill('#fff')
     this.setStroke('#000')
-    this.set('strokeWidth', '1px')
+    this.set('stroke-width', '1px')
   }
   setFill(val) {
     this.set('fill', val)

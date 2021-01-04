@@ -126,7 +126,6 @@ document.querySelector('#set-fill-btn').onclick = function() {
   editor.setting.setFill(fill)
   editor.activedElsManager.setElsAttr('fill', fill)
 }
-
 // stroke value control
 const strokeTextNode = document.querySelector('#element-info-stroke')
 strokeTextNode.innerHTML = editor.setting.get('stroke')
@@ -141,6 +140,21 @@ document.querySelector('#set-stroke-btn').onclick = function() {
   editor.setting.setStroke(stroke)
   editor.activedElsManager.setElsAttr('stroke', stroke)
 }
+// stroke-width value control
+const strokeWidthTextNode = document.querySelector('#element-info-stroke-width')
+strokeWidthTextNode.innerHTML = editor.setting.get('stroke-width')
+editor.setting.bindEvent('stroke-width', val => {
+  strokeWidthTextNode.innerHTML = val
+})
+document.querySelector('#set-stroke-width-btn').onclick = function() {
+  const strokeWidth = window.prompt('Please input value(like 6px)', editor.setting.get('stroke-width'))
+  if (!strokeWidth) return
+  strokeWidthTextNode.innerHTML = strokeWidth
+
+  editor.setting.set('stroke-width', strokeWidth)
+  editor.activedElsManager.setElsAttr('stroke-width', strokeWidth)
+}
+
 // register shortcut
 editor.shortcut.register('Undo', 'Cmd+Z', () => {
   editor.executeCommand('undo')

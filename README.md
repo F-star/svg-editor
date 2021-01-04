@@ -34,6 +34,7 @@ To do recently:
 - draw bezier curve
 - record coordinate when move
 - zoom center position
+- export
 - layer
 - element breadcrumb
 - UI
