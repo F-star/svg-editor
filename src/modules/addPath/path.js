@@ -1,10 +1,18 @@
 
 // referrence http://paperjs.org/reference/path/
-class Path {
-  constructor(el) {
-    this.el_ = el
-    this.pathItem = null
-  }
+// class Path {
+//   constructor(el) {
+//     this.el_ = el
+//     this.pathItem = null
+//   }
+// }
+
+/**
+ * guide drawing path
+ */
+
+class PathGuide {
+  constructor() {}
 }
 
 // describe path

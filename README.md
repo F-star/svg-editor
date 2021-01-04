@@ -32,6 +32,7 @@ The simple features has added(of course with some bugs):
 To do recently:
 
 - draw bezier curve
+- pencil
 - record coordinate when move
 - zoom center position
 - export
@@ -49,5 +50,6 @@ editor
   toolManager
   commandManager
   activedElsManager
+  shortcut
   ...
 ```
