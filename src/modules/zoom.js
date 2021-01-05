@@ -3,8 +3,8 @@
 import { getViewBox } from "../util/svg"
 
 export class ZoomManager {
-  constructor() {
-    this.editor = null
+  constructor(editor) {
+    this.editor = editor
   }
   setEditor(editor) {
     this.editor = editor

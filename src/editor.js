@@ -1,16 +1,18 @@
 import { ActivedElsManager } from "./activedElsManager"
-import { EditorEventContext } from "./editorEventContext"
 import { HudManager } from "./editorLayer/hudManager"
+import { ZoomManager } from "./modules/zoom"
 import { Shortcut } from "./shortcut"
+import { getViewBox } from "./util/svg"
 
 class Editor {
   constructor() {
     this.setting = null
     this.commandManager = null
-    this.zoomManager = null
+    this.zoomManager = new ZoomManager(this)
     this.activedElsManager = new ActivedElsManager(this)
     this.shortcut = new Shortcut(this)
     this.toolManager = null
+    this.viewport = new Viewport(this)
     // const contentWidth = 400
     // const contentHeight = 300
     // const stageWidth = 1000 // 正在纠结命名
@@ -18,12 +20,12 @@ class Editor {
     const viewportWidth = 800
     const viewportHeight = 550
 
-    const viewport = document.createElement('div')
-    viewport.id = 'viewport'
-    viewport.style.border = '1px solid #000'
-    viewport.style.width = viewportWidth + 'px'
-    viewport.style.height = viewportHeight + 'px'
-    this.viewport = viewport
+    const viewportElement = document.createElement('div')
+    viewportElement.id = 'viewportElement'
+    viewportElement.style.border = '1px solid #000'
+    viewportElement.style.width = viewportWidth + 'px'
+    viewportElement.style.height = viewportHeight + 'px'
+    this.viewportElement = viewportElement
     
     const svgContainer = document.createElement('div')
     svgContainer.id = 'svg-container'
@@ -73,7 +75,7 @@ class Editor {
     layer.id = 'layer-1'
     this.currentLayer = layer
 
-    viewport.appendChild(svgContainer)
+    viewportElement.appendChild(svgContainer)
     svgContainer.appendChild(svgRoot)
     svgRoot.appendChild(svgStage)
 
@@ -86,11 +88,11 @@ class Editor {
     this.hudManager = new HudManager()
     this.hudManager.mount(svgStage)
 
-    // document.body.appendChild(viewport)
+    // document.body.appendChild(viewportElement)
   }
   mount(selector) {
     const mountNode = document.querySelector(selector)
-    mountNode.appendChild(this.viewport)
+    mountNode.appendChild(this.viewportElement)
   }
   getCurrentLayer() {
     return this.currentLayer
@@ -129,32 +131,6 @@ class Editor {
     this.commandManager.execute(name, ...params)
   }
 
-  // zoom
-  setZoomManager(zoomManager) {
-    zoomManager.setEditor(this)
-    this.zoomManager = zoomManager
-  }
-  getZoom() { // 封装
-    return this.zoomManager.getZoom()
-  }
-
-  getScroll() {
-    return {
-      x: this.svgContainer.scrollLeft,
-      y: this.svgContainer.scrollTop,
-    }
-  }
-  setScroll(x, y) {
-    this.svgContainer.scrollLeft = x
-    this.svgContainer.scrollTop = y
-  }
-  getContentOffset() {
-    return {
-      x: this.svgStage.getAttribute('x'),
-      y: this.svgStage.getAttribute('y'),
-    }
-  }
-
   isContentElement(el) {
     while (el) {
       if (el.parentElement == this.svgContent) {
@@ -169,29 +145,62 @@ class Editor {
   }
 }
 
-// TODO:
-/* class Viewport {
+/**
+ * Viewport
+ * 
+ * scroll, zoom
+ */
+class Viewport {
   constructor(editor) {
     this.editor = editor
-    this.el_ = null
-
   }
+
+  /**
+   * scroll
+   */
   getScroll() {
     return {
-      x: this.svgContainer.scrollLeft,
-      y: this.svgContainer.scrollTop,
+      x: this.editor.svgContainer.scrollLeft,
+      y: this.editor.svgContainer.scrollTop,
     }
   }
   setScroll(x, y) {
-    this.svgContainer.scrollLeft = x
-    this.svgContainer.scrollTop = y
+    this.editor.svgContainer.scrollLeft = x
+    this.editor.svgContainer.scrollTop = y
   }
   getContentOffset() {
     return {
-      x: this.svgStage.getAttribute('x'),
-      y: this.svgStage.getAttribute('y'),
+      x: this.editor.svgStage.getAttribute('x'),
+      y: this.editor.svgStage.getAttribute('y'),
     }
   }
-} */
+
+  /**
+   * zoom
+   */
+  getZoom() {
+    const actulWidth = parseFloat(this.editor.svgRoot.getAttribute('width'))
+    const viewBox = getViewBox(this.editor.svgRoot)
+    const zoom = actulWidth / viewBox.w
+    return zoom
+  }
+  setZoom(zoom) {
+    console.log(zoom)
+    const viewBox = getViewBox(this.editor.svgRoot)
+    const width = viewBox.w * zoom
+    const height = viewBox.h * zoom
+    this.editor.svgRoot.setAttribute('width', width)
+    this.editor.svgRoot.setAttribute('height', height)
+  }
+  zoomIn(cx, cy) {
+    // TODO:
+    const currentZoom = this.getZoom()
+    this.setZoom(currentZoom + 0.1)
+  }
+  zoomOut() {
+    const currentZoom = this.getZoom()
+    this.setZoom(currentZoom - 0.1)
+  }
+}
 
 export default Editor

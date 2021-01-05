@@ -4,7 +4,6 @@ import AddRect from './modules/addRect.js'
 import { DragCanvas } from './modules/dragCanvas.js'
 import CommandManager from './command/commandManager.js'
 import { EditorSetting } from './setting/editorSetting.js'
-import { ZoomManager } from './modules/zoom.js'
 import { Select } from './modules/select.js'
 import { ToolManager } from './toolManager.js'
 
@@ -47,8 +46,6 @@ editor.toolManager.onSwitchTool(name => {
 
 toolManager.setCurrentTool('addRect')
 toolManager.bindToolEvent()
-// zoom
-editor.setZoomManager(new ZoomManager())
 
 editor.mount('#editor-area')
 
@@ -66,11 +63,11 @@ document.querySelector('#btn-redo').onclick = function() {
 }
 // zoomIn
 document.querySelector('#btn-zoom-in').onclick = function() {
-  editor.zoomManager.zoomIn()
+  editor.viewport.zoomIn()
 }
 // zoomOut
 document.querySelector('#btn-zoom-out').onclick = function() {
-  editor.zoomManager.zoomOut()
+  editor.viewport.zoomOut()
 }
 // select addRect tool
 document.querySelector('#btn-add-rect').onclick = function() {

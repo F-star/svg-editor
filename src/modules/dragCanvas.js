@@ -21,14 +21,14 @@ export class DragCanvas {
     // do something before switch to current tool
   }
   start(ctx) {
-    const scroll = this.editor.getScroll()
+    const scroll = this.editor.viewport.getScroll()
     this.startOffsetX = scroll.x
     this.startOffsetY = scroll.y
   }
   move(ctx) {
-    const zoom = this.editor.getZoom()
+    const zoom = this.editor.viewport.getZoom()
     const { x: dx, y: dy } = ctx.getDiffPos()
-    this.editor.setScroll(this.startOffsetX - dx, this.startOffsetY - dy)
+    this.editor.viewport.setScroll(this.startOffsetX - dx, this.startOffsetY - dy)
   }
   end() {}
   endOutside() {}

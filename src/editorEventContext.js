@@ -44,8 +44,8 @@ export class EditorEventContext {
     this.mousePressed = true
   }
   getPos() {
-    const zoom = this.editor.getZoom()
-    const {x, y} = this.editor.getContentOffset()
+    const zoom = this.editor.viewport.getZoom()
+    const {x, y} = this.editor.viewport.getContentOffset()
     return { 
       x: this.originEvent.offsetX / zoom - x, 
       y: this.originEvent.offsetY / zoom - y,
