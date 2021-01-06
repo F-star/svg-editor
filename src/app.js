@@ -48,7 +48,7 @@ toolManager.setCurrentTool('addRect')
 toolManager.bindToolEvent()
 
 editor.mount('#editor-area')
-
+editor.viewport.center()
 
 /** 
  * bind event in button

@@ -2,7 +2,7 @@ import { ActivedElsManager } from "./activedElsManager"
 import { HudManager } from "./editorLayer/hudManager"
 import { ZoomManager } from "./modules/zoom"
 import { Shortcut } from "./shortcut"
-import { getViewBox } from "./util/svg"
+import { Viewport } from "./viewport"
 
 class Editor {
   constructor() {
@@ -13,41 +13,43 @@ class Editor {
     this.shortcut = new Shortcut(this)
     this.toolManager = null
     this.viewport = new Viewport(this)
-    // const contentWidth = 400
-    // const contentHeight = 300
-    // const stageWidth = 1000 // 正在纠结命名
-    // const stageHeight = 600
-    const viewportWidth = 800
-    const viewportHeight = 550
+
+
+    const viewportW = 800
+    const viewportH = 550
+    const svgRootW = 1000
+    const svgRootH = 600
+    const svgStageW = 500
+    const svgStageH = 400
 
     const viewportElement = document.createElement('div')
     viewportElement.id = 'viewportElement'
     viewportElement.style.border = '1px solid #000'
-    viewportElement.style.width = viewportWidth + 'px'
-    viewportElement.style.height = viewportHeight + 'px'
+    viewportElement.style.width = viewportW + 'px'
+    viewportElement.style.height = viewportH + 'px'
     this.viewportElement = viewportElement
     
     const svgContainer = document.createElement('div')
     svgContainer.id = 'svg-container'
     svgContainer.style.backgroundColor = '#ddd'
-    svgContainer.style.width = viewportWidth + 'px'
-    svgContainer.style.height = viewportHeight + 'px'
+    svgContainer.style.width = viewportW + 'px'
+    svgContainer.style.height = viewportH + 'px'
     svgContainer.style.overflow = 'scroll'
     this.svgContainer = svgContainer
 
     const svgRoot = document.createElementNS('http://www.w3.org/2000/svg', 'svg')
     svgRoot.id = 'svg-root'
-    svgRoot.setAttribute('width', 1000)
-    svgRoot.setAttribute('height', 600)
-    svgRoot.setAttribute('viewBox', '0 0 1000 600')
+    svgRoot.setAttribute('width', svgRootW)
+    svgRoot.setAttribute('height', svgRootH)
+    svgRoot.setAttribute('viewBox', `0 0 ${svgRootW} ${svgRootH}`)
     this.svgRoot = svgRoot
 
     const svgStage = document.createElementNS('http://www.w3.org/2000/svg', 'svg')
     svgStage.id = 'svg-stage'
-    svgStage.setAttribute('width', 400)
-    svgStage.setAttribute('height', 300)
-    svgStage.setAttribute('x', 300)
-    svgStage.setAttribute('y', 150)
+    svgStage.setAttribute('width', svgStageW)
+    svgStage.setAttribute('height', svgStageH)
+    svgStage.setAttribute('x', Math.floor((svgRootW - svgStageW) / 2))
+    svgStage.setAttribute('y', Math.floor((svgRootH - svgStageH) / 2))
     svgStage.style.overflow = 'visible'
     this.svgStage = svgStage
 
@@ -142,64 +144,6 @@ class Editor {
       el = el.parentElement
     }
     return false
-  }
-}
-
-/**
- * Viewport
- * 
- * scroll, zoom
- */
-class Viewport {
-  constructor(editor) {
-    this.editor = editor
-  }
-
-  /**
-   * scroll
-   */
-  getScroll() {
-    return {
-      x: this.editor.svgContainer.scrollLeft,
-      y: this.editor.svgContainer.scrollTop,
-    }
-  }
-  setScroll(x, y) {
-    this.editor.svgContainer.scrollLeft = x
-    this.editor.svgContainer.scrollTop = y
-  }
-  getContentOffset() {
-    return {
-      x: this.editor.svgStage.getAttribute('x'),
-      y: this.editor.svgStage.getAttribute('y'),
-    }
-  }
-
-  /**
-   * zoom
-   */
-  getZoom() {
-    const actulWidth = parseFloat(this.editor.svgRoot.getAttribute('width'))
-    const viewBox = getViewBox(this.editor.svgRoot)
-    const zoom = actulWidth / viewBox.w
-    return zoom
-  }
-  setZoom(zoom) {
-    console.log(zoom)
-    const viewBox = getViewBox(this.editor.svgRoot)
-    const width = viewBox.w * zoom
-    const height = viewBox.h * zoom
-    this.editor.svgRoot.setAttribute('width', width)
-    this.editor.svgRoot.setAttribute('height', height)
-  }
-  zoomIn(cx, cy) {
-    // TODO:
-    const currentZoom = this.getZoom()
-    this.setZoom(currentZoom + 0.1)
-  }
-  zoomOut() {
-    const currentZoom = this.getZoom()
-    this.setZoom(currentZoom - 0.1)
   }
 }
 
