@@ -31,12 +31,12 @@ The simple features has added(of course with some bugs):
 
 To do recently:
 
-- draw bezier curve
 - pencil
-- record coordinate when move
-- zoom center position
+- draw bezier curve
 - export
 - layer
+- record coordinate when move
+- zoom center position
 - element breadcrumb
 - UI
 
@@ -51,5 +51,6 @@ editor
   commandManager
   activedElsManager
   shortcut
+  viewport(scroll, zoom)
   ...
 ```
