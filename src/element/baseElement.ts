@@ -36,7 +36,10 @@ export class FElement {
   /** DOM methods */
   parent() {
     const p = this.el_.parentElement
-    return FSVG.create(p as SVGElement) // FIXME:
+    if (p instanceof SVGElement) {
+      return FSVG.create(p)
+    }
+    throw new Error('parent is not SVGElement')
   }
   nextSibling() {
     const nextOne = this.el_.nextElementSibling
@@ -93,5 +96,16 @@ export class FElement {
     } else {
       parent.appendChild(this.el_)
     }
+  }
+
+  getPos() {
+    const x = parseFloat(this.getAttr('x'))
+    const y = parseFloat(this.getAttr('y'))
+    return { x, y }
+  }
+  dmove(dx: number, dy: number) {
+    const pos = this.getPos()
+    this.setAttr('x', pos.x + dx + '')
+    this.setAttr('y', pos.y + dy + '')
   }
  }

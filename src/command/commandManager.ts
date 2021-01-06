@@ -14,7 +14,7 @@ class CommandManager {
   editor: Editor
   redoStack: Array<BaseCommand>
   undoStack: Array<BaseCommand>
-  commandClasses: { [key: string]: BaseCommand }
+  commandClasses: { [key: string]: {new (): BaseCommand} }
 
   constructor(editor: Editor) {
     this.editor = editor
@@ -22,11 +22,11 @@ class CommandManager {
     this.undoStack = []
     this.commandClasses = {}
 
-    this.resigterCommandClass(AddRect)
+    this.resigterCommandClass(AddRect, AddRect.cmdName())
     this.resigterCommandClass(DMove)
     this.resigterCommandClass(SetAttr)
     this.resigterCommandClass(removeSelectedElements)
-    this.resigterCommandClass(ArrangingFront)
+    this.resigterCommandClass(ArrangingFront, ArrangingFront.cmdName())
     this.resigterCommandClass(ArrangingBack)
     this.resigterCommandClass(ArrangingForward)
     this.resigterCommandClass(ArrangingBackward)
@@ -63,9 +63,8 @@ class CommandManager {
     command.afterRedo()
   }
   // 注册命令类到命令管理对象中。
-  resigterCommandClass(commandClass: BaseCommand) {
-    const name = commandClass.cmdName()
-    this.commandClasses[name] = commandClass
+  resigterCommandClass(commandClass: { new (): BaseCommand }, cmdName: string) {
+    this.commandClasses[cmdName] = commandClass
   }
   afterAnyUndo() {
 

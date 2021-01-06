@@ -10,7 +10,7 @@ export abstract class BaseCommand {
     this.editor = editor
   }
   // TODO: abstract static method
-  // abstract name(): void
+  // static cmdName: () => string
   abstract undo(): void
   abstract redo(): void
   afterRedo() {}
@@ -120,7 +120,11 @@ export class removeSelectedElements extends BaseCommand {
  * dmove elements
  */
 export class DMove extends BaseCommand {
-  constructor(editor: Editor, els, dx: number, dy: number) {
+  private els: Array<FElement>
+  private dx: number
+  private dy: number
+
+  constructor(editor: Editor, els: Array<FElement>, dx: number, dy: number) {
     super(editor)
     this.dx = dx
     this.dy = dy
@@ -155,9 +159,14 @@ export class DMove extends BaseCommand {
  * setAttr
  */
 export class SetAttr extends BaseCommand {
-  constructor(editor, els, attrName, val) {
-    super()
-    this.editor = editor
+  private els: Array<FElement>
+  private attrName: string
+  private beforeVal: string[]
+  private afterVal: string
+
+
+  constructor(editor: Editor, els: Array<FElement> | FElement, attrName: string, val: string) {
+    super(editor)
     if (!Array.isArray(els)) els = [els]
     this.els = els
     this.attrName = attrName
