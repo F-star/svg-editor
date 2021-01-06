@@ -1,10 +1,30 @@
 import { ActivedElsManager } from "./activedElsManager"
+import CommandManager from "./command/commandManager"
 import { HudManager } from "./editorLayer/hudManager"
 import { ZoomManager } from "./modules/zoom"
+import { EditorSetting } from "./setting/editorSetting"
 import { Shortcut } from "./shortcut"
+import { ToolManager } from "./toolManager"
 import { Viewport } from "./viewport"
 
 class Editor {
+  setting: EditorSetting
+  commandManager: CommandManager
+  zoomManager: ZoomManager
+  activedElsManager: ActivedElsManager
+  shortcut: Shortcut
+  toolManager: ToolManager
+  viewport: Viewport
+  hudManager: HudManager
+
+  // elements
+  viewportElement: HTMLElement 
+  svgContainer: HTMLElement 
+  svgRoot: SVGSVGElement 
+  svgStage: SVGSVGElement 
+  svgContent: SVGGElement 
+  currentLayer: SVGGElement 
+
   constructor() {
     this.setting = null
     this.commandManager = null
@@ -39,17 +59,17 @@ class Editor {
 
     const svgRoot = document.createElementNS('http://www.w3.org/2000/svg', 'svg')
     svgRoot.id = 'svg-root'
-    svgRoot.setAttribute('width', svgRootW)
-    svgRoot.setAttribute('height', svgRootH)
+    svgRoot.setAttribute('width', svgRootW + '')
+    svgRoot.setAttribute('height', svgRootH + '')
     svgRoot.setAttribute('viewBox', `0 0 ${svgRootW} ${svgRootH}`)
     this.svgRoot = svgRoot
 
     const svgStage = document.createElementNS('http://www.w3.org/2000/svg', 'svg')
     svgStage.id = 'svg-stage'
-    svgStage.setAttribute('width', svgStageW)
-    svgStage.setAttribute('height', svgStageH)
-    svgStage.setAttribute('x', Math.floor((svgRootW - svgStageW) / 2))
-    svgStage.setAttribute('y', Math.floor((svgRootH - svgStageH) / 2))
+    svgStage.setAttribute('width', svgStageW + '')
+    svgStage.setAttribute('height', svgStageH + '')
+    svgStage.setAttribute('x', Math.floor((svgRootW - svgStageW) / 2) + '')
+    svgStage.setAttribute('y', Math.floor((svgRootH - svgStageH) / 2) + '')
     svgStage.style.overflow = 'visible'
     this.svgStage = svgStage
 
@@ -57,8 +77,8 @@ class Editor {
     svgBg.id = 'background'
     // svgBg.setAttribute('width', 400)
     // svgBg.setAttribute('height', 300)
-    svgBg.setAttribute('x', 0)
-    svgBg.setAttribute('y', 0)
+    svgBg.setAttribute('x', '0')
+    svgBg.setAttribute('y', '0')
 
     const bgRect = document.createElementNS('http://www.w3.org/2000/svg', 'rect')
     bgRect.setAttribute('width', '100%')
@@ -69,8 +89,8 @@ class Editor {
     svgContent.id = 'content'
     // svgContent.setAttribute('width', 400)
     // svgContent.setAttribute('height', 300)
-    svgContent.setAttribute('x', 0)
-    svgContent.setAttribute('y', 0)
+    svgContent.setAttribute('x', '0')
+    svgContent.setAttribute('y', '0')
     this.svgContent = svgContent
 
     const layer = document.createElementNS('http://www.w3.org/2000/svg', 'g')
@@ -92,7 +112,7 @@ class Editor {
 
     // document.body.appendChild(viewportElement)
   }
-  mount(selector) {
+  mount(selector: string) {
     const mountNode = document.querySelector(selector)
     mountNode.appendChild(this.viewportElement)
   }
@@ -100,28 +120,28 @@ class Editor {
     return this.currentLayer
   }
 
-  setToolManager(toolManager) {
+  setToolManager(toolManager: ToolManager) {
     this.toolManager = toolManager
   }
   // tool relatived methods
-  setCurrentTool(name) {
+  setCurrentTool(name: string) {
     this.toolManager.setCurrentTool(name)
   }
-  registerTool(tool) {
+  registerTool(tool: { new (): any }) {
     this.toolManager.registerTool(tool)
   }
-  setSetting(setting) {
+  setSetting(setting: EditorSetting) {
     this.setting = setting
   }
-  setCursor(val) {
+  setCursor(val: string) {
     this.svgRoot.style.cursor = val
   }
 
   // 命令相关
-  setCommandManager(commandManager) {
+  setCommandManager(commandManager: CommandManager) {
     this.commandManager = commandManager
   }
-  executeCommand(name, ...params) {
+  executeCommand(name: string, ...params: any[]) {
     if (name == 'undo') {
       this.commandManager.undo()
       return
@@ -133,7 +153,8 @@ class Editor {
     this.commandManager.execute(name, ...params)
   }
 
-  isContentElement(el) {
+  // TODO: set any type temporarily 
+  isContentElement(el: any) {
     while (el) {
       if (el.parentElement == this.svgContent) {
         return true

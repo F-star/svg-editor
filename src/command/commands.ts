@@ -1,12 +1,18 @@
-import { FSVG } from "../element"
+import Editor from "../editor"
+import { FElement } from "../element/baseElement"
+import { FSVG } from "../element/index"
+import { Rect } from "../element/rect"
 
-export class BaseCommand {
-  undo() {
-    throw new Error('please override undo method')
+export abstract class BaseCommand {
+  protected editor: Editor
+
+  constructor(editor: Editor) {
+    this.editor = editor
   }
-  redo() {
-    throw new Error('please override redo method')
-  }
+  // TODO: abstract static method
+  // abstract name(): void
+  abstract undo(): void
+  abstract redo(): void
   afterRedo() {}
   afterUndo() {}
 }
@@ -17,9 +23,14 @@ export class BaseCommand {
  * add rect svg element
  */
 export class AddRect extends BaseCommand {
-  constructor(editor, x, y, w, h) {
-    super()
-    this.editor = editor
+  // private editor: Editor
+  nextSibling: Element
+  parent: Element
+  rect: Rect
+
+  constructor(editor: Editor, x: number, y: number, w: number, h: number) {
+    super(editor)
+    // this.editor = editor
     const rect = new FSVG.Rect(x, y, w, h)
 
     const fill = editor.setting.get('fill')
@@ -37,7 +48,7 @@ export class AddRect extends BaseCommand {
 
     this.editor.activedElsManager.setEls(this.rect)
   }
-  static name() {
+  static cmdName() {
     return 'addRect'
   }
   redo() {
@@ -58,9 +69,12 @@ export class AddRect extends BaseCommand {
  * remove elements
  */
 export class removeSelectedElements extends BaseCommand {
-  constructor(editor) {
-    super()
-    this.editor = editor
+  private els: Array<FElement>
+  private parents: Array<HTMLElement>
+  private nextSiblings: Array<Element>
+
+  constructor(editor: Editor) {
+    super(editor)
 
     this.els = this.editor.activedElsManager.getEls()
 
@@ -73,7 +87,7 @@ export class removeSelectedElements extends BaseCommand {
     })
     this.execute()
   }
-  static name() {
+  static cmdName() {
     return 'removeSelectedElements'
   }
   execute() { // private
@@ -106,9 +120,8 @@ export class removeSelectedElements extends BaseCommand {
  * dmove elements
  */
 export class DMove extends BaseCommand {
-  constructor(editor, els, dx, dy) {
-    super()
-    this.editor = editor
+  constructor(editor: Editor, els, dx: number, dy: number) {
+    super(editor)
     this.dx = dx
     this.dy = dy
     this.els = els
@@ -117,7 +130,7 @@ export class DMove extends BaseCommand {
       el.dmove(this.dx, this.dy)
     })
   }
-  static name() {
+  static cmdName() {
     return 'dmove'
   }
   redo() {
@@ -155,7 +168,7 @@ export class SetAttr extends BaseCommand {
       el.setAttr(attrName, val)
     })
   }
-  static name() {
+  static cmdName() {
     return 'setAttr'
   }
   redo() {

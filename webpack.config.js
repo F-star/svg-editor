@@ -21,7 +21,8 @@ module.exports = env => {
 
   const config = {
     mode: env.prod ? 'production' : 'development',
-    entry: './src/app.js',
+    entry: './src/app.ts',
+    // entry: './ts-test/test.ts',
     output: {
       filename: 'app.[contenthash].js',
       path: path.resolve(__dirname, 'dist'),
@@ -34,6 +35,11 @@ module.exports = env => {
     module: {
       rules: [
         {
+          test: /\.tsx?$/,
+          use: 'ts-loader',
+          exclude: /node_modules/,
+        },
+        {
           test: /\.js$/,
           exclude: /node_modules/,
           use: {
@@ -44,8 +50,12 @@ module.exports = env => {
               ]
             },
           }
-        }
+        },
       ],
+    },
+    // TODO: how does it work
+    resolve: {
+      extensions: [ '.ts', '.tsx', '.js' ],
     },
     plugins: createPlugins(env),
     optimization: env.prod ? {

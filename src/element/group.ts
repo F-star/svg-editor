@@ -9,12 +9,14 @@ import { NS } from "../constants"
 import { FElement } from "./baseElement"
 
 export class Group extends FElement {
-  constructor(el) {
+  el_: SVGGElement
+
+  constructor(el?: SVGGElement) {
     super()
     if (el) {
       this.el_ = el
     } else {
-      this.el_ = document.createElementNS(NS.SVG, 'g')
+      this.el_ = document.createElementNS(NS.SVG, 'g') as SVGGElement
     }
   }
 

@@ -29,7 +29,7 @@ export class ArrangingFront extends BaseCommand {
       el.front()
     }
   }
-  static name() {
+  static cmdName() {
     return 'front'
   }
   undo() {
@@ -71,7 +71,7 @@ export class ArrangingBack extends BaseCommand {
 
     this.exec()
   }
-  static name() {
+  static cmdName() {
     return 'back'
   }
   undo() {
@@ -113,7 +113,7 @@ export class ArrangingForward extends BaseCommand {
 
     this.exec()
   }
-  static name() {
+  static cmdName() {
     return 'forward'
   }
   exec() {
@@ -162,7 +162,7 @@ export class ArrangingBackward extends BaseCommand {
 
     this.exec()
   }
-  static name() {
+  static cmdName() {
     return 'backward'
   }
   exec() {

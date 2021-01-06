@@ -5,6 +5,8 @@
  * used for tool event
  */
 
+import Editor from "./editor"
+
 export class EditorEventContext {
   constructor(editor, e) {
     this.mousePressed = false

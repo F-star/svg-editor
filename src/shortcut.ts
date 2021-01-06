@@ -2,9 +2,18 @@
  * editor global shortcut
  */
 import { isDebug } from "./devConfig"
+import Editor from "./editor"
+
+interface IRegisterItem {
+  cmdName: string
+  fn: Function
+}
 
 export class Shortcut {
-  constructor(editor) {
+  editor: Editor
+  registeredFns: { [key: string]: IRegisterItem }
+
+  constructor(editor: Editor) {
     this.editor = editor
     this.registeredFns = {}
 
@@ -24,7 +33,7 @@ export class Shortcut {
     }, false)
   }
   // this.register('undo', 'Ctrl+Z', () => { editor.execCommand('undo') })
-  register(cmdName, shortcutName, fn) {
+  register(cmdName: string, shortcutName: string, fn: Function) {
     // TODO: valid shortcutName
     this.registeredFns[shortcutName] = { cmdName, fn }
     
@@ -40,7 +49,7 @@ export class Shortcut {
   
 }
 
-function getPressKeyName(e) {
+function getPressKeyName(e: KeyboardEvent) {
   const pressedKeys = []
   if (e.ctrlKey) pressedKeys.push('Ctrl')
   if (e.metaKey) pressedKeys.push('Cmd')

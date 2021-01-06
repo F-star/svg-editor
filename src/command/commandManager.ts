@@ -6,11 +6,17 @@
  * CommandManager.redo()
  */
 
+import Editor from "../editor"
 import { ArrangingBack, ArrangingBackward, ArrangingForward, ArrangingFront } from "./arranging"
-import { AddRect, DMove, removeSelectedElements, SetAttr } from "./commands"
+import { AddRect, BaseCommand, DMove, removeSelectedElements, SetAttr } from "./commands"
 
 class CommandManager {
-  constructor(editor) {
+  editor: Editor
+  redoStack: Array<BaseCommand>
+  undoStack: Array<BaseCommand>
+  commandClasses: { [key: string]: BaseCommand }
+
+  constructor(editor: Editor) {
     this.editor = editor
     this.redoStack = []
     this.undoStack = []
@@ -25,10 +31,10 @@ class CommandManager {
     this.resigterCommandClass(ArrangingForward)
     this.resigterCommandClass(ArrangingBackward)
   }
-  setEditor(editor) {
+  setEditor(editor: Editor) {
     this.editor = editor
   }
-  execute(name, ...args) {
+  execute(name: string, ...args: any) {
     const CommandClass = this.commandClasses[name]
     if (!CommandClass) throw new Error(`editor has not the ${name} command`)
     const command = new CommandClass(this.editor, ...args) // 创建 command 实例
@@ -57,8 +63,8 @@ class CommandManager {
     command.afterRedo()
   }
   // 注册命令类到命令管理对象中。
-  resigterCommandClass(commandClass) {
-    const name = commandClass.name()
+  resigterCommandClass(commandClass: BaseCommand) {
+    const name = commandClass.cmdName()
     this.commandClasses[name] = commandClass
   }
   afterAnyUndo() {
