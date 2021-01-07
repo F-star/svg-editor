@@ -10,6 +10,11 @@
 /**
  * guide drawing path
  */
+interface IPoint {
+  x: number
+  y: number
+}
+
 
 class PathGuide {
   constructor() {}
@@ -61,12 +66,10 @@ class PathItem {
 }
 
 class Segment {
-  constructor(x, y, handleIn, handleOut) {
-    this.x = x
-    this.y = y
-    this.handleIn = handleIn
-    this.handleOut = handleOut
-  }
+  constructor(
+    public x: number, public y: number,
+    public handleIn: IPoint, public handleOut: IPoint
+  ) {}
 }
 
 class PathOutline {

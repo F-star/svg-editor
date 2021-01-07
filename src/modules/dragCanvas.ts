@@ -1,12 +1,14 @@
+import { EditorEventContext } from "../editorEventContext"
+import { ToolAbstract } from "./ToolAbstract"
 
-export class DragCanvas {
+export class DragCanvas  extends ToolAbstract {
+  private startOffsetX: number
+  private startOffsetY: number
+
   constructor() {
-    this.editor = null
+    super()
     this.startOffsetX = 0
     this.startOffsetY = 0
-  }
-  setEditor(editor) { // 依赖注入
-    this.editor = editor
   }
   name() {
     return 'dragCanvas'
@@ -20,12 +22,12 @@ export class DragCanvas {
   beforeActive() {
     // do something before switch to current tool
   }
-  start(ctx) {
+  start() {
     const scroll = this.editor.viewport.getScroll()
     this.startOffsetX = scroll.x
     this.startOffsetY = scroll.y
   }
-  move(ctx) {
+  move(ctx: EditorEventContext) {
     const zoom = this.editor.viewport.getZoom()
     const { x: dx, y: dy } = ctx.getDiffPos()
     this.editor.viewport.setScroll(this.startOffsetX - dx, this.startOffsetY - dy)

@@ -1,5 +1,8 @@
-import { FSVG } from "../element"
+import { EditorEventContext } from "../editorEventContext"
+import { FSVG } from "../element/index"
+import { FElement } from "../element/baseElement"
 import { getBoxBy2points } from "../util/math"
+import { ToolAbstract } from "./ToolAbstract"
 
 /**
  * select
@@ -13,16 +16,17 @@ import { getBoxBy2points } from "../util/math"
  * 4. 选区和元素相交的判定
  * 5. 激活元素如何保存，保存到哪里
  */
-export class Select {
+export class Select extends ToolAbstract {
+  private selectedEls: Array<FElement>
+  private outlineStartX: number
+  private outlineStartY: number
+
   constructor() {
-    this.editor = null
+    super()
     this.selectedEls = []
 
     this.outlineStartX = 0
     this.outlineStartY = 0
-  }
-  setEditor(editor) {
-    this.editor = editor
   }
   name() {
     return 'select'
@@ -36,16 +40,16 @@ export class Select {
   hasSelectedElsWhenStart() {
     return this.selectedEls.length > 0
   }
-  start(ctx) {
+  start(ctx: EditorEventContext) {
     const targetElement = ctx.originEvent.target
     if (!this.editor.isContentElement(targetElement)) {
       return
     }
 
-    const targetFElement = FSVG.create(targetElement)
+    const targetFElement = FSVG.create(targetElement as SVGElement)
     const activedElsManager = this.editor.activedElsManager
     
-    if (activedElsManager.contains(targetElement)) {
+    if (activedElsManager.contains(targetElement as SVGElement)) {
       activedElsManager.heighligthEls()
     } else {
       activedElsManager.setEls(targetFElement)
@@ -58,7 +62,7 @@ export class Select {
     this.outlineStartX = outlineBoxHud.getX()
     this.outlineStartY = outlineBoxHud.getY()
   }
-  move(ctx) {
+  move(ctx: EditorEventContext) {
     // draw selecting area
     if (!this.hasSelectedElsWhenStart()) { 
       // select no element, draw select rect
@@ -76,7 +80,7 @@ export class Select {
     const h = outlineBoxHud.getHeight()
     outlineBoxHud.drawRect(this.outlineStartX + dx, this.outlineStartY + dy, w, h)
   }
-  end(ctx) {
+  end(ctx: EditorEventContext) {
     if (!this.hasSelectedElsWhenStart()) { // finished drawn selecting area
       const box = this.editor.hudManager.selectArea.getBox()
       this.editor.hudManager.selectArea.clear()

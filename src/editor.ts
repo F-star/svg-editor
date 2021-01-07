@@ -1,7 +1,7 @@
 import { ActivedElsManager } from "./activedElsManager"
 import CommandManager from "./command/commandManager"
 import { HudManager } from "./editorLayer/hudManager"
-import { ZoomManager } from "./modules/zoom"
+import { ToolAbstract } from "./modules/ToolAbstract"
 import { EditorSetting } from "./setting/editorSetting"
 import { Shortcut } from "./shortcut"
 import { ToolManager } from "./toolManager"
@@ -10,7 +10,6 @@ import { Viewport } from "./viewport"
 class Editor {
   setting: EditorSetting
   commandManager: CommandManager
-  zoomManager: ZoomManager
   activedElsManager: ActivedElsManager
   shortcut: Shortcut
   toolManager: ToolManager
@@ -28,7 +27,6 @@ class Editor {
   constructor() {
     this.setting = null
     this.commandManager = null
-    this.zoomManager = new ZoomManager(this)
     this.activedElsManager = new ActivedElsManager(this)
     this.shortcut = new Shortcut(this)
     this.toolManager = null
@@ -127,7 +125,7 @@ class Editor {
   setCurrentTool(name: string) {
     this.toolManager.setCurrentTool(name)
   }
-  registerTool(tool: { new (): any }) {
+  registerTool(tool: ToolAbstract) {
     this.toolManager.registerTool(tool)
   }
   setSetting(setting: EditorSetting) {

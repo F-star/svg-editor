@@ -2,15 +2,19 @@
  * 激活元素管理类
  */
 
-import { FSVG } from "./element"
+import Editor from "./editor"
+import { FElement } from "./element/baseElement"
+import { FSVG } from "./element/index"
 import { getElementsInBox } from "./util/common"
+import { IBox } from "./element/box"
 
 export class ActivedElsManager {
-  constructor(editor) {
-    this.editor = editor
+  els: Array<FElement>
+
+  constructor(private editor: Editor) {
     this.els = []
   }
-  setEls(els) {
+  setEls(els: Array<FElement> | FElement) {
     if (!Array.isArray(els)) els = [els]
     this.els = els
     // console.log(this.editor.toolManager.getCurrentToolName())
@@ -24,7 +28,7 @@ export class ActivedElsManager {
   getEls() {
     return this.els
   }
-  setElsInBox(box) {
+  setElsInBox(box: IBox) {
     if (box.width === 0 || box.height === 0) {
       this.clear()
       return
@@ -49,7 +53,7 @@ export class ActivedElsManager {
     const hudManager = this.editor.hudManager
     hudManager.outlineBoxHud.clear()
   }
-  contains(el) {
+  contains(el: HTMLOrSVGElement) {
     for (let i = 0; i < this.els.length; i++) {
       if (this.els[i].el() === el) {
         return true
@@ -77,7 +81,7 @@ export class ActivedElsManager {
 
     hudManager.outlineBoxHud.drawRect(mergedBox.x, mergedBox.y, mergedBox.width, mergedBox.height)
   }
-  setSetting(name) {
+  setSetting(name: string) {
     const els = this.els
 
     const vals = els.map(el => {
@@ -86,7 +90,7 @@ export class ActivedElsManager {
 
     this.editor.setting.set(name, vals[0]) // FIXME:
   }
-  setElsAttr(name, val) {
+  setElsAttr(name: string, val: string) {
     if (this.isNoEmpty()) {
       console.log(name, val)
       this.editor.executeCommand('setAttr', this.els, name, val)

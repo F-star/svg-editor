@@ -8,10 +8,24 @@
 import Editor from "./editor"
 
 export class EditorEventContext {
-  constructor(editor, e) {
+  originEvent: MouseEvent
+  isEndInside: boolean
+  private mousePressed: boolean
+  private editor: Editor
+
+  private startX: number
+  private startY: number
+  private offsetX: number
+  private offsetY: number
+  private startClientX: number
+  private startClientY: number
+  private dx: number
+  private dy: number
+
+  constructor(editor: Editor, e: MouseEvent) {
+    this.editor = editor
     this.mousePressed = false
     this.originEvent = e
-    this.editor = editor
     this.isEndInside = false
 
     this.startX = 0
@@ -27,7 +41,7 @@ export class EditorEventContext {
 
     this.setStartPos()
   }
-  setOriginEvent(e) {
+  setOriginEvent(e: MouseEvent) {
     this.originEvent = e
   }
   setStartPos() {

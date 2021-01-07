@@ -1,5 +1,8 @@
 
 export class EditorSetting {
+  private setting: {[prop: string]: string}
+  private bindedEventFns: {[prop: string]: Array<Function>}
+
   constructor() {
     this.setting = {
       // fill: '#fff',
@@ -14,13 +17,13 @@ export class EditorSetting {
     this.setStroke('#000')
     this.set('stroke-width', '1px')
   }
-  setFill(val) {
+  setFill(val: string) {
     this.set('fill', val)
   }
-  setStroke(val) {
+  setStroke(val: string) {
     this.set('stroke', val)
   }
-  set(name, val) {
+  set(name: string, val: string) {
     this.setting[name] = val
 
     const toCallFns = this.bindedEventFns[name]
@@ -30,21 +33,21 @@ export class EditorSetting {
       })
     }
   }
-  get(name) {
+  get(name: string) {
     return this.setting[name]
   }
-  bindEvent(name, fn) {
+  bindEvent(name: string, fn: Function) {
     if (!this.bindedEventFns[name]) {
       this.bindedEventFns[name] = []
     }
     this.bindedEventFns[name].push(fn)
   }
-  removeEvent(name, fn) {
-    if (!this.bindedEventFns[name]) return false
+  // removeEvent(name: string, fn: Function) {
+  //   if (!this.bindedEventFns[name]) return false
 
-    const removeFnIdx = this.bindedEventFns[name].findIndex(fn)
-    if (removeFnIdx === -1) return false
-    this.bindedEventFns.splice(removeFnIdx, 1)
-    return true
-  }
+  //   const removeFnIdx = this.bindedEventFns[name].findIndex(fn)
+  //   if (removeFnIdx === -1) return false
+  //   this.bindedEventFns.splice(removeFnIdx, 1)
+  //   return true
+  // }
 }

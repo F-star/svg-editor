@@ -1,7 +1,15 @@
-const { EditorEventContext } = require("./editorEventContext")
+import Editor from "./editor"
+import { EditorEventContext } from "./editorEventContext"
+import { ToolAbstract } from "./modules/ToolAbstract"
 
 export class ToolManager {
-  constructor(editor) {
+  private editor: Editor
+  private tools: { [name: string]: ToolAbstract }
+  private currentTool: ToolAbstract
+  private invokeWhenSwitch: Function
+  private ctx: EditorEventContext
+
+  constructor(editor: Editor) {
     this.editor = editor
     this.tools = {}
     this.currentTool = null
@@ -9,7 +17,7 @@ export class ToolManager {
 
     this.ctx = null // tool context
   }
-  setCurrentTool(name) {
+  setCurrentTool(name: string) {
     this.currentTool = this.tools[name]
     // set normal cursor
     const cursor = this.currentTool.cursorNormal()
@@ -18,13 +26,13 @@ export class ToolManager {
     const toolName = this.getCurrentToolName()
     this.invokeWhenSwitch(toolName)
   }
-  onSwitchTool(fn) {
+  onSwitchTool(fn: Function) {
     this.invokeWhenSwitch = fn
   }
   getCurrentToolName() {
     return this.currentTool.name()
   }
-  registerTool(tool) {
+  registerTool(tool: ToolAbstract) {
     this.tools[tool.name()] = tool
     tool.setEditor(this.editor) // dependency injection
   }
@@ -63,7 +71,7 @@ export class ToolManager {
       ctx.isEndInside = true
     }, false)
 
-    window.addEventListener('mouseup', e => {
+    window.addEventListener('mouseup', () => {
       if (this.ctx && this.ctx.isEndInside == false) {
         this.currentTool.endOutside(this.ctx)
       }

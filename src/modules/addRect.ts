@@ -1,12 +1,12 @@
 
+import { EditorEventContext } from "../editorEventContext"
 import { getBoxBy2points } from "../util/math"
+import { ToolAbstract } from "./ToolAbstract"
 
-class AddRect {
+class AddRect extends ToolAbstract {
   constructor() {
+    super()
     this.editor = null
-  }
-  setEditor(editor) { // 依赖注入
-    this.editor = editor
   }
   name() {
     return 'addRect'
@@ -17,14 +17,16 @@ class AddRect {
   cursorPress() {
     return 'crosshair'
   }
-  start(ctx) {}
-  move(ctx) {
+  start() {
+    // do nothing
+  }
+  move(ctx: EditorEventContext) {
     const { x: endX, y: endY } = ctx.getPos()
     const { x: startX, y: startY } = ctx.getStartPos()
     const { x, y, w, h } = getBoxBy2points(startX, startY, endX, endY)
     this.editor.hudManager.outlineBoxHud.drawRect(x, y, w, h)
   }
-  end(ctx) {
+  end(ctx: EditorEventContext) {
     this.editor.hudManager.outlineBoxHud.clear()
 
     const { x: endX, y: endY } = ctx.getPos()

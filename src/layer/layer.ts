@@ -1,6 +1,8 @@
 
 /**
  * layer manager
+ * 
+ * TODO:
  */
 
 class LayerManager {

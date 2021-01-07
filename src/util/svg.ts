@@ -1,6 +1,6 @@
 
 // TODO: to finish
-export function getViewBox(el) {
+export function getViewBox(el: SVGSVGElement) {
   const val = el.getAttribute('viewBox')
   if (!val) {
     throw new Error('has not viewBox attribute')

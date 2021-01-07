@@ -1,4 +1,6 @@
-import { FSVG } from "../element"
+import { FElement } from "../element/baseElement"
+import { Box, IBox } from "../element/box"
+import { FSVG } from "../element/index"
 
 export function isVaildColorVal() {
   // TODO:
@@ -8,30 +10,30 @@ export function isVaildColorVal() {
   // ...
 }
 
-export function getElementsInBox(box, parent) {
+export function getElementsInBox(box: IBox, parent: SVGElement) {
   const tagNameForbidList = ['g']
   box = new FSVG.Box(box)
-  const elsInBox = []
+  const elsInBox: Array<FElement> = []
 
-  function r(box, parent) {
+  function r(box: Box, parent: SVGElement) {
     const elements = parent.children
     for (let i = 0; i < elements.length; i++) {
       const el = elements[i] // FSVG.create(elements[i])
 
       if (!tagNameForbidList.includes(el.tagName)) {
-        const bbox = el.getBBox()
+        const bbox = (el as SVGGraphicsElement).getBBox()
         if (box.contains(bbox)) {
-          elsInBox.push( FSVG.create(el))
+          elsInBox.push( FSVG.create(el as SVGElement))
         }
       }
 
-      if (el.children.length > 0) r(box, el)
+      if (el.children.length > 0) r(box, el as SVGElement)
     }
   }
-  r(box, parent)
+  r(box as Box, parent)
   return elsInBox
 }
 
-export function uniq(arr) {
+export function uniq(arr: any[]) {
   return Array.from(new Set(arr))
 }

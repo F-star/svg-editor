@@ -5,13 +5,13 @@
  */
 class TransformHud {
   constructor() {}
-  render(els) {
-    this.els = els
-  }
-  draw(x, y, w, h) {
+  // render(els) {
+  //   this.els = els
+  // }
+  // draw(x, y, w, h) {
     
-  }
-  drawGrips() {
+  // }
+  // drawGrips() {
 
-  }
+  // }
 }

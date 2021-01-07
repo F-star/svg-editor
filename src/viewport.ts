@@ -3,12 +3,11 @@
  * 
  * scroll, zoom
  */
+import Editor from "./editor"
 import { getViewBox } from "./util/svg"
 
 export class Viewport {
-  constructor(editor) {
-    this.editor = editor
-  }
+  constructor(private editor: Editor) {}
 
   /**
    * scroll
@@ -19,14 +18,14 @@ export class Viewport {
       y: this.editor.svgContainer.scrollTop,
     }
   }
-  setScroll(x, y) {
+  setScroll(x: number, y: number) {
     this.editor.svgContainer.scrollLeft = x
     this.editor.svgContainer.scrollTop = y
   }
   getContentOffset() {
     return {
-      x: this.editor.svgStage.getAttribute('x'),
-      y: this.editor.svgStage.getAttribute('y'),
+      x: parseFloat(this.editor.svgStage.getAttribute('x')),
+      y: parseFloat(this.editor.svgStage.getAttribute('y')),
     }
   }
 
@@ -39,20 +38,20 @@ export class Viewport {
     const zoom = actulWidth / viewBox.w
     return zoom
   }
-  setZoom(zoom, cx, cy) {
+  setZoom(zoom: number, cx?: number, cy?: number) {
     // TODO:
     console.log(zoom)
     const viewBox = getViewBox(this.editor.svgRoot)
     const width = viewBox.w * zoom
     const height = viewBox.h * zoom
-    this.editor.svgRoot.setAttribute('width', width)
-    this.editor.svgRoot.setAttribute('height', height)
+    this.editor.svgRoot.setAttribute('width', width + '')
+    this.editor.svgRoot.setAttribute('height', height + '')
   }
-  zoomIn(cx, cy) {
+  zoomIn(cx?: number, cy?: number) {
     const currentZoom = this.getZoom()
     this.setZoom(currentZoom + 0.1, cx, cy)
   }
-  zoomOut(cx, cy) {
+  zoomOut(cx?: number, cy?: number) {
     const currentZoom = this.getZoom()
     this.setZoom(currentZoom - 0.1, cx, cy)
   }
@@ -71,10 +70,10 @@ export class Viewport {
     )
   }
 
-  getViewportBox(prop) {
+  getViewportBox(prop: any) {
     return parseFloat(this.editor.viewportElement.style[prop])
   }
-  getSVGRootBox(prop) {
+  getSVGRootBox(prop: string) {
     return parseFloat(this.editor.svgRoot.getAttribute(prop))
   }
 }

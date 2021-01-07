@@ -2,6 +2,7 @@
 /**
  * quadratic Bezier curves
  */
+import { ToolAbstract } from "../ToolAbstract"
 
 const ENUM_STATE = {
   // INIT: 0,
@@ -10,7 +11,7 @@ const ENUM_STATE = {
 
 }
 
-class BezierCurve {
+class BezierCurve extends ToolAbstract {
   constructor() {
     this.editor = null
     this.state = ENUM_STATE.DRAW_POINT

@@ -3,20 +3,27 @@
  * 
  */
 
-const { NS } = require("../constants");
+import { NS } from "../constants"
 
 export class OutlineBoxHud {
-  constructor(parent) {
+  x = 0
+  y = 0
+  w = 0
+  h = 0
+  container: SVGGElement
+  outline: SVGPathElement
+
+  constructor(parent: HTMLElement) {
     this.x = 0
     this.y = 0
     this.w = 0
     this.h = 0
 
-    this.container = document.createElementNS(NS.SVG, 'g')
+    this.container = document.createElementNS(NS.SVG, 'g') as SVGGElement
     this.container.id = 'outline-box-hud'
     parent.appendChild(this.container)
 
-    this.outline = document.createElementNS(NS.SVG, 'path')
+    this.outline = document.createElementNS(NS.SVG, 'path') as SVGPathElement
     this.outline.setAttribute('fill', 'none')
     this.outline.setAttribute('stroke', '#f04')
     this.outline.setAttribute('vector-effect', 'non-scaling-stroke')
@@ -27,7 +34,7 @@ export class OutlineBoxHud {
     // parent.innerHTML = ''
     this.outline.style.display = 'none'
   }
-  drawRect(x, y, w, h) {
+  drawRect(x: number, y: number, w: number, h: number) {
     this.x = x
     this.y = y
     this.w = w

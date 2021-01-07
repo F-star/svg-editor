@@ -4,7 +4,7 @@
 
 import { OutlineBoxHud } from "./outlineBoxHud";
 import { SelectArea } from "./selectArea";
-const { NS } = require("../constants");
+import { NS } from "../constants"
 
 export class HudManager{
   constructor() {

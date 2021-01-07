@@ -1,5 +1,5 @@
 
-export function getBoxBy2points(x1, y1, x2, y2) {
+export function getBoxBy2points(x1: number, y1: number, x2: number, y2: number) {
   let x, y, w, h
   w = Math.abs(x2 - x1)
   h = Math.abs(y2 - y1)

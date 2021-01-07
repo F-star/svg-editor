@@ -1,5 +1,5 @@
 
-interface IBox {
+export interface IBox {
   x: number,
   y: number,
   width: number,
