@@ -41,7 +41,7 @@ export class AddRect extends BaseCommand {
     rect.setAttr('stroke', stroke)
     rect.setAttr('stroke-width', strokeWidth)
 
-    editor.getCurrentLayer().appendChild(rect.el())
+    editor.getCurrentLayer().addChild(rect)
 
     this.nextSibling = rect.el().nextElementSibling
     this.parent = rect.el().parentElement

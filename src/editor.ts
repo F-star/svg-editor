@@ -6,6 +6,7 @@ import { EditorSetting } from './setting/editorSetting'
 import { Shortcut } from './shortcut'
 import { ToolManager } from './toolManager'
 import { Viewport } from './viewport'
+import { LayerManager } from './layer/layer'
 
 class Editor {
   setting: EditorSetting
@@ -14,6 +15,7 @@ class Editor {
   shortcut: Shortcut
   toolManager: ToolManager
   viewport: Viewport
+  layerManager: LayerManager
   hudManager: HudManager
 
   // elements
@@ -22,7 +24,6 @@ class Editor {
   svgRoot: SVGSVGElement
   svgStage: SVGSVGElement
   svgContent: SVGGElement
-  currentLayer: SVGGElement
 
   constructor() {
     this.setting = null
@@ -31,13 +32,14 @@ class Editor {
     this.shortcut = new Shortcut(this)
     this.toolManager = null
     this.viewport = new Viewport(this)
-
+    this.layerManager = new LayerManager(this)
+    this.hudManager = new HudManager()
 
     const viewportW = 800
     const viewportH = 550
     const svgRootW = 1000
     const svgRootH = 600
-    const svgStageW = 500
+    const svgStageW = 520
     const svgStageH = 400
 
     const viewportElement = document.createElement('div')
@@ -91,10 +93,6 @@ class Editor {
     svgContent.setAttribute('y', '0')
     this.svgContent = svgContent
 
-    const layer = document.createElementNS('http://www.w3.org/2000/svg', 'g')
-    layer.id = 'layer-1'
-    this.currentLayer = layer
-
     viewportElement.appendChild(svgContainer)
     svgContainer.appendChild(svgRoot)
     svgRoot.appendChild(svgStage)
@@ -102,10 +100,8 @@ class Editor {
     svgStage.appendChild(svgBg)
     svgBg.appendChild(bgRect)
     svgStage.appendChild(svgContent)
-    svgContent.appendChild(layer)
 
-
-    this.hudManager = new HudManager()
+    this.layerManager.createInitLayerAndMount()
     this.hudManager.mount(svgStage)
 
     // document.body.appendChild(viewportElement)
@@ -115,7 +111,7 @@ class Editor {
     mountNode.appendChild(this.viewportElement)
   }
   getCurrentLayer() {
-    return this.currentLayer
+    return this.layerManager.getCurrent()
   }
 
   setToolManager(toolManager: ToolManager) {

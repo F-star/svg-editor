@@ -1,6 +1,7 @@
 import { Box } from './box'
 import { Rect } from './rect'
 import { Group } from './group'
+import { Path } from './path'
 import { FElement } from './baseElement'
 
 /**
@@ -25,4 +26,5 @@ export const FSVG = {
   Rect,
   Box,
   Group,
+  Path,
 }

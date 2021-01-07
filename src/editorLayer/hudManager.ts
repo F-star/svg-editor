@@ -2,12 +2,11 @@
  * guide line layer
  */
 
-import { OutlineBoxHud } from "./outlineBoxHud";
-import { SelectArea } from "./selectArea";
-import { NS } from "../constants"
-import { Select } from "../modules/select";
+import { OutlineBoxHud } from './outlineBoxHud'
+import { SelectArea } from './selectArea'
+import { NS } from '../constants'
 
-export class HudManager{
+export class HudManager {
   container: SVGGElement
   selectArea: SelectArea
   outlineBoxHud: OutlineBoxHud
@@ -19,7 +18,6 @@ export class HudManager{
 
     this.selectArea = new SelectArea(this.container)
     this.outlineBoxHud = new OutlineBoxHud(this.container)
-    
   }
   mount(el: Node) {
     el.appendChild(this.container)

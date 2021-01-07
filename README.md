@@ -31,10 +31,10 @@ The simple features has added(of course with some bugs):
 
 To do recently:
 
+- layer
 - pencil
 - draw bezier curve
 - export
-- layer
 - record coordinate when move
 - zoom center position
 - element breadcrumb

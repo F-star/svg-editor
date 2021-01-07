@@ -1,3 +1,4 @@
+import { EditorEventContext } from '../editorEventContext'
 import { ToolAbstract } from './ToolAbstract'
 
 class Pencil extends ToolAbstract {
@@ -10,11 +11,14 @@ class Pencil extends ToolAbstract {
   cursorPress() {
     return 'default'
   }
-  start() {}
-  move() {}
-  end() {}
+  start(ctx: EditorEventContext) {
+    // this.editor.getCurrentLayer()
+
+  }
+  move(ctx: EditorEventContext) {}
+  end(ctx: EditorEventContext) {}
   // mousedown outside viewport
-  endOutside() {}
+  endOutside(ctx: EditorEventContext) {}
 }
 
 export default Pencil
