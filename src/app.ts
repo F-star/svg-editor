@@ -2,7 +2,7 @@
 import Editor from './editor'
 import AddRect from './modules/addRect.js'
 import { DragCanvas } from './modules/dragCanvas.js'
-import CommandManager from './command/commandManager.js'
+import CommandManager from './command/commandManager'
 import { EditorSetting } from './setting/editorSetting.js'
 import { Select } from './modules/select.js'
 import { ToolManager } from './toolManager.js'

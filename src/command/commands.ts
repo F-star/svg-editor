@@ -6,7 +6,7 @@ import { Rect } from "../element/rect"
 export abstract class BaseCommand {
   protected editor: Editor
 
-  constructor(editor: Editor) {
+  constructor(editor: Editor, ...args: any) {
     this.editor = editor
   }
   // TODO: abstract static method

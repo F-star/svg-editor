@@ -7,11 +7,16 @@
  * back
  */
 
+import Editor from "../editor"
+import { FElement } from "../element/baseElement"
 import { BaseCommand } from "./commands"
 
 export class ArrangingFront extends BaseCommand {
-  constructor(editor, els) {
-    super()
+  els: Array<FElement>
+  nextSiblings: Array<FElement>
+
+  constructor(editor: Editor, els?: Array<FElement>) {
+    super(editor)
     if (els === undefined) {
       this.els = editor.activedElsManager.getEls()
     } else {
@@ -51,8 +56,11 @@ export class ArrangingFront extends BaseCommand {
 }
 
 export class ArrangingBack extends BaseCommand {
-  constructor(editor, els) {
-    super()
+  els: Array<FElement>
+  previousSiblings: Array<FElement>
+
+  constructor(editor: Editor, els?: Array<FElement>) {
+    super(editor)
     if (els === undefined) {
       this.els = editor.activedElsManager.getEls()
     } else {
@@ -99,8 +107,10 @@ export class ArrangingBack extends BaseCommand {
  * forward elements
  */
 export class ArrangingForward extends BaseCommand {
-  constructor(editor, els) {
-    super()
+  els: Array<FElement>
+
+  constructor(editor: Editor, els?: Array<FElement>) {
+    super(editor)
     if (els === undefined) {
       this.els = editor.activedElsManager.getEls()
     } else {
@@ -120,11 +130,11 @@ export class ArrangingForward extends BaseCommand {
     let lastForwardedEl = null
     for (let i = this.els.length - 1; i >= 0; i--) {
       const el = this.els[i]
-      const nextSibling = el.el().nextSibling
+      const nextSibling = el.el().nextElementSibling
       if (lastForwardedEl !== null && nextSibling === lastForwardedEl) {
         // do nothing
       } else if (nextSibling) {
-        el.after(nextSibling)
+        el.after(nextSibling as SVGElement)
       }
       lastForwardedEl = el.el()
     }
@@ -133,11 +143,11 @@ export class ArrangingForward extends BaseCommand {
     let lastBackwardedEl = null
     for (let i = 0; i < this.els.length; i++) {
       const el = this.els[i]
-      const previousSibling = el.el().previousSibling
+      const previousSibling = el.el().previousElementSibling
       if (lastBackwardedEl !== null && previousSibling === lastBackwardedEl) {
         // do nothing
       } else if (previousSibling) {
-        el.before(previousSibling)
+        el.before(previousSibling as SVGElement)
       }
       lastBackwardedEl = el.el()
     }
@@ -149,8 +159,10 @@ export class ArrangingForward extends BaseCommand {
  * backward elements
  */
 export class ArrangingBackward extends BaseCommand {
-  constructor(editor, els) {
-    super()
+  els: Array<FElement>
+
+  constructor(editor: Editor, els: Array<FElement>) {
+    super(editor)
     if (els === undefined) {
       this.els = editor.activedElsManager.getEls()
     } else {
@@ -169,11 +181,11 @@ export class ArrangingBackward extends BaseCommand {
     let lastBackwardedEl = null
     for (let i = 0; i < this.els.length; i++) {
       const el = this.els[i]
-      const previousSibling = el.el().previousSibling
+      const previousSibling = el.el().previousElementSibling
       if (lastBackwardedEl !== null && previousSibling === lastBackwardedEl) {
         // do nothing
       } else if (previousSibling) {
-        el.before(previousSibling)
+        el.before(previousSibling as SVGElement)
       }
       lastBackwardedEl = el.el()
     }
@@ -182,11 +194,11 @@ export class ArrangingBackward extends BaseCommand {
     let lastForwardedEl = null
     for (let i = this.els.length - 1; i >= 0; i--) {
       const el = this.els[i]
-      const nextSibling = el.el().nextSibling
+      const nextSibling = el.el().nextElementSibling
       if (lastForwardedEl !== null && nextSibling === lastForwardedEl) {
         // do nothing
       } else if (nextSibling) {
-        el.after(nextSibling)
+        el.after(nextSibling as SVGElement)
       }
       lastForwardedEl = el.el()
     }

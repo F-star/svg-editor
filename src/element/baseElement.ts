@@ -43,12 +43,12 @@ export class FElement {
   }
   nextSibling() {
     const nextOne = this.el_.nextElementSibling
-    if (nextOne == null) return nextOne
+    if (nextOne === null) return null
     return FSVG.create(nextOne as SVGElement)
   }
   previousSibling() {
-    const n = this.el_.previousSibling
-    if (n == null) return n
+    const n = this.el_.previousElementSibling
+    if (n === null) return null
     return FSVG.create(n as SVGElement)
   }
   append(el: FElement) {

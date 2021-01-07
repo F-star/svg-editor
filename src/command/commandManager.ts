@@ -14,7 +14,7 @@ class CommandManager {
   editor: Editor
   redoStack: Array<BaseCommand>
   undoStack: Array<BaseCommand>
-  commandClasses: { [key: string]: {new (): BaseCommand} }
+  commandClasses: { [key: string]: {new (editor: Editor, ...args: any): BaseCommand} }
 
   constructor(editor: Editor) {
     this.editor = editor
@@ -23,13 +23,13 @@ class CommandManager {
     this.commandClasses = {}
 
     this.resigterCommandClass(AddRect, AddRect.cmdName())
-    this.resigterCommandClass(DMove)
-    this.resigterCommandClass(SetAttr)
-    this.resigterCommandClass(removeSelectedElements)
+    this.resigterCommandClass(DMove, DMove.cmdName())
+    this.resigterCommandClass(SetAttr, SetAttr.cmdName())
+    this.resigterCommandClass(removeSelectedElements, removeSelectedElements.cmdName())
     this.resigterCommandClass(ArrangingFront, ArrangingFront.cmdName())
-    this.resigterCommandClass(ArrangingBack)
-    this.resigterCommandClass(ArrangingForward)
-    this.resigterCommandClass(ArrangingBackward)
+    this.resigterCommandClass(ArrangingBack, ArrangingBack.cmdName())
+    this.resigterCommandClass(ArrangingForward, ArrangingForward.cmdName())
+    this.resigterCommandClass(ArrangingBackward, ArrangingBackward.cmdName())
   }
   setEditor(editor: Editor) {
     this.editor = editor
@@ -63,7 +63,7 @@ class CommandManager {
     command.afterRedo()
   }
   // 注册命令类到命令管理对象中。
-  resigterCommandClass(commandClass: { new (): BaseCommand }, cmdName: string) {
+  resigterCommandClass(commandClass: { new (editor: Editor, ...args: any): BaseCommand }, cmdName: string) {
     this.commandClasses[cmdName] = commandClass
   }
   afterAnyUndo() {
