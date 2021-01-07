@@ -1,7 +1,7 @@
 svg-editor
 ---
 
-A simple web svg editor.
+A simple web svg editor. Built by typescript.
 
 Developing...
 

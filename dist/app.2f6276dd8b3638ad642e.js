@@ -1,1 +1,0 @@
-(()=>{"use strict";console.log("this is ab"),console.log({mode:"prod"})})();
