@@ -1,5 +1,5 @@
-import Editor from "../editor"
-import { EditorEventContext } from "../editorEventContext"
+import Editor from '../editor'
+import { EditorEventContext } from '../editorEventContext'
 
 export abstract class ToolAbstract {
   protected editor: Editor

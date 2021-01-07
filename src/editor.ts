@@ -1,11 +1,11 @@
-import { ActivedElsManager } from "./activedElsManager"
-import CommandManager from "./command/commandManager"
-import { HudManager } from "./editorLayer/hudManager"
-import { ToolAbstract } from "./modules/ToolAbstract"
-import { EditorSetting } from "./setting/editorSetting"
-import { Shortcut } from "./shortcut"
-import { ToolManager } from "./toolManager"
-import { Viewport } from "./viewport"
+import { ActivedElsManager } from './activedElsManager'
+import CommandManager from './command/commandManager'
+import { HudManager } from './editorLayer/hudManager'
+import { ToolAbstract } from './modules/ToolAbstract'
+import { EditorSetting } from './setting/editorSetting'
+import { Shortcut } from './shortcut'
+import { ToolManager } from './toolManager'
+import { Viewport } from './viewport'
 
 class Editor {
   setting: EditorSetting
@@ -17,12 +17,12 @@ class Editor {
   hudManager: HudManager
 
   // elements
-  viewportElement: HTMLElement 
-  svgContainer: HTMLElement 
-  svgRoot: SVGSVGElement 
-  svgStage: SVGSVGElement 
-  svgContent: SVGGElement 
-  currentLayer: SVGGElement 
+  viewportElement: HTMLElement
+  svgContainer: HTMLElement
+  svgRoot: SVGSVGElement
+  svgStage: SVGSVGElement
+  svgContent: SVGGElement
+  currentLayer: SVGGElement
 
   constructor() {
     this.setting = null
@@ -46,7 +46,7 @@ class Editor {
     viewportElement.style.width = viewportW + 'px'
     viewportElement.style.height = viewportH + 'px'
     this.viewportElement = viewportElement
-    
+
     const svgContainer = document.createElement('div')
     svgContainer.id = 'svg-container'
     svgContainer.style.backgroundColor = '#ddd'
@@ -140,24 +140,24 @@ class Editor {
     this.commandManager = commandManager
   }
   executeCommand(name: string, ...params: any[]) {
-    if (name == 'undo') {
+    if (name === 'undo') {
       this.commandManager.undo()
       return
     }
-    if (name == 'redo') {
+    if (name === 'redo') {
       this.commandManager.redo()
       return
     }
     this.commandManager.execute(name, ...params)
   }
 
-  // TODO: set any type temporarily 
+  // TODO: set any type temporarily
   isContentElement(el: any) {
     while (el) {
-      if (el.parentElement == this.svgContent) {
+      if (el.parentElement === this.svgContent) {
         return true
       }
-      if (el.parentElement == this.svgRoot) {
+      if (el.parentElement === this.svgRoot) {
         return false
       }
       el = el.parentElement

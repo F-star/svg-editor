@@ -13,7 +13,7 @@ export class OutlineBoxHud {
   container: SVGGElement
   outline: SVGPathElement
 
-  constructor(parent: HTMLElement) {
+  constructor(parent: SVGGElement) {
     this.x = 0
     this.y = 0
     this.w = 0

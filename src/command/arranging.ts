@@ -7,9 +7,9 @@
  * back
  */
 
-import Editor from "../editor"
-import { FElement } from "../element/baseElement"
-import { BaseCommand } from "./commands"
+import Editor from '../editor'
+import { FElement } from '../element/baseElement'
+import { BaseCommand } from './commands'
 
 export class ArrangingFront extends BaseCommand {
   els: Array<FElement>
@@ -22,7 +22,7 @@ export class ArrangingFront extends BaseCommand {
     } else {
       this.els = els
     }
-    
+
     if (this.els.length === 0) {
       throw new Error('elements can not be empty.')
     }
@@ -66,7 +66,7 @@ export class ArrangingBack extends BaseCommand {
     } else {
       this.els = els
     }
-    
+
     if (this.els.length === 0) {
       throw new Error('elements can not be empty.')
     }
@@ -116,7 +116,7 @@ export class ArrangingForward extends BaseCommand {
     } else {
       this.els = els
     }
-    
+
     if (this.els.length === 0) {
       throw new Error('elements can not be empty.')
     }

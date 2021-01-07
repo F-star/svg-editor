@@ -1,7 +1,7 @@
 const path = require('path')
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
-const TerserPlugin = require("terser-webpack-plugin");
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+const { CleanWebpackPlugin } = require('clean-webpack-plugin')
+const TerserPlugin = require('terser-webpack-plugin')
 
 function createPlugins(env) {
   if (env.prod) {
@@ -46,7 +46,7 @@ module.exports = env => {
             loader: 'babel-loader',
             options: {
               presets: [
-                ['@babel/preset-env', { targets: "defaults" }]
+                ['@babel/preset-env', { targets: 'defaults' }]
               ]
             },
           }
@@ -55,13 +55,15 @@ module.exports = env => {
     },
     // TODO: how does it work
     resolve: {
-      extensions: [ '.ts', '.tsx', '.js' ],
+      extensions: ['.ts', '.tsx', '.js'],
     },
     plugins: createPlugins(env),
-    optimization: env.prod ? {
-      minimize: true,
-      minimizer: [new TerserPlugin()],
-    } : {},
+    optimization: env.prod
+      ? {
+          minimize: true,
+          minimizer: [new TerserPlugin()],
+        }
+      : {},
   }
 
   return config

@@ -3,8 +3,8 @@
  * 对 rect 元素的简单封装
  */
 
-import { NS } from "../constants"
-import { FElement } from "./baseElement"
+import { NS } from '../constants'
+import { FElement } from './baseElement'
 
 export class Rect extends FElement {
   el_: SVGElement
@@ -13,7 +13,7 @@ export class Rect extends FElement {
   constructor(el: SVGElement)
   constructor(x: number | SVGElement, y?: number, w?: number, h?: number) {
     super()
-    if (typeof x == 'object') {
+    if (typeof x === 'object') {
       this.el_ = x
     } else {
       this.el_ = document.createElementNS(NS.SVG, 'rect') as SVGElement

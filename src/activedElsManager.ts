@@ -2,11 +2,11 @@
  * 激活元素管理类
  */
 
-import Editor from "./editor"
-import { FElement } from "./element/baseElement"
-import { FSVG } from "./element/index"
-import { getElementsInBox } from "./util/common"
-import { IBox } from "./element/box"
+import Editor from './editor'
+import { FElement } from './element/baseElement'
+import { FSVG } from './element/index'
+import { getElementsInBox } from './util/common'
+import { IBox } from './element/box'
 
 export class ActivedElsManager {
   els: Array<FElement>
@@ -42,7 +42,7 @@ export class ActivedElsManager {
     }
   }
   isEmpty() {
-    return this.els.length == 0
+    return this.els.length === 0
   }
   isNoEmpty() {
     return this.els.length > 0

@@ -19,7 +19,7 @@ export class Box {
   constructor(x: number, y: number, w: number, h: number)
   constructor(box: IBox)
   constructor(x: number | IBox, y?: number, w?: number, h?: number) {
-    if (typeof x == 'object') {
+    if (typeof x === 'object') {
       this.x = x.x
       this.y = x.y
       this.w = x.width
@@ -36,6 +36,7 @@ export class Box {
     this.x2 = this.x + this.w
     this.y2 = this.y + this.h
   }
+
   contains(otherBox: IBox) {
     return this.x <= otherBox.x && this.y <= otherBox.y &&
       this.x2 >= otherBox.x + otherBox.width && this.y2 >= otherBox.y + otherBox.height

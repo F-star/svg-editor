@@ -2,19 +2,21 @@
 /**
  * quadratic Bezier curves
  */
-import { ToolAbstract } from "../ToolAbstract"
+import { ToolAbstract } from '../ToolAbstract'
 
-const ENUM_STATE = {
+enum State {
   // INIT: 0,
-  DRAG_CTR_POINT: 1,
-  DRAW_POINT: 2,
-
+  DragCtrPoint,
+  DrawPoint,
 }
 
 class BezierCurve extends ToolAbstract {
+  state: State = State.DrawPoint
+
   constructor() {
+    super()
     this.editor = null
-    this.state = ENUM_STATE.DRAW_POINT
+    this.state = State.DrawPoint
   }
   setEditor(editor) { // 依赖注入
     this.editor = editor
@@ -31,26 +33,26 @@ class BezierCurve extends ToolAbstract {
   start(ctx) {
     // check if drag ctrpoints?
 
-    if (this.state === ENUM_STATE.DRAW_POINT) {
+    if (this.state === State.DrawPoint) {
       // 1. create path guide and control-line
     }
   }
   move(ctx) {
-    if (this.state === ENUM_STATE.DRAG_CTR_POINT) {
+    if (this.state === State.DragCtrPoint) {
       // 2. change control-line
-      this.state = ENUM_STATE.DRAG_CTR_POINT
+      this.state = State.DragCtrPoint
     }
   }
   end(ctx) {
-    if (this.state === ENUM_STATE.DRAG_CTR_POINT) {
-      this.state = ENUM_STATE.DRAW_POINT
-      // 
+    if (this.state === State.DragCtrPoint) {
+      this.state = State.DrawPoint
+      //
     }
   }
   // mousedown outside viewport
   endOutside() {
-    
+
   }
 }
 
-export  { BezierCurve }
+export { BezierCurve }

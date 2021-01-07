@@ -1,11 +1,11 @@
 
 /**
  * context class
- * 
+ *
  * used for tool event
  */
 
-import Editor from "./editor"
+import Editor from './editor'
 
 export class EditorEventContext {
   originEvent: MouseEvent
@@ -61,9 +61,9 @@ export class EditorEventContext {
   }
   getPos() {
     const zoom = this.editor.viewport.getZoom()
-    const {x, y} = this.editor.viewport.getContentOffset()
-    return { 
-      x: this.originEvent.offsetX / zoom - x, 
+    const { x, y } = this.editor.viewport.getContentOffset()
+    return {
+      x: this.originEvent.offsetX / zoom - x,
       y: this.originEvent.offsetY / zoom - y,
     }
   }
@@ -79,5 +79,4 @@ export class EditorEventContext {
     const y = this.originEvent.clientY - this.startClientY
     return { x, y }
   }
-
 }

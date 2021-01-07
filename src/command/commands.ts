@@ -1,7 +1,8 @@
-import Editor from "../editor"
-import { FElement } from "../element/baseElement"
-import { FSVG } from "../element/index"
-import { Rect } from "../element/rect"
+import Editor from '../editor'
+import { FElement } from '../element/baseElement'
+import { FSVG } from '../element/index'
+import { Rect } from '../element/rect'
+
 
 export abstract class BaseCommand {
   protected editor: Editor
@@ -19,7 +20,7 @@ export abstract class BaseCommand {
 
 /**
  * addRect
- * 
+ *
  * add rect svg element
  */
 export class AddRect extends BaseCommand {
@@ -42,7 +43,7 @@ export class AddRect extends BaseCommand {
 
     editor.getCurrentLayer().appendChild(rect.el())
 
-    this.nextSibling = rect.el().nextElementSibling 
+    this.nextSibling = rect.el().nextElementSibling
     this.parent = rect.el().parentElement
     this.rect = rect
 
@@ -82,7 +83,7 @@ export class removeSelectedElements extends BaseCommand {
     this.parents = new Array(size)
     this.nextSiblings = new Array(size)
     this.els.forEach((el, idx) => {
-      this.nextSiblings[idx] = el.el().nextElementSibling 
+      this.nextSiblings[idx] = el.el().nextElementSibling
       this.parents[idx] = el.el().parentElement
     })
     this.execute()
@@ -116,7 +117,7 @@ export class removeSelectedElements extends BaseCommand {
 
 /**
  * DMove
- * 
+ *
  * dmove elements
  */
 export class DMove extends BaseCommand {

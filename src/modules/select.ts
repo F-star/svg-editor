@@ -1,14 +1,14 @@
-import { EditorEventContext } from "../editorEventContext"
-import { FSVG } from "../element/index"
-import { FElement } from "../element/baseElement"
-import { getBoxBy2points } from "../util/math"
-import { ToolAbstract } from "./ToolAbstract"
+import { EditorEventContext } from '../editorEventContext'
+import { FSVG } from '../element/index'
+import { FElement } from '../element/baseElement'
+import { getBoxBy2points } from '../util/math'
+import { ToolAbstract } from './ToolAbstract'
 
 /**
  * select
- * 
+ *
  * 此模块非常复杂
- * 
+ *
  * 1. 鼠标按下时，选中单个元素
  * 2. 鼠标按下为空，拖拽时产生选中框，可以选择多个元素
  * 3. 选中单个（或选区选中多个） 缩放 等控制点，拖拽改变宽高
@@ -48,7 +48,7 @@ export class Select extends ToolAbstract {
 
     const targetFElement = FSVG.create(targetElement as SVGElement)
     const activedElsManager = this.editor.activedElsManager
-    
+
     if (activedElsManager.contains(targetElement as SVGElement)) {
       activedElsManager.heighligthEls()
     } else {
@@ -64,7 +64,7 @@ export class Select extends ToolAbstract {
   }
   move(ctx: EditorEventContext) {
     // draw selecting area
-    if (!this.hasSelectedElsWhenStart()) { 
+    if (!this.hasSelectedElsWhenStart()) {
       // select no element, draw select rect
       const { x: endX, y: endY } = ctx.getPos()
       const { x: startX, y: startY } = ctx.getStartPos()
@@ -91,7 +91,6 @@ export class Select extends ToolAbstract {
     }
     this.editor.hudManager.outlineBoxHud.clear()
 
-    
     const { x: dx, y: dy } = ctx.getDiffPos()
     this.editor.executeCommand('dmove', this.selectedEls, dx, dy)
     this.editor.activedElsManager.setEls(this.selectedEls) // set global actived elements

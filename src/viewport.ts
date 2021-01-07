@@ -1,10 +1,10 @@
 /**
  * Viewport
- * 
+ *
  * scroll, zoom
  */
-import Editor from "./editor"
-import { getViewBox } from "./util/svg"
+import Editor from './editor'
+import { getViewBox } from './util/svg'
 
 export class Viewport {
   constructor(private editor: Editor) {}

@@ -1,5 +1,4 @@
-import { ToolAbstract } from "./ToolAbstract"
-
+import { ToolAbstract } from './ToolAbstract'
 
 class Pencil extends ToolAbstract {
   name() {

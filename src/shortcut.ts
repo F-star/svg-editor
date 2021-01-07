@@ -1,8 +1,8 @@
 /**
  * editor global shortcut
  */
-import { isDebug } from "./devConfig"
-import Editor from "./editor"
+import { isDebug } from './devConfig'
+import Editor from './editor'
 
 interface IRegisterItem {
   cmdName: string
@@ -22,31 +22,28 @@ export class Shortcut {
       const fn = this.registeredFns[pressKeyName]
       if (fn) {
         /** debug */
-        if(isDebug) {
+        if (isDebug) {
           console.log(pressKeyName)
         }
         /** debug end */
         e.preventDefault()
         fn.fn(e)
       }
-      
     }, false)
   }
   // this.register('undo', 'Ctrl+Z', () => { editor.execCommand('undo') })
   register(cmdName: string, shortcutName: string, fn: Function) {
     // TODO: valid shortcutName
     this.registeredFns[shortcutName] = { cmdName, fn }
-    
   }
   formatPrint() {
     const arr = []
-    for (let shortcutName in this.registeredFns) {
+    for (const shortcutName in this.registeredFns) {
       const cmdName = this.registeredFns[shortcutName].cmdName
       arr.push(cmdName + ': ' + shortcutName)
     }
     return arr.join(', ')
   }
-  
 }
 
 function getPressKeyName(e: KeyboardEvent) {
@@ -58,8 +55,7 @@ function getPressKeyName(e: KeyboardEvent) {
   // TODO: resolve all key
   if (/Key./.test(e.code)) {
     pressedKeys.push(e.code[e.code.length - 1])
-  }
-  else {
+  } else {
     pressedKeys.push(e.code)
   }
   const name = pressedKeys.join('+')

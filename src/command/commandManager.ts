@@ -1,14 +1,14 @@
 /**
  * CommandManager Class
- * 
- * 
+ *
+ *
  * CommandManager.undo()
  * CommandManager.redo()
  */
 
-import Editor from "../editor"
-import { ArrangingBack, ArrangingBackward, ArrangingForward, ArrangingFront } from "./arranging"
-import { AddRect, BaseCommand, DMove, removeSelectedElements, SetAttr } from "./commands"
+import Editor from '../editor'
+import { ArrangingBack, ArrangingBackward, ArrangingForward, ArrangingFront } from './arranging'
+import { AddRect, BaseCommand, DMove, removeSelectedElements, SetAttr } from './commands'
 
 class CommandManager {
   editor: Editor

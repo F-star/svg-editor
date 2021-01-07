@@ -1,6 +1,6 @@
-import Editor from "./editor"
-import { EditorEventContext } from "./editorEventContext"
-import { ToolAbstract } from "./modules/ToolAbstract"
+import Editor from './editor'
+import { EditorEventContext } from './editorEventContext'
+import { ToolAbstract } from './modules/ToolAbstract'
 
 export class ToolManager {
   private editor: Editor
@@ -59,14 +59,14 @@ export class ToolManager {
       ctx.pressMouse()
       this.currentTool.move(ctx) // move
     }, false)
-    
+
     svgRoot.addEventListener('mouseup', e => {
       // this.ctx.releaseMouse()
       const ctx = this.ctx
-      // ctx.setOriginEvent(e) // the offsetX and offsetY in mouseup and the last mousemove is not equal ?? 
+      // ctx.setOriginEvent(e) // the offsetX and offsetY in mouseup and the last mousemove is not equal ??
       const cursor = this.currentTool.cursorNormal()
       this.editor.setCursor(cursor)
-      
+
       this.currentTool.end(ctx)
       ctx.isEndInside = true
     }, false)

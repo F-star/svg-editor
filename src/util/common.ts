@@ -1,6 +1,6 @@
-import { FElement } from "../element/baseElement"
-import { Box, IBox } from "../element/box"
-import { FSVG } from "../element/index"
+import { FElement } from '../element/baseElement'
+import { Box, IBox } from '../element/box'
+import { FSVG } from '../element/index'
 
 export function isVaildColorVal() {
   // TODO:
@@ -23,7 +23,7 @@ export function getElementsInBox(box: IBox, parent: SVGElement) {
       if (!tagNameForbidList.includes(el.tagName)) {
         const bbox = (el as SVGGraphicsElement).getBBox()
         if (box.contains(bbox)) {
-          elsInBox.push( FSVG.create(el as SVGElement))
+          elsInBox.push(FSVG.create(el as SVGElement))
         }
       }
 

@@ -1,7 +1,7 @@
 
-import { EditorEventContext } from "../editorEventContext"
-import { getBoxBy2points } from "../util/math"
-import { ToolAbstract } from "./ToolAbstract"
+import { EditorEventContext } from '../editorEventContext'
+import { getBoxBy2points } from '../util/math'
+import { ToolAbstract } from './ToolAbstract'
 
 class AddRect extends ToolAbstract {
   constructor() {

@@ -9,11 +9,11 @@ import { ToolManager } from './toolManager'
 
 function activeBtn(name: string) {
   const selector = ({
-    'select': 'btn-select',
-    'addRect': 'btn-add-rect',
-    'dragCanvas': 'btn-drag-canvas',
+    select: 'btn-select',
+    addRect: 'btn-add-rect',
+    dragCanvas: 'btn-drag-canvas',
   } as {[key: string]: string})[name]
-  if (name == undefined) return
+  if (name === undefined) return
 
   const toolBar = document.querySelector('#tool-bar')
   const toolBtns = Array.prototype.slice.call(toolBar.children)
@@ -52,10 +52,10 @@ toolManager.bindToolEvent()
 editor.mount('#editor-area')
 editor.viewport.center()
 
-/** 
+/**
  * bind event in button
- */ 
-function bindClickHandler(selector: string, fn: GlobalEventHandlers["onclick"]) {
+ */
+function bindClickHandler(selector: string, fn: GlobalEventHandlers['onclick']) {
   const el: HTMLElement = document.querySelector(selector)
   el.onclick = fn
 }
@@ -166,15 +166,15 @@ document.querySelector('#shortcut').innerHTML = editor.shortcut.formatPrint()
 
 /**
  * 理想 api 使用例子
- * 
+ *
  * const editorBuilder = new Editor.builder()
  * editorBuilder
  *   .setCanvasSize(400, 300)
  *   .setStageSize(1000, 800)
  *   .setViewportSize(800, 500)
  *   .setZoom(100)
- * 
+ *
  * const editor = editorBuilder.build()
  * editor.registerTool(toolMove)
- * 
+ *
  */

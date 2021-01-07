@@ -1,7 +1,7 @@
-import { EditorEventContext } from "../editorEventContext"
-import { ToolAbstract } from "./ToolAbstract"
+import { EditorEventContext } from '../editorEventContext'
+import { ToolAbstract } from './ToolAbstract'
 
-export class DragCanvas  extends ToolAbstract {
+export class DragCanvas extends ToolAbstract {
   private startOffsetX: number
   private startOffsetY: number
 
@@ -28,7 +28,6 @@ export class DragCanvas  extends ToolAbstract {
     this.startOffsetY = scroll.y
   }
   move(ctx: EditorEventContext) {
-    const zoom = this.editor.viewport.getZoom()
     const { x: dx, y: dy } = ctx.getDiffPos()
     this.editor.viewport.setScroll(this.startOffsetX - dx, this.startOffsetY - dy)
   }

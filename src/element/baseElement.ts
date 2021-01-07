@@ -3,7 +3,7 @@
  * 对 SVG 元素的简单封装
  */
 
-import { FSVG } from "./index"
+import { FSVG } from './index'
 
 export class FElement {
   protected el_: SVGElement
@@ -108,4 +108,4 @@ export class FElement {
     this.setAttr('x', pos.x + dx + '')
     this.setAttr('y', pos.y + dy + '')
   }
- }
+}

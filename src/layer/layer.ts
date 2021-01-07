@@ -1,7 +1,7 @@
 
 /**
  * layer manager
- * 
+ *
  * TODO:
  */
 
@@ -12,7 +12,7 @@ class LayerManager {
     this.currentLayer = null
   }
   mount() {
-    
+
   }
   setCurrent() {
 
@@ -24,6 +24,6 @@ class LayerManager {
 
   }
   removeLayer() {
-    
+
   }
 }

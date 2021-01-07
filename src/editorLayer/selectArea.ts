@@ -12,7 +12,7 @@ export class SelectArea {
   container: SVGGElement
   outline: SVGPathElement
 
-  constructor(parent: HTMLElement) {
+  constructor(parent: SVGGElement) {
 
 
     this.container = document.createElementNS(NS.SVG, 'g') as SVGGElement
