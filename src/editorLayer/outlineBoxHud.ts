@@ -1,9 +1,9 @@
 /**
  * elements outline box
- * 
+ *
  */
 
-import { NS } from "../constants"
+import { NS } from '../constants'
 
 export class OutlineBoxHud {
   x = 0
@@ -41,7 +41,7 @@ export class OutlineBoxHud {
     this.h = h
 
     // why don't I use rect, just solve the condition when width or height is 0 the outline is disapper
-    const d = `M ${x} ${y} L ${x+w} ${y} L ${x+w} ${y+h} L ${x} ${y+h} Z`
+    const d = `M ${x} ${y} L ${x + w} ${y} L ${x + w} ${y + h} L ${x} ${y + h} Z`
     this.outline.setAttribute('d', d)
     this.outline.style.display = ''
   }
