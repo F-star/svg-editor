@@ -1,8 +1,18 @@
 import Editor from '../editor'
 import { FElement } from '../element/baseElement'
 import { FSVG } from '../element/index'
+import { Path } from '../element/path'
 import { Rect } from '../element/rect'
+import { EditorSetting } from '../setting/editorSetting'
 
+function setDefaultAttrsBySetting(el: FElement, setting: EditorSetting) {
+  const fill = setting.get('fill')
+  const stroke = setting.get('stroke')
+  const strokeWidth = setting.get('stroke-width')
+  el.setAttr('fill', fill)
+  el.setAttr('stroke', stroke)
+  el.setAttr('stroke-width', strokeWidth)
+}
 
 export abstract class BaseCommand {
   protected editor: Editor
@@ -19,7 +29,7 @@ export abstract class BaseCommand {
 }
 
 /**
- * addRect
+ * AddRect
  *
  * add rect svg element
  */
@@ -34,13 +44,7 @@ export class AddRect extends BaseCommand {
     // this.editor = editor
     const rect = new FSVG.Rect(x, y, w, h)
 
-    const fill = editor.setting.get('fill')
-    const stroke = editor.setting.get('stroke')
-    const strokeWidth = editor.setting.get('stroke-width')
-    rect.setAttr('fill', fill)
-    rect.setAttr('stroke', stroke)
-    rect.setAttr('stroke-width', strokeWidth)
-
+    setDefaultAttrsBySetting(rect, editor.setting)
     editor.getCurrentLayer().addChild(rect)
 
     this.nextSibling = rect.el().nextElementSibling
@@ -66,10 +70,55 @@ export class AddRect extends BaseCommand {
     this.editor.activedElsManager.clear()
   }
 }
+
+/**
+ * AddPath
+ *
+ * add path element
+ */
+export class AddPath extends BaseCommand {
+  // private editor: Editor
+  nextSibling: Element
+  parent: Element
+  el: Path
+
+  constructor(editor: Editor, d: string) {
+    super(editor)
+    // this.editor = editor
+    const el = new FSVG.Path()
+
+    setDefaultAttrsBySetting(el, editor.setting)
+    el.setAttr('d', d)
+
+    editor.getCurrentLayer().addChild(el)
+
+    this.nextSibling = el.el().nextElementSibling
+    this.parent = el.el().parentElement
+    this.el = el
+
+    this.editor.activedElsManager.setEls(this.el)
+  }
+  static cmdName() {
+    return 'addPath'
+  }
+  redo() {
+    const el = this.el.el()
+    if (this.nextSibling) {
+      this.parent.insertBefore(el, this.nextSibling)
+    } else {
+      this.parent.appendChild(el)
+    }
+    this.editor.activedElsManager.setEls(this.el)
+  }
+  undo() {
+    this.el.el().remove()
+    this.editor.activedElsManager.clear()
+  }
+}
 /**
  * remove elements
  */
-export class removeSelectedElements extends BaseCommand {
+export class RemoveElements extends BaseCommand {
   private els: Array<FElement>
   private parents: Array<HTMLElement>
   private nextSiblings: Array<Element>
@@ -89,9 +138,9 @@ export class removeSelectedElements extends BaseCommand {
     this.execute()
   }
   static cmdName() {
-    return 'removeSelectedElements'
+    return 'removeElements'
   }
-  execute() { // private
+  private execute() {
     this.els.forEach(item => {
       item.remove()
     })

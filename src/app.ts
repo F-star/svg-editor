@@ -1,10 +1,7 @@
 
 import Editor from './editor'
-import AddRect from './modules/addRect'
-import { DragCanvas } from './modules/dragCanvas'
 import CommandManager from './command/commandManager'
 import { EditorSetting } from './setting/editorSetting'
-import { Select } from './modules/select'
 import { ToolManager } from './toolManager'
 
 function activeBtn(name: string) {
@@ -12,6 +9,7 @@ function activeBtn(name: string) {
     select: 'btn-select',
     addRect: 'btn-add-rect',
     dragCanvas: 'btn-drag-canvas',
+    pencil: 'btn-pencil'
   } as {[key: string]: string})[name]
   if (name === undefined) return
 
@@ -33,13 +31,10 @@ const commandManager = new CommandManager(editor)
 editor.setCommandManager(commandManager)
 
 editor.setSetting(new EditorSetting())
-// register tools
 
 const toolManager = new ToolManager(editor)
 editor.setToolManager(toolManager)
-toolManager.registerTool(new AddRect())
-toolManager.registerTool(new DragCanvas())
-toolManager.registerTool(new Select())
+
 
 editor.toolManager.onSwitchTool((name: string) => {
   console.log('switched tool:', name)
@@ -67,16 +62,20 @@ bindClickHandler('#btn-redo', () => { editor.executeCommand('redo') })
 bindClickHandler('#btn-zoom-in', () => { editor.viewport.zoomIn() })
 // zoomOut
 bindClickHandler('#btn-zoom-out', () => { editor.viewport.zoomOut() })
-// select addRect tool
+
+// addRect tool
 bindClickHandler('#btn-add-rect', () => { editor.setCurrentTool('addRect') })
-// select dragcanvas tool
+// dragcanvas tool
 bindClickHandler('#btn-drag-canvas', () => { editor.setCurrentTool('dragCanvas') })
-// select tool
+// pencil
+bindClickHandler('#btn-pencil', () => { editor.setCurrentTool('pencil') })
+// select
 bindClickHandler('#btn-select', () => { editor.setCurrentTool('select') })
+
 // delete selected elements
 bindClickHandler('#btn-delete', () => {
   if (editor.activedElsManager.isNoEmpty()) {
-    editor.executeCommand('removeSelectedElements')
+    editor.executeCommand('removeElements')
   }
 })
 // front elements
@@ -159,7 +158,7 @@ editor.shortcut.register('Redo', 'Ctrl+Shift+Z', () => {
 })
 editor.shortcut.register('Delete', 'Backspace', () => {
   if (editor.activedElsManager.isNoEmpty()) {
-    editor.executeCommand('removeSelectedElements')
+    editor.executeCommand('removeElements')
   }
 })
 document.querySelector('#shortcut').innerHTML = editor.shortcut.formatPrint()

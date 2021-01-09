@@ -28,15 +28,15 @@ The simple features has added(of course with some bugs):
 - select multiple elements
 - arranging elements(front, frontward, backwar, back)
 - different tool cursors
+- pencil tool
 
 To do recently:
 
-- layer
-- pencil
-- draw bezier curve
-- export
-- record coordinate when move
 - zoom center position
+- layer operate
+- draw bezier curve
+- export svg file
+- record coordinate when move
 - element breadcrumb
 - UI
 

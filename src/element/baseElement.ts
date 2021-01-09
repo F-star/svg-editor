@@ -20,6 +20,9 @@ export class FElement {
   getAttr(prop: string) {
     return this.el_.getAttribute(prop)
   }
+  removeAttr(prop: string) {
+    this.el_.removeAttribute(prop)
+  }
   getBBox() {
     return (this.el_ as SVGGraphicsElement).getBBox()
   }
@@ -67,7 +70,7 @@ export class FElement {
   }
   forward() {
     const parent = this.el_.parentElement
-    const nextSibling = this.el_.nextSibling // FIXME:
+    const nextSibling = this.el_.nextSibling
     if (nextSibling) {
       parent.insertBefore(nextSibling, this.el_)
     }
@@ -107,5 +110,12 @@ export class FElement {
     const pos = this.getPos()
     this.setAttr('x', pos.x + dx + '')
     this.setAttr('y', pos.y + dy + '')
+  }
+
+  hide() {
+    this.el_.style.display = 'none'
+  }
+  visible() {
+    this.el_.removeAttribute('style')
   }
 }

@@ -8,7 +8,7 @@
 
 import Editor from '../editor'
 import { ArrangingBack, ArrangingBackward, ArrangingForward, ArrangingFront } from './arranging'
-import { AddRect, BaseCommand, DMove, removeSelectedElements, SetAttr } from './commands'
+import { AddPath, AddRect, BaseCommand, DMove, RemoveElements, SetAttr } from './commands'
 
 class CommandManager {
   editor: Editor
@@ -23,9 +23,10 @@ class CommandManager {
     this.commandClasses = {}
 
     this.resigterCommandClass(AddRect, AddRect.cmdName())
+    this.resigterCommandClass(AddPath, AddPath.cmdName())
     this.resigterCommandClass(DMove, DMove.cmdName())
     this.resigterCommandClass(SetAttr, SetAttr.cmdName())
-    this.resigterCommandClass(removeSelectedElements, removeSelectedElements.cmdName())
+    this.resigterCommandClass(RemoveElements, RemoveElements.cmdName())
     this.resigterCommandClass(ArrangingFront, ArrangingFront.cmdName())
     this.resigterCommandClass(ArrangingBack, ArrangingBack.cmdName())
     this.resigterCommandClass(ArrangingForward, ArrangingForward.cmdName())

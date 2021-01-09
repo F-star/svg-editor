@@ -1,5 +1,10 @@
 import Editor from './editor'
 import { EditorEventContext } from './editorEventContext'
+import AddRect from './modules/addRect'
+import { DragCanvas } from './modules/dragCanvas'
+import { Select } from './modules/select'
+import { Pencil } from './modules/pencil'
+
 import { ToolAbstract } from './modules/ToolAbstract'
 
 export class ToolManager {
@@ -16,6 +21,11 @@ export class ToolManager {
     this.invokeWhenSwitch = () => {}
 
     this.ctx = null // tool context
+
+    this.registerTool(new AddRect())
+    this.registerTool(new DragCanvas())
+    this.registerTool(new Select())
+    this.registerTool(new Pencil())
   }
   setCurrentTool(name: string) {
     this.currentTool = this.tools[name]

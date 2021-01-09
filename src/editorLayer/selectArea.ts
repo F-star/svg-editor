@@ -1,5 +1,5 @@
 
-import { NS } from "../constants"
+import { NS } from '../constants'
 
 /**
  * select area
@@ -13,8 +13,6 @@ export class SelectArea {
   outline: SVGPathElement
 
   constructor(parent: SVGGElement) {
-
-
     this.container = document.createElementNS(NS.SVG, 'g') as SVGGElement
     this.container.id = 'select-area'
     parent.appendChild(this.container)
@@ -28,7 +26,6 @@ export class SelectArea {
     this.container.appendChild(this.outline)
   }
   clear() {
-    // parent.innerHTML = ''
     this.x = this.y = this.w = this.h = 0
     this.outline.style.display = 'none'
   }
@@ -39,7 +36,7 @@ export class SelectArea {
     this.h = h
 
     // why don't I use rect, just solve the condition when width or height is 0 the outline is disapper
-    const d = `M ${x} ${y} L ${x+w} ${y} L ${x+w} ${y+h} L ${x} ${y+h} Z`
+    const d = `M ${x} ${y} L ${x + w} ${y} L ${x + w} ${y + h} L ${x} ${y + h} Z`
     this.outline.setAttribute('d', d)
 
     /* this.outline.setAttribute('x', x)
