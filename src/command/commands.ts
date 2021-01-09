@@ -84,12 +84,10 @@ export class AddPath extends BaseCommand {
 
   constructor(editor: Editor, d: string) {
     super(editor)
-    // this.editor = editor
     const el = new FSVG.Path()
 
     setDefaultAttrsBySetting(el, editor.setting)
     el.setAttr('d', d)
-
     editor.getCurrentLayer().addChild(el)
 
     this.nextSibling = el.el().nextElementSibling

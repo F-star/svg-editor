@@ -12,7 +12,6 @@ export class Pencil extends ToolAbstract {
     return 'default'
   }
   start(ctx: EditorEventContext) {
-    // this.editor.getCurrentLayer()
     console.log('pencil start')
     const { x, y } = ctx.getPos()
     this.editor.hudManager.pencilDraw.addPoint(x, y)
@@ -24,6 +23,8 @@ export class Pencil extends ToolAbstract {
   private doWhenEndOrEndOutside() {
     const d = this.editor.hudManager.pencilDraw.getD()
     this.editor.hudManager.pencilDraw.clear()
+
+    this.editor.setting.set('fill', 'none')
     this.editor.executeCommand('addPath', d)
   }
   end() { this.doWhenEndOrEndOutside() }

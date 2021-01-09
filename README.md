@@ -5,7 +5,9 @@ A simple web svg editor. Built by typescript.
 
 Developing...
 
-Try the editor: https://f-star.github.io/svg-editor/dist/
+Try the editor: https://blog.fstars.wang/app/svg-editor/
+
+Backup url(not latest): https://f-star.github.io/svg-editor/dist/
 
 Run project:
 
@@ -37,6 +39,7 @@ To do recently:
 - draw bezier curve
 - export svg file
 - record coordinate when move
+- element info card
 - element breadcrumb
 - UI
 

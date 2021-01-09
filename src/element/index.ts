@@ -15,7 +15,10 @@ function create(el: SVGElement): FElement {
     return new FSVG.Rect(el as SVGRectElement)
   } else if (tagName === 'g') {
     return new FSVG.Group(el)
-  } else {
+  } else if (tagName === 'path') {
+    return new FSVG.Path(el)
+  }
+  else {
     throw new Error(`Can not creat ${tagName} instance, no match class.`)
   }
 }
