@@ -4,6 +4,7 @@ import AddRect from './modules/addRect'
 import { DragCanvas } from './modules/dragCanvas'
 import { Select } from './modules/select'
 import { Pencil } from './modules/pencil'
+import { AddPath } from './modules/addPath/addPath'
 
 import { ToolAbstract } from './modules/ToolAbstract'
 
@@ -26,6 +27,7 @@ export class ToolManager {
     this.registerTool(new DragCanvas())
     this.registerTool(new Select())
     this.registerTool(new Pencil())
+    this.registerTool(new AddPath())
   }
   setCurrentTool(name: string) {
     this.currentTool = this.tools[name]
@@ -82,7 +84,7 @@ export class ToolManager {
     }, false)
 
     window.addEventListener('mouseup', () => {
-      if (this.ctx && this.ctx.isEndInside == false) {
+      if (this.ctx && this.ctx.isEndInside === false) {
         this.currentTool.endOutside(this.ctx)
       }
       this.ctx = null

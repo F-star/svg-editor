@@ -9,7 +9,8 @@ function activeBtn(name: string) {
     select: 'btn-select',
     addRect: 'btn-add-rect',
     dragCanvas: 'btn-drag-canvas',
-    pencil: 'btn-pencil'
+    pencil: 'btn-pencil',
+    addPath: 'btn-add-path'
   } as {[key: string]: string})[name]
   if (name === undefined) return
 
@@ -41,7 +42,7 @@ editor.toolManager.onSwitchTool((name: string) => {
   activeBtn(name)
 })
 
-toolManager.setCurrentTool('addRect')
+toolManager.setCurrentTool('addPath')
 toolManager.bindToolEvent()
 
 editor.mount('#editor-area')
@@ -69,6 +70,8 @@ bindClickHandler('#btn-add-rect', () => { editor.setCurrentTool('addRect') })
 bindClickHandler('#btn-drag-canvas', () => { editor.setCurrentTool('dragCanvas') })
 // pencil
 bindClickHandler('#btn-pencil', () => { editor.setCurrentTool('pencil') })
+// add-path
+bindClickHandler('#btn-add-path', () => { editor.setCurrentTool('addPath') })
 // select
 bindClickHandler('#btn-select', () => { editor.setCurrentTool('select') })
 

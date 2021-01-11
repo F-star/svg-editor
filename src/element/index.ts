@@ -2,6 +2,7 @@ import { Box } from './box'
 import { Rect } from './rect'
 import { Group } from './group'
 import { Path } from './path'
+import { Line } from './line'
 import { FElement } from './baseElement'
 
 /**
@@ -17,12 +18,10 @@ function create(el: SVGElement): FElement {
     return new FSVG.Group(el)
   } else if (tagName === 'path') {
     return new FSVG.Path(el)
-  }
-  else {
+  } else {
     throw new Error(`Can not creat ${tagName} instance, no match class.`)
   }
 }
-
 
 export const FSVG = {
   create,
@@ -30,4 +29,5 @@ export const FSVG = {
   Box,
   Group,
   Path,
+  Line,
 }

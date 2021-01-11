@@ -10,11 +10,7 @@
 /**
  * guide drawing path
  */
-interface IPoint {
-  x: number
-  y: number
-}
-
+import { IPoint } from '../../interface'
 
 class PathGuide {
   constructor() {}
@@ -77,6 +73,6 @@ class PathOutline {
     this.pathItems = []
   }
   draw() {
-    
+
   }
 }

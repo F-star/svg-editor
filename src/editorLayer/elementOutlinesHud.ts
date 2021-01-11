@@ -1,10 +1,10 @@
 /**
  * elements outlines
- * 
+ *
  * TODO:
  */
 
-import { NS } from "../constants"
+import { NS } from '../constants'
 
 export class ElementsOutlinesHub {
   container: SVGGElement

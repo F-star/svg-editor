@@ -23,6 +23,16 @@ export class Rect extends FElement {
       this.setAttr('height', h + '')
     }
   }
+  setPos(x: number, y: number) {
+    this.setAttr('x', String(x))
+    this.setAttr('y', String(y))
+  }
+  setCenterPos(cx: number, cy: number) {
+    const w = parseFloat(this.getAttr('width'))
+    const h = parseFloat(this.getAttr('height'))
+
+    this.setPos(cx - w / 2, cy - h / 2)
+  }
   // getPos() {
   //   const x = parseFloat(this.getAttr('x'))
   //   const y = parseFloat(this.getAttr('y'))
