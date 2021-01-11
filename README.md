@@ -34,9 +34,9 @@ The simple features has added(of course with some bugs):
 
 To do recently:
 
+- draw bezier curve
 - zoom center position
 - layer operate
-- draw bezier curve
 - export svg file
 - record coordinate when move
 - element info card
@@ -56,4 +56,5 @@ editor
   shortcut
   viewport(scroll, zoom)
   ...
+FSVG
 ```

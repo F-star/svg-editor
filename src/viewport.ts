@@ -28,6 +28,15 @@ export class Viewport {
       y: parseFloat(this.editor.svgStage.getAttribute('y')),
     }
   }
+  getViewportCenter() {
+    // FIXME:
+    const w = parseFloat(this.editor.svgStage.getAttribute('width'))
+    const h = parseFloat(this.editor.svgStage.getAttribute('height'))
+    return {
+      x: w / 2,
+      y: h / 2,
+    }
+  }
 
   /**
    * zoom
@@ -39,13 +48,27 @@ export class Viewport {
     return zoom
   }
   setZoom(zoom: number, cx?: number, cy?: number) {
-    // TODO:
-    console.log(zoom)
+    if (cx === undefined) {
+      const point = this.getViewportCenter()
+      cx = point.x
+      cy = point.y
+    }
+    // TODO: has deviation, to optimize.
+    // adjust scroll position
+    const { x: scrollX, y: scrollY } = this.getScroll()
+    const { x: offsetX, y: offsetY } = this.getContentOffset()
+    const oldZoom = this.getZoom()
+    const dx = cx + offsetX - scrollX
+    const dy = cy + offsetY - scrollY
+    const newX = (cx + offsetX) * zoom / oldZoom - dx
+    const newY = (cy + offsetY) * zoom / oldZoom - dy
+    this.setScroll(newX, newY)
+
     const viewBox = getViewBox(this.editor.svgRoot)
     const width = viewBox.w * zoom
     const height = viewBox.h * zoom
-    this.editor.svgRoot.setAttribute('width', width + '')
-    this.editor.svgRoot.setAttribute('height', height + '')
+    this.editor.svgRoot.setAttribute('width', String(width))
+    this.editor.svgRoot.setAttribute('height', String(height))
   }
   zoomIn(cx?: number, cy?: number) {
     const currentZoom = this.getZoom()

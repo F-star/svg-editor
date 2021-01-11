@@ -37,8 +37,8 @@ class Editor {
 
     const viewportW = 800
     const viewportH = 550
-    const svgRootW = 1000
-    const svgRootH = 600
+    const svgRootW = 3000
+    const svgRootH = 1500
     const svgStageW = 520
     const svgStageH = 400
 
@@ -66,10 +66,10 @@ class Editor {
 
     const svgStage = document.createElementNS('http://www.w3.org/2000/svg', 'svg')
     svgStage.id = 'svg-stage'
-    svgStage.setAttribute('width', svgStageW + '')
-    svgStage.setAttribute('height', svgStageH + '')
-    svgStage.setAttribute('x', Math.floor((svgRootW - svgStageW) / 2) + '')
-    svgStage.setAttribute('y', Math.floor((svgRootH - svgStageH) / 2) + '')
+    svgStage.setAttribute('width', String(svgStageW))
+    svgStage.setAttribute('height', String(svgStageH))
+    svgStage.setAttribute('x', String(Math.floor((svgRootW - svgStageW) / 2)))
+    svgStage.setAttribute('y', String(Math.floor((svgRootH - svgStageH) / 2)))
     svgStage.style.overflow = 'visible'
     this.svgStage = svgStage
 

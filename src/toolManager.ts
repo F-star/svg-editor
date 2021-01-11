@@ -5,6 +5,7 @@ import { DragCanvas } from './modules/dragCanvas'
 import { Select } from './modules/select'
 import { Pencil } from './modules/pencil'
 import { AddPath } from './modules/addPath/addPath'
+import { Zoom } from './modules/zoom'
 
 import { ToolAbstract } from './modules/ToolAbstract'
 
@@ -28,6 +29,7 @@ export class ToolManager {
     this.registerTool(new Select())
     this.registerTool(new Pencil())
     this.registerTool(new AddPath())
+    this.registerTool(new Zoom())
   }
   setCurrentTool(name: string) {
     this.currentTool = this.tools[name]

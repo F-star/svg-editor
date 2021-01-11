@@ -10,7 +10,8 @@ function activeBtn(name: string) {
     addRect: 'btn-add-rect',
     dragCanvas: 'btn-drag-canvas',
     pencil: 'btn-pencil',
-    addPath: 'btn-add-path'
+    addPath: 'btn-add-path',
+    zoom: 'btn-zoom',
   } as {[key: string]: string})[name]
   if (name === undefined) return
 
@@ -74,6 +75,8 @@ bindClickHandler('#btn-pencil', () => { editor.setCurrentTool('pencil') })
 bindClickHandler('#btn-add-path', () => { editor.setCurrentTool('addPath') })
 // select
 bindClickHandler('#btn-select', () => { editor.setCurrentTool('select') })
+// zoom
+bindClickHandler('#btn-zoom', () => { editor.setCurrentTool('zoom') })
 
 // delete selected elements
 bindClickHandler('#btn-delete', () => {
