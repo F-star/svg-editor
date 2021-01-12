@@ -21,6 +21,7 @@ export class Zoom extends ToolAbstract {
     this.editor.viewport.zoomIn(x, y)
   }
   move(ctx: EditorEventContext) {
+    // TODO:
     /* const { x: dx, y: dy } = ctx.getDiffPos()
     const distance = Math.sqrt(dx * dx + dy * dy)
     console.log(distance) */

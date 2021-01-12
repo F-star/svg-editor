@@ -53,15 +53,14 @@ export class Viewport {
       cx = point.x
       cy = point.y
     }
-    // TODO: has deviation, to optimize.
     // adjust scroll position
     const { x: scrollX, y: scrollY } = this.getScroll()
     const { x: offsetX, y: offsetY } = this.getContentOffset()
     const oldZoom = this.getZoom()
-    const dx = cx + offsetX - scrollX
-    const dy = cy + offsetY - scrollY
-    const newX = (cx + offsetX) * zoom / oldZoom - dx
-    const newY = (cy + offsetY) * zoom / oldZoom - dy
+    const dx = (cx + offsetX) * oldZoom - scrollX
+    const dy = (cy + offsetY) * oldZoom - scrollY
+    const newX = (cx + offsetX) * zoom - dx
+    const newY = (cy + offsetY) * zoom - dy
     this.setScroll(newX, newY)
 
     const viewBox = getViewBox(this.editor.svgRoot)

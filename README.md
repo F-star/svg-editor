@@ -43,6 +43,11 @@ To do recently:
 - element breadcrumb
 - UI
 
+To fix bugs:
+
+- (should) Only enable left mouse click when using tool
+- Get fill/stroke when setting actived elements
+
 ---
 
 Code construction:
@@ -50,7 +55,7 @@ Code construction:
 ```
 editor
   setting
-  toolManager
+  toolManager(add rect, select...)
   commandManager
   activedElsManager
   shortcut
