@@ -4,9 +4,7 @@ import CommandManager from './command/commandManager'
 import { EditorSetting } from './setting/editorSetting'
 import { ToolManager } from './toolManager'
 
-import './static/static.css'
-import './static/box.css'
-import './views/test.tsx'
+import './views/App.tsx'
 
 
 function activeBtn(name: string) {

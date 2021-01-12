@@ -25,7 +25,8 @@ module.exports = env => {
 
   const config = {
     mode: env.prod ? 'production' : 'development',
-    entry: './src/app.ts',
+    // entry: './src/app.ts',
+    entry: './src/views/index.tsx',
     output: {
       filename: 'app.[contenthash:8].js',
       path: path.resolve(__dirname, 'dist'),
