@@ -35,13 +35,12 @@ The simple features has added(of course with some bugs):
 To do recently:
 
 - draw bezier curve
-- zoom center position
-- layer operate
+- UI(using React)
+- layer operation
 - export svg file
 - record coordinate when move
 - element info card
 - element breadcrumb
-- UI
 
 To fix bugs:
 

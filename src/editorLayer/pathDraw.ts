@@ -14,6 +14,32 @@ interface ISegment {
   handleOut: IPoint
 }
 
+// TODO: replace ISegment
+class Segment {
+  constructor(
+    public x: number, public y: number,
+    public handleIn: IPoint, public handleOut: IPoint
+  ) {}
+  getHandleInOrAnchor(): IPoint {
+    if (this.handleIn) {
+      return this.handleIn
+    }
+    return { x: this.x, y: this.y }
+  }
+  getHandleOutOrAnchor(): IPoint {
+    if (this.handleOut) {
+      return this.handleOut
+    }
+    return { x: this.x, y: this.y }
+  }
+  hasHandleIn() {
+    return !!this.handleIn
+  }
+  hasHandleOut() {
+    return !!this.handleOut
+  }
+}
+
 /**
  * predict segment
  */
