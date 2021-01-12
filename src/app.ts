@@ -4,6 +4,11 @@ import CommandManager from './command/commandManager'
 import { EditorSetting } from './setting/editorSetting'
 import { ToolManager } from './toolManager'
 
+import './static/static.css'
+import './static/box.css'
+import './views/test.tsx'
+
+
 function activeBtn(name: string) {
   const selector = ({
     select: 'btn-select',

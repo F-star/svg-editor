@@ -2,12 +2,16 @@ const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const TerserPlugin = require('terser-webpack-plugin')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
 function createPlugins(env) {
   if (env.prod) {
     return [
       new CleanWebpackPlugin(),
       new HtmlWebpackPlugin({ template: 'src/index.html' }),
+      new MiniCssExtractPlugin({
+        filename: '[name].[contenthash:8].css'
+      })
     ]
   }
   return [
@@ -22,9 +26,8 @@ module.exports = env => {
   const config = {
     mode: env.prod ? 'production' : 'development',
     entry: './src/app.ts',
-    // entry: './ts-test/test.ts',
     output: {
-      filename: 'app.[contenthash].js',
+      filename: 'app.[contenthash:8].js',
       path: path.resolve(__dirname, 'dist'),
     },
 
@@ -40,22 +43,30 @@ module.exports = env => {
           exclude: /node_modules/,
         },
         {
-          test: /\.js$/,
+          test: /\.jsx?$/,
           exclude: /node_modules/,
           use: {
             loader: 'babel-loader',
             options: {
               presets: [
-                ['@babel/preset-env', { targets: 'defaults' }]
+                ['@babel/preset-env', { targets: 'defaults' }],
+                '@babel/preset-react',
               ]
             },
           }
         },
+        {
+          test: /\.css$/,
+          use: [
+            env.prod ? MiniCssExtractPlugin.loader : 'style-loader',
+            'css-loader'
+          ]
+        }
       ],
     },
     // TODO: how does it work
     resolve: {
-      extensions: ['.ts', '.tsx', '.js'],
+      extensions: ['.ts', '.tsx', '.js', 'jsx'],
     },
     plugins: createPlugins(env),
     optimization: env.prod
