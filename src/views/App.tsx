@@ -11,7 +11,7 @@ class App extends React.Component {
 
   render() {
     return (
-      <div>
+      <div style={{ overflow: 'hidden' }}>
         <EditorHeader />
         <div style={{ display: 'flex', height: 'calc(100vh - 30px)' }}>
           <ToolBar />

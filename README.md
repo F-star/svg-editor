@@ -45,7 +45,9 @@ To do recently:
 To fix bugs:
 
 - (should) Only enable left mouse click when using tool
-- Get fill/stroke when setting actived elements
+- Get right fill/stroke when setting actived elements
+- Move elements when zoom is not 100%
+- Different effect of `event.offsetX` between Chrome and Firefox
 
 ---
 

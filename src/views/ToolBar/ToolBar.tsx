@@ -2,13 +2,13 @@ import React from 'react'
 import styled from 'styled-components'
 import Editor from '../../editor'
 import ToolItem from './ToolItem'
-
+import defaultConfig from '../../config/editorDefaultConfig'
 
 class ToolBar extends React.Component<any, any> {
   constructor(props: any) {
     super(props)
     this.state = {
-      tool: '',
+      tool: defaultConfig.tool,
     }
   }
 
@@ -20,18 +20,19 @@ class ToolBar extends React.Component<any, any> {
 
   render() {
     const StyleToolBar = styled.div`
-      margin-top: 20px;
+      padding-top: 10px;
       width: 60px;
       height: 100%;
-      background-color: #eee;
+      flex-shrink: 0;
+      background-color: #555;
     `
 
     const toolItems = [
+      { name: 'select', value: 'select' },
       { name: 'rect', value: 'addRect' },
-      { name: 'move', value: 'dragCanvas' },
       { name: 'pencil', value: 'pencil' },
       { name: 'path', value: 'addPath' },
-      { name: 'select', value: 'select' },
+      { name: 'pan', value: 'dragCanvas' },
       { name: 'zoom', value: 'zoom' },
     ]
 

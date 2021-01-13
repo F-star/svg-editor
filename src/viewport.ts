@@ -71,11 +71,11 @@ export class Viewport {
   }
   zoomIn(cx?: number, cy?: number) {
     const currentZoom = this.getZoom()
-    this.setZoom(currentZoom + 0.1, cx, cy)
+    this.setZoom(currentZoom + 0.2, cx, cy)
   }
   zoomOut(cx?: number, cy?: number) {
     const currentZoom = this.getZoom()
-    this.setZoom(currentZoom - 0.1, cx, cy)
+    this.setZoom(currentZoom - 0.2, cx, cy)
   }
   // get viewport center pos, parse to svg pos
   // getCenter() {

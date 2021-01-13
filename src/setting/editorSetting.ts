@@ -1,3 +1,4 @@
+import defaultConfig from '../config/editorDefaultConfig'
 
 export class EditorSetting {
   private setting: {[prop: string]: string}
@@ -13,9 +14,9 @@ export class EditorSetting {
       // outlineColor
     }
     this.bindedEventFns = {}
-    this.setFill('#fff')
-    this.setStroke('#000')
-    this.set('stroke-width', '1px')
+    this.setFill(defaultConfig.fill)
+    this.setStroke(defaultConfig.stroke)
+    this.set('stroke-width', defaultConfig.strokeWidth)
   }
   setFill(val: string) {
     this.set('fill', val)

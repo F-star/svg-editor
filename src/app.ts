@@ -3,24 +3,30 @@ import Editor from './editor'
 import CommandManager from './command/commandManager'
 import { EditorSetting } from './setting/editorSetting'
 import { ToolManager } from './toolManager'
-
+import defaultConfig from './config/editorDefaultConfig'
 
 function initEditorAndMount(selector: string) {
   const editor = new Editor()
-
   ;(window as any).editor = editor // debug in devtool
 
   const commandManager = new CommandManager(editor)
   editor.setCommandManager(commandManager)
-
   editor.setSetting(new EditorSetting())
-
   const toolManager = new ToolManager(editor)
   editor.setToolManager(toolManager)
-
-  // default tool
-  toolManager.setCurrentTool('addPath')
+  toolManager.setCurrentTool(defaultConfig.tool)
   toolManager.bindToolEvent()
+
+  // register shortcut
+  editor.shortcut.register('Undo', 'Cmd+Z', () => { editor.executeCommand('undo') })
+  editor.shortcut.register('Undo', 'Ctrl+Z', () => { editor.executeCommand('undo') })
+  editor.shortcut.register('Redo', 'Cmd+Shift+Z', () => { editor.executeCommand('redo') })
+  editor.shortcut.register('Redo', 'Ctrl+Shift+Z', () => { editor.executeCommand('redo') })
+  editor.shortcut.register('Delete', 'Backspace', () => {
+    if (editor.activedElsManager.isNoEmpty()) {
+      editor.executeCommand('removeElements')
+    }
+  })
 
   editor.mount(selector)
   editor.viewport.center()

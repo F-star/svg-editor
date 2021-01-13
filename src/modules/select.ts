@@ -75,10 +75,11 @@ export class Select extends ToolAbstract {
 
     // move selected elements
     const { x: dx, y: dy } = ctx.getDiffPos()
+    const zoom = this.editor.viewport.getZoom()
     const outlineBoxHud = this.editor.hudManager.outlineBoxHud
     const w = outlineBoxHud.getWidth()
     const h = outlineBoxHud.getHeight()
-    outlineBoxHud.drawRect(this.outlineStartX + dx, this.outlineStartY + dy, w, h)
+    outlineBoxHud.drawRect(this.outlineStartX + dx / zoom, this.outlineStartY + dy / zoom, w, h)
   }
   end(ctx: EditorEventContext) {
     if (!this.hasSelectedElsWhenStart()) { // finished drawn selecting area
@@ -92,7 +93,8 @@ export class Select extends ToolAbstract {
     this.editor.hudManager.outlineBoxHud.clear()
 
     const { x: dx, y: dy } = ctx.getDiffPos()
-    this.editor.executeCommand('dmove', this.selectedEls, dx, dy)
+    const zoom = this.editor.viewport.getZoom()
+    this.editor.executeCommand('dmove', this.selectedEls, dx / zoom, dy / zoom)
     this.editor.activedElsManager.setEls(this.selectedEls) // set global actived elements
     this.selectedEls = []
   }

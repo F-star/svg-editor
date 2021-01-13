@@ -1,7 +1,7 @@
 /**
  * editor global shortcut
  */
-import { isDebug } from './devConfig'
+import { isDebug } from './config/devConfig'
 import Editor from './editor'
 
 interface IRegisterItem {
