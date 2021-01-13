@@ -35,27 +35,28 @@ class Editor {
     this.layerManager = new LayerManager(this)
     this.hudManager = new HudManager()
 
-    const viewportW = 800
-    const viewportH = 550
     const svgRootW = 3000
     const svgRootH = 1500
     const svgStageW = 520
     const svgStageH = 400
 
-    const viewportElement = document.createElement('div')
+    /** */
+    /* const viewportElement = document.createElement('div')
     viewportElement.id = 'viewportElement'
     viewportElement.style.border = '1px solid #000'
     viewportElement.style.width = viewportW + 'px'
     viewportElement.style.height = viewportH + 'px'
-    this.viewportElement = viewportElement
+    this.viewportElement = viewportElement */
+    this.viewportElement = null
+    /** */
 
-    const svgContainer = document.createElement('div')
+    /* const svgContainer = document.createElement('div')
     svgContainer.id = 'svg-container'
     svgContainer.style.backgroundColor = '#ddd'
     svgContainer.style.width = viewportW + 'px'
     svgContainer.style.height = viewportH + 'px'
-    svgContainer.style.overflow = 'scroll'
-    this.svgContainer = svgContainer
+    svgContainer.style.overflow = 'scroll' */
+    this.svgContainer = null
 
     const svgRoot = document.createElementNS('http://www.w3.org/2000/svg', 'svg')
     svgRoot.id = 'svg-root'
@@ -93,8 +94,6 @@ class Editor {
     svgContent.setAttribute('y', '0')
     this.svgContent = svgContent
 
-    viewportElement.appendChild(svgContainer)
-    svgContainer.appendChild(svgRoot)
     svgRoot.appendChild(svgStage)
 
     svgStage.appendChild(svgBg)
@@ -104,11 +103,32 @@ class Editor {
     this.layerManager.createInitLayerAndMount()
     this.hudManager.mount(svgStage)
 
+    /** mount!! */
+    // viewportElement.appendChild(svgContainer)
     // document.body.appendChild(viewportElement)
   }
   mount(selector: string) {
-    const mountNode = document.querySelector(selector)
-    mountNode.appendChild(this.viewportElement)
+    console.log('go')
+
+    // const viewportW = 800
+    // const viewportH = 550
+    const viewportElement = document.querySelector(selector) as HTMLDivElement // document.createElement('div')
+    // viewportElement.id = 'viewportElement'
+    // viewportElement.style.border = '1px solid #000'
+    // viewportElement.style.width = viewportW + 'px'
+    // viewportElement.style.height = viewportH + 'px'
+    this.viewportElement = viewportElement
+
+    const svgContainer = document.createElement('div')
+    svgContainer.id = 'svg-container'
+    svgContainer.style.backgroundColor = '#999'
+    svgContainer.style.width = this.viewport.getViewportWidth() + 'px' // '100%' // viewportW + 'px'
+    svgContainer.style.height = this.viewport.getViewportHeight() + 'px' // '100%' // viewportH + 'px'
+    svgContainer.style.overflow = 'scroll'
+    this.svgContainer = svgContainer
+
+    svgContainer.appendChild(this.svgRoot)
+    viewportElement.appendChild(svgContainer)
   }
   getCurrentLayer() {
     return this.layerManager.getCurrent()

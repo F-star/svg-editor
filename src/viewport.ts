@@ -84,17 +84,30 @@ export class Viewport {
   center() {
     const scrollWidth = this.getSVGRootBox('width')
     const scrollHeight = this.getSVGRootBox('height')
-    const viewportWidth = this.getViewportBox('width')
-    const viewportHeight = this.getViewportBox('height')
+    const viewportWidth = this.getViewportWidth()
+    const viewportHeight = this.getViewportHeight()
     this.setScroll(
       (scrollWidth - viewportWidth) / 2,
       (scrollHeight - viewportHeight) / 2
     )
   }
 
-  getViewportBox(prop: any) {
-    return parseFloat(this.editor.viewportElement.style[prop])
+  getViewportWidth(): number {
+    const widthVal = this.editor.viewportElement.getAttribute('width')
+    if (widthVal) {
+      return parseFloat(widthVal)
+    }
+    return this.editor.viewportElement.offsetWidth
   }
+
+  getViewportHeight(): number {
+    const val = this.editor.viewportElement.getAttribute('height')
+    if (val) {
+      return parseFloat(val)
+    }
+    return this.editor.viewportElement.offsetHeight
+  }
+
   getSVGRootBox(prop: string) {
     return parseFloat(this.editor.svgRoot.getAttribute(prop))
   }
