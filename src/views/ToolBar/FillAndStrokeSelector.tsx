@@ -61,7 +61,7 @@ class FillAndStrokeSelector extends React.Component<any, Props> {
     const Fill = (
       <div
         style={{
-          margin: '5px auto',
+          margin: '6px auto',
           width: 30,
           height: 30,
           backgroundColor: this.state.fill,
@@ -73,7 +73,7 @@ class FillAndStrokeSelector extends React.Component<any, Props> {
     const Stroke = (
       <div
         style={{
-          margin: '5px auto',
+          margin: '6px auto',
           width: 30,
           height: 30,
           border: `4px solid ${this.state.stroke}`,
@@ -85,7 +85,7 @@ class FillAndStrokeSelector extends React.Component<any, Props> {
 
     return (
       <div style={{
-        paddingBottom: 20,
+        paddingTop: 15,
       }}>
         {Fill}
         {Stroke}

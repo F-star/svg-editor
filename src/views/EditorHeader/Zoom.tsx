@@ -2,21 +2,21 @@ import React from 'react'
 import globalVar from '../common/globalVar'
 
 type States = {
-  zoom: number
+  zoom: string
 }
 
 class Zoom extends React.Component<any, States> {
   constructor(props: any) {
     super(props)
     this.state = {
-      zoom: 1,
+      zoom: '100%',
     }
   }
 
   componentDidMount() {
     const editor = globalVar.editor
     editor.viewport.onZoomChange(zoom => {
-      this.setState({ zoom })
+      this.setState({ zoom: (zoom * 100).toFixed(2) + '%' })
     })
   }
 
@@ -24,7 +24,14 @@ class Zoom extends React.Component<any, States> {
     return (
       <div style={{ marginLeft: 20, color: '#fff', fontSize: '12px' }}>
         zoom:
-        <div style={{ display: 'inline-block' }}>{this.state.zoom}</div>
+        <span style={{
+          display: 'inline-block',
+          marginLeft: 10,
+          paddingLeft: 4,
+          width: 60,
+          backgroundColor: '#fff',
+          color: '#333'
+        }}>{this.state.zoom}</span>
       </div>
     )
   }

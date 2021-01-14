@@ -37,8 +37,8 @@ class Editor {
 
     const svgRootW = 3000
     const svgRootH = 1500
-    const svgStageW = 520
-    const svgStageH = 400
+    const svgStageW = 900
+    const svgStageH = 600
 
     this.viewportElement = null
     this.svgContainer = null
