@@ -1,18 +1,16 @@
 svg-editor
 ---
 
-A simple web svg editor. Built by typescript.
+A simple web svg editor. Built by Typescript.
 
 Developing...
 
 Try the editor: https://blog.fstars.wang/app/svg-editor/
 
-Backup url(not latest): https://f-star.github.io/svg-editor/dist/
-
 Run project:
 
 ```sh
-npm i
+npm install
 npm run dev
 ```
 
@@ -31,12 +29,13 @@ The simple features has added(of course with some bugs):
 - Arranging elements(front, frontward, backwar, back)
 - Different tool cursors
 - Pencil tool
+- UI(using React)
 
 To do recently:
 
-- UI(using React)
 - Contectmenu
 - Draw bezier curve
+- Making icons
 - Layer operation
 - Export svg file
 - Record coordinate when move
