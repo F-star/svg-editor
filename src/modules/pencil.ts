@@ -12,7 +12,6 @@ export class Pencil extends ToolAbstract {
     return 'default'
   }
   start(ctx: EditorEventContext) {
-    console.log('pencil start')
     const { x, y } = ctx.getPos()
     this.editor.hudManager.pencilDraw.addPoint(x, y)
   }

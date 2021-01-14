@@ -77,6 +77,7 @@ export class ToolManager {
     svgRoot.addEventListener('mouseup', e => {
       // this.ctx.releaseMouse()
       const ctx = this.ctx
+      if (!ctx) return
       // ctx.setOriginEvent(e) // the offsetX and offsetY in mouseup and the last mousemove is not equal ??
       const cursor = this.currentTool.cursorNormal()
       this.editor.setCursor(cursor)

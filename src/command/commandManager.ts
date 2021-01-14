@@ -51,7 +51,7 @@ class CommandManager {
   }
   undo() {
     if (this.undoStack.length === 0) {
-      console.log('undo stack is empty, can not undo')
+      console.log('undo stack is empty now')
       return
     }
     const command = this.undoStack.pop()
@@ -63,7 +63,7 @@ class CommandManager {
   }
   redo() {
     if (this.redoStack.length === 0) {
-      console.log('redo stack is empty, can not redo')
+      console.log('redo stack is empty now')
       return
     }
     const command = this.redoStack.pop()

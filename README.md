@@ -46,9 +46,7 @@ To fix bugs:
 
 - (Should) Only enable left mouse click when using tool
 - Get right fill/stroke when setting actived elements
-- Move elements when zoom is not 100%
 - Different effect of `event.offsetX` between Chrome and Firefox
-- mousedown outside and mouseup inside with error
 
 ---
 

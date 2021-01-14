@@ -8,7 +8,9 @@ type Props = {
 }
 
 class FillAndStrokeSelector extends React.Component<any, Props> {
-  private setFill = (fill: string) => { this.setState({ fill }) }
+  private setFill = (fill: string) => {
+    this.setState({ fill })
+  }
   private setStroke = (stroke: string) => { this.setState({ stroke }) }
 
   constructor(props: any) {

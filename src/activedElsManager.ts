@@ -92,7 +92,6 @@ export class ActivedElsManager {
   }
   setElsAttr(name: string, val: string) {
     if (this.isNoEmpty()) {
-      console.log(name, val)
       this.editor.executeCommand('setAttr', this.els, name, val)
     }
   }

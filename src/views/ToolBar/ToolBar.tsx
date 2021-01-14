@@ -21,9 +21,6 @@ class ToolBar extends React.Component<any, any> {
   render() {
     const StyleToolBar = styled.div`
       padding-top: 10px;
-      width: 60px;
-      height: 100%;
-      flex-shrink: 0;
       background-color: #555;
     `
 
@@ -49,10 +46,18 @@ class ToolBar extends React.Component<any, any> {
     })
 
     return (
-    <StyleToolBar>
-      {items}
-      <FillAndStrokeSelector />
-    </StyleToolBar>
+      <div style={{
+        height: '100%',
+        width: '60px',
+        flexShrink: 0,
+        backgroundColor: '#555',
+      }}>
+        <StyleToolBar>
+          {items}
+        </StyleToolBar>
+        <FillAndStrokeSelector />
+      </div>
+
     )
   }
 }

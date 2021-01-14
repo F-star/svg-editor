@@ -3,7 +3,10 @@ import globalVar from '../common/globalVar'
 import CmdBtnItem from './CmdBtnItem'
 
 function execCmd(cmd: string) {
-  globalVar.editor.executeCommand(cmd)
+  const editor = globalVar.editor
+  if (cmd === 'undo' || cmd === 'redo' || editor.activedElsManager.isNoEmpty()) {
+    editor.executeCommand(cmd)
+  }
 }
 
 type States = {
