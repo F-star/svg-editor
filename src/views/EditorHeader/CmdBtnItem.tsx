@@ -19,15 +19,22 @@ const Div = styled.div`
     background-color: #333;
     border-color: #322;
   }
+  &.disabled {
+    color: #999;
+    border: 1px solid #555!important;
+    background-color: #555!important;
+  }
 `
 
 function CmdBtnItem(props: {
   label: string,
   cmd: string,
+  disabled: boolean,
   onClick: (val: string) => void }) {
   return (
     <Div
-      onClick={() => { props.onClick(props.cmd) }}
+      className={props.disabled ? 'disabled' : ''}
+      onClick={() => { !props.disabled && props.onClick(props.cmd) }}
     >
       {props.label}
     </Div>

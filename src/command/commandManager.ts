@@ -10,11 +10,15 @@ import Editor from '../Editor'
 import { ArrangingBack, ArrangingBackward, ArrangingForward, ArrangingFront } from './arranging'
 import { AddPath, AddRect, BaseCommand, DMove, RemoveElements, SetAttr } from './commands'
 
+type listener = (n: number) => void
+
 class CommandManager {
   private editor: Editor
   private redoStack: Array<BaseCommand>
   private undoStack: Array<BaseCommand>
   private commandClasses: { [key: string]: {new (editor: Editor, ...args: any): BaseCommand} }
+  private undoListener: listener
+  private redoListener: listener
 
   constructor(editor: Editor) {
     this.editor = editor
@@ -42,6 +46,8 @@ class CommandManager {
 
     this.undoStack.push(command)
     this.redoStack = []
+
+    this.emitUndoAndRedoEvent()
   }
   undo() {
     if (this.undoStack.length === 0) {
@@ -52,6 +58,8 @@ class CommandManager {
     this.redoStack.push(command)
     command.undo()
     command.afterUndo()
+
+    this.emitUndoAndRedoEvent()
   }
   redo() {
     if (this.redoStack.length === 0) {
@@ -62,13 +70,34 @@ class CommandManager {
     this.undoStack.push(command)
     command.redo()
     command.afterRedo()
+
+    this.emitUndoAndRedoEvent()
   }
   // 注册命令类到命令管理对象中。
-  resigterCommandClass(commandClass: { new (editor: Editor, ...args: any): BaseCommand }, cmdName: string) {
+  resigterCommandClass(
+    commandClass: { new (editor: Editor, ...args: any): BaseCommand },
+    cmdName: string
+  ) {
     this.commandClasses[cmdName] = commandClass
   }
-  afterAnyUndo() {
 
+  private emitUndoAndRedoEvent() {
+    this.undoListener(this.undoStack.length)
+    this.redoListener(this.redoStack.length)
+  }
+
+  /** event bind */
+  setUndoListener(fn: listener) {
+    this.undoListener = fn
+  }
+  setRedoListener(fn: listener) {
+    this.redoListener = fn
+  }
+  removeRedoListener() {
+    this.redoListener = null
+  }
+  removeUndoListener() {
+    this.undoListener = null
   }
 }
 

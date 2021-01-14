@@ -1,10 +1,11 @@
 import defaultConfig from '../config/editorDefaultConfig'
 
 
-type Listener = (val: string) => void
+type listener = (val: string) => void
+
 export class EditorSetting {
   private setting: {[prop: string]: string}
-  private listeners: {[prop: string]: Array<Listener>}
+  private listeners: {[prop: string]: Array<listener>}
 
   constructor() {
     this.setting = {}
@@ -32,14 +33,14 @@ export class EditorSetting {
   get(name: string) {
     return this.setting[name]
   }
-  on(name: string, fn: Listener) {
+  on(name: string, fn: listener) {
     if (!this.listeners[name]) {
       this.listeners[name] = []
     }
     this.listeners[name].push(fn)
   }
   // TODO: to test
-  off(name: string, fn: Listener): boolean {
+  off(name: string, fn: listener): boolean {
     const spListeners = this.listeners[name]
     if (this.listeners) {
       const idx = spListeners.indexOf(fn)

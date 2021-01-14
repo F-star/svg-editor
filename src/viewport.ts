@@ -6,9 +6,9 @@
 import Editor from './Editor'
 import { getViewBox } from './util/svg'
 
-type Listener = (zoom: number) => void
+type listener = (zoom: number) => void
 export class Viewport {
-  private zoomListeners: Array<Listener> = []
+  private zoomListeners: Array<listener> = []
 
   constructor(private editor: Editor) {}
   /** scroll */
@@ -76,7 +76,7 @@ export class Viewport {
     const currentZoom = this.getZoom()
     this.setZoom(currentZoom - 0.2, cx, cy)
   }
-  onZoomChange(fn: Listener) {
+  onZoomChange(fn: listener) {
     this.zoomListeners.push(fn)
   }
   private emitZoomListeners() {
