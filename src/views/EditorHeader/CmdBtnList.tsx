@@ -1,5 +1,4 @@
 import React from 'react'
-import Editor from '../../editor'
 import globalVar from '../common/globalVar'
 import CmdBtnItem from './CmdBtnItem'
 

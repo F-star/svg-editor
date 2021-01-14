@@ -1,4 +1,4 @@
-import Editor from '../editor'
+import Editor from '../Editor'
 import { Path } from '../element/path'
 import { BaseCommand } from './commands'
 
