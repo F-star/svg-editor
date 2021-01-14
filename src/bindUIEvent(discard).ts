@@ -84,7 +84,7 @@ function bindUIEvent(editor: Editor) {
   // fill value control
   const fillTextNode = document.querySelector('#element-info-fill')
   fillTextNode.innerHTML = editor.setting.get('fill')
-  editor.setting.bindEvent('fill', (val: string) => {
+  editor.setting.on('fill', (val: string) => {
     fillTextNode.innerHTML = val
   })
   bindClickHandler('#set-fill-btn', () => {
@@ -98,7 +98,7 @@ function bindUIEvent(editor: Editor) {
   // stroke value control
   const strokeTextNode = document.querySelector('#element-info-stroke')
   strokeTextNode.innerHTML = editor.setting.get('stroke')
-  editor.setting.bindEvent('stroke', (val: string) => {
+  editor.setting.on('stroke', (val: string) => {
     strokeTextNode.innerHTML = val
   })
   bindClickHandler('#set-stroke-btn', () => {
@@ -112,7 +112,7 @@ function bindUIEvent(editor: Editor) {
   // stroke-width value control
   const strokeWidthTextNode = document.querySelector('#element-info-stroke-width')
   strokeWidthTextNode.innerHTML = editor.setting.get('stroke-width')
-  editor.setting.bindEvent('stroke-width', (val: string) => {
+  editor.setting.on('stroke-width', (val: string) => {
     strokeWidthTextNode.innerHTML = val
   })
   bindClickHandler('#set-stroke-width-btn', () => {

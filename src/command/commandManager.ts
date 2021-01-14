@@ -11,10 +11,10 @@ import { ArrangingBack, ArrangingBackward, ArrangingForward, ArrangingFront } fr
 import { AddPath, AddRect, BaseCommand, DMove, RemoveElements, SetAttr } from './commands'
 
 class CommandManager {
-  editor: Editor
-  redoStack: Array<BaseCommand>
-  undoStack: Array<BaseCommand>
-  commandClasses: { [key: string]: {new (editor: Editor, ...args: any): BaseCommand} }
+  private editor: Editor
+  private redoStack: Array<BaseCommand>
+  private undoStack: Array<BaseCommand>
+  private commandClasses: { [key: string]: {new (editor: Editor, ...args: any): BaseCommand} }
 
   constructor(editor: Editor) {
     this.editor = editor

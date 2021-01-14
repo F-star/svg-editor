@@ -1,19 +1,14 @@
 import defaultConfig from '../config/editorDefaultConfig'
 
+
+type Listener = (val: string) => void
 export class EditorSetting {
   private setting: {[prop: string]: string}
-  private bindedEventFns: {[prop: string]: Array<Function>}
+  private listeners: {[prop: string]: Array<Listener>}
 
   constructor() {
-    this.setting = {
-      // fill: '#fff',
-      // stroke: '#000',
-      // strokeWidth: '2px',
-
-      // outlineWidth
-      // outlineColor
-    }
-    this.bindedEventFns = {}
+    this.setting = {}
+    this.listeners = {}
     this.setFill(defaultConfig.fill)
     this.setStroke(defaultConfig.stroke)
     this.set('stroke-width', defaultConfig.strokeWidth)
@@ -27,7 +22,7 @@ export class EditorSetting {
   set(name: string, val: string) {
     this.setting[name] = val
 
-    const toCallFns = this.bindedEventFns[name]
+    const toCallFns = this.listeners[name]
     if (toCallFns) {
       toCallFns.forEach(fn => {
         fn(val)
@@ -37,18 +32,22 @@ export class EditorSetting {
   get(name: string) {
     return this.setting[name]
   }
-  bindEvent(name: string, fn: Function) {
-    if (!this.bindedEventFns[name]) {
-      this.bindedEventFns[name] = []
+  on(name: string, fn: Listener) {
+    if (!this.listeners[name]) {
+      this.listeners[name] = []
     }
-    this.bindedEventFns[name].push(fn)
+    this.listeners[name].push(fn)
   }
-  // removeEvent(name: string, fn: Function) {
-  //   if (!this.bindedEventFns[name]) return false
-
-  //   const removeFnIdx = this.bindedEventFns[name].findIndex(fn)
-  //   if (removeFnIdx === -1) return false
-  //   this.bindedEventFns.splice(removeFnIdx, 1)
-  //   return true
-  // }
+  // TODO: to test
+  off(name: string, fn: Listener): boolean {
+    const spListeners = this.listeners[name]
+    if (this.listeners) {
+      const idx = spListeners.indexOf(fn)
+      if (idx > -1) {
+        spListeners.splice(idx, 1)
+        return true
+      }
+    }
+    return false
+  }
 }

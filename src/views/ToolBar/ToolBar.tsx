@@ -1,9 +1,9 @@
 import React from 'react'
 import styled from 'styled-components'
-import Editor from '../../editor'
 import ToolItem from './ToolItem'
 import defaultConfig from '../../config/editorDefaultConfig'
 import globalVar from '../common/globalVar'
+import FillAndStrokeSelector from './FillAndStrokeSelector'
 
 class ToolBar extends React.Component<any, any> {
   constructor(props: any) {
@@ -55,6 +55,7 @@ class ToolBar extends React.Component<any, any> {
     return (
     <StyleToolBar>
       {items}
+      <FillAndStrokeSelector />
     </StyleToolBar>
     )
   }

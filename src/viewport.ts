@@ -6,12 +6,12 @@
 import Editor from './Editor'
 import { getViewBox } from './util/svg'
 
+type Listener = (zoom: number) => void
 export class Viewport {
-  constructor(private editor: Editor) {}
+  private zoomListeners: Array<Listener> = []
 
-  /**
-   * scroll
-   */
+  constructor(private editor: Editor) {}
+  /** scroll */
   getScroll() {
     return {
       x: this.editor.svgContainer.scrollLeft,
@@ -37,10 +37,7 @@ export class Viewport {
       y: h / 2,
     }
   }
-
-  /**
-   * zoom
-   */
+  /** zoom */
   getZoom() {
     const actulWidth = parseFloat(this.editor.svgRoot.getAttribute('width'))
     const viewBox = getViewBox(this.editor.svgRoot)
@@ -68,6 +65,8 @@ export class Viewport {
     const height = viewBox.h * zoom
     this.editor.svgRoot.setAttribute('width', String(width))
     this.editor.svgRoot.setAttribute('height', String(height))
+
+    this.emitZoomListeners()
   }
   zoomIn(cx?: number, cy?: number) {
     const currentZoom = this.getZoom()
@@ -77,10 +76,15 @@ export class Viewport {
     const currentZoom = this.getZoom()
     this.setZoom(currentZoom - 0.2, cx, cy)
   }
-  // get viewport center pos, parse to svg pos
-  // getCenter() {
-
-  // }
+  onZoomChange(fn: Listener) {
+    this.zoomListeners.push(fn)
+  }
+  private emitZoomListeners() {
+    const zoom = this.getZoom()
+    this.zoomListeners.forEach(fn => {
+      fn(zoom)
+    })
+  }
   center() {
     const scrollWidth = this.getSVGRootBox('width')
     const scrollHeight = this.getSVGRootBox('height')

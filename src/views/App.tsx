@@ -10,8 +10,9 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    globalVar.editor.mount('#editor-area')
-    globalVar.editor.viewport.center()
+    const editor = globalVar.editor
+    editor.mount('#editor-area')
+    editor.viewport.center()
   }
 
   render() {

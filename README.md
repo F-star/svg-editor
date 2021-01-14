@@ -18,34 +18,34 @@ npm run dev
 
 The simple features has added(of course with some bugs):
 
-- redo/undo
-- add rect
-- drag canvas
-- zoom
-- select(only can move rect)
-- actived elements
-- select fill and stroke color
-- shortcut
-- delete elements
-- select multiple elements
-- arranging elements(front, frontward, backwar, back)
-- different tool cursors
-- pencil tool
+- Redo/undo
+- Add rect
+- Drag canvas
+- Zoom
+- Select(only can move rect)
+- Actived elements
+- Select fill and stroke color
+- Shortcut
+- Delete elements
+- Select multiple elements
+- Arranging elements(front, frontward, backwar, back)
+- Different tool cursors
+- Pencil tool
 
 To do recently:
 
 - UI(using React)
 - Contectmenu
-- draw bezier curve
-- layer operation
-- export svg file
-- record coordinate when move
-- element info card
-- element breadcrumb
+- Draw bezier curve
+- Layer operation
+- Export svg file
+- Record coordinate when move
+- Element info card
+- Element breadcrumb
 
 To fix bugs:
 
-- (should) Only enable left mouse click when using tool
+- (Should) Only enable left mouse click when using tool
 - Get right fill/stroke when setting actived elements
 - Move elements when zoom is not 100%
 - Different effect of `event.offsetX` between Chrome and Firefox
@@ -55,13 +55,22 @@ To fix bugs:
 Code construction:
 
 ```
-editor
-  setting
-  toolManager(add rect, select...)
-  commandManager
-  activedElsManager
-  shortcut
-  viewport(scroll, zoom)
+Editor
+  Setting
+  ToolManager(add rect, select...)
+  CommandManager
+  ActivedElsManager
+  Shortcut
+  Viewport(scroll, zoom)
   ...
 FSVG
 ```
+
+---
+
+event summary(bind listener):
+
+- Zoom change
+- Redo/undo stack is empty
+- Fill/stroke/strokeWidth change
+- Switch tool
