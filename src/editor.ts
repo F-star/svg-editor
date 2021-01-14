@@ -40,22 +40,7 @@ class Editor {
     const svgStageW = 520
     const svgStageH = 400
 
-    /** */
-    /* const viewportElement = document.createElement('div')
-    viewportElement.id = 'viewportElement'
-    viewportElement.style.border = '1px solid #000'
-    viewportElement.style.width = viewportW + 'px'
-    viewportElement.style.height = viewportH + 'px'
-    this.viewportElement = viewportElement */
     this.viewportElement = null
-    /** */
-
-    /* const svgContainer = document.createElement('div')
-    svgContainer.id = 'svg-container'
-    svgContainer.style.backgroundColor = '#ddd'
-    svgContainer.style.width = viewportW + 'px'
-    svgContainer.style.height = viewportH + 'px'
-    svgContainer.style.overflow = 'scroll' */
     this.svgContainer = null
 
     const svgRoot = document.createElementNS('http://www.w3.org/2000/svg', 'svg')
@@ -122,8 +107,8 @@ class Editor {
     const svgContainer = document.createElement('div')
     svgContainer.id = 'svg-container'
     svgContainer.style.backgroundColor = '#999'
-    svgContainer.style.width = this.viewport.getViewportWidth() + 'px' // '100%' // viewportW + 'px'
-    svgContainer.style.height = this.viewport.getViewportHeight() + 'px' // '100%' // viewportH + 'px'
+    svgContainer.style.width = /* '100%' */ this.viewport.getViewportWidth() + 'px'
+    svgContainer.style.height = /* '100%' */ this.viewport.getViewportHeight() + 'px'
     svgContainer.style.overflow = 'scroll'
     this.svgContainer = svgContainer
 

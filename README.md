@@ -34,8 +34,9 @@ The simple features has added(of course with some bugs):
 
 To do recently:
 
-- draw bezier curve
 - UI(using React)
+- Contectmenu
+- draw bezier curve
 - layer operation
 - export svg file
 - record coordinate when move

@@ -12,6 +12,10 @@ class ToolBar extends React.Component<any, any> {
     }
   }
 
+  componentDidMount() {
+    console.log('toolBar component did mount')
+  }
+
   switchEditorTool(toolName: string) {
     const editor = (window as any).editor as Editor
     editor && editor.setCurrentTool(toolName)

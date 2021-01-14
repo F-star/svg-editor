@@ -2,11 +2,20 @@ import React from 'react'
 import './App.css'
 import ToolBar from './ToolBar/ToolBar'
 import EditorHeader from './EditorHeader/EditorHeader'
-import { initEditorAndMount } from '../app'
+import { initEditor } from '../app'
+import Editor from '../editor'
 
 class App extends React.Component {
+  editor: Editor
+
+  constructor(props: any) {
+    super(props)
+    this.editor = initEditor()
+  }
+
   componentDidMount() {
-    initEditorAndMount('#editor-area')
+    this.editor.mount('#editor-area')
+    this.editor.viewport.center()
   }
 
   render() {

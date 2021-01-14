@@ -5,7 +5,7 @@ import { EditorSetting } from './setting/editorSetting'
 import { ToolManager } from './toolManager'
 import defaultConfig from './config/editorDefaultConfig'
 
-function initEditorAndMount(selector: string) {
+function initEditor() {
   const editor = new Editor()
   ;(window as any).editor = editor // debug in devtool
 
@@ -28,11 +28,12 @@ function initEditorAndMount(selector: string) {
     }
   })
 
-  editor.mount(selector)
-  editor.viewport.center()
+  // editor.mount(selector) // do those when react components do mount
+  // editor.viewport.center()
+  return editor
 }
 
-export { initEditorAndMount }
+export { initEditor }
 
 /**
  * 理想 api 使用例子
