@@ -2,20 +2,16 @@ import React from 'react'
 import './App.css'
 import ToolBar from './ToolBar/ToolBar'
 import EditorHeader from './EditorHeader/EditorHeader'
-import { initEditor } from '../app'
-import Editor from '../editor'
+import globalVar from './common/globalVar'
 
 class App extends React.Component {
-  editor: Editor
-
   constructor(props: any) {
     super(props)
-    this.editor = initEditor()
   }
 
   componentDidMount() {
-    this.editor.mount('#editor-area')
-    this.editor.viewport.center()
+    globalVar.editor.mount('#editor-area')
+    globalVar.editor.viewport.center()
   }
 
   render() {
@@ -37,6 +33,5 @@ class App extends React.Component {
     )
   }
 }
-
 
 export default App

@@ -1,4 +1,4 @@
-import Editor from '../editor'
+import Editor from '../Editor'
 import { EditorEventContext } from '../editorEventContext'
 
 export abstract class ToolAbstract {

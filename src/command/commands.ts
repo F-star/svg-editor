@@ -1,4 +1,4 @@
-import Editor from '../editor'
+import Editor from '../Editor'
 import { FElement } from '../element/baseElement'
 import { FSVG } from '../element/index'
 import { Path } from '../element/path'

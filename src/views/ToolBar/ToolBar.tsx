@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import Editor from '../../editor'
 import ToolItem from './ToolItem'
 import defaultConfig from '../../config/editorDefaultConfig'
+import globalVar from '../common/globalVar'
 
 class ToolBar extends React.Component<any, any> {
   constructor(props: any) {
@@ -17,8 +18,7 @@ class ToolBar extends React.Component<any, any> {
   }
 
   switchEditorTool(toolName: string) {
-    const editor = (window as any).editor as Editor
-    editor && editor.setCurrentTool(toolName)
+    globalVar.editor.setCurrentTool(toolName)
     this.setState({ tool: toolName })
   }
 

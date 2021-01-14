@@ -6,7 +6,7 @@
  * CommandManager.redo()
  */
 
-import Editor from '../editor'
+import Editor from '../Editor'
 import { ArrangingBack, ArrangingBackward, ArrangingForward, ArrangingFront } from './arranging'
 import { AddPath, AddRect, BaseCommand, DMove, RemoveElements, SetAttr } from './commands'
 

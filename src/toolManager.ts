@@ -1,4 +1,4 @@
-import Editor from './editor'
+import Editor from './Editor'
 import { EditorEventContext } from './editorEventContext'
 import AddRect from './modules/addRect'
 import { DragCanvas } from './modules/dragCanvas'

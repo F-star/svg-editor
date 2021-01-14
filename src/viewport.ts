@@ -3,7 +3,7 @@
  *
  * scroll, zoom
  */
-import Editor from './editor'
+import Editor from './Editor'
 import { getViewBox } from './util/svg'
 
 export class Viewport {

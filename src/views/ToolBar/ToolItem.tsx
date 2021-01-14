@@ -6,7 +6,6 @@ const Div = styled.div`
   margin: 0 auto 5px auto;
   border: 1px solid #666;
   border-radius: 4px;
-  // box-sizing: border-box;
   width: 40px;
   height: 30px;
   line-height: 30px;
@@ -27,7 +26,6 @@ const Div = styled.div`
 function ToolItem(props: { name: string, value: string, currentTool: string, onClick: (val: string) => void }) {
   return (
     <Div
-      // style={{ color: props.currentTool === props.value ? 'red' : '' }}
       className={props.currentTool === props.value ? 'active' : '' }
       onClick={() => { props.onClick(props.value) }}
     >

@@ -2,7 +2,7 @@
  * 激活元素管理类
  */
 
-import Editor from './editor'
+import Editor from './Editor'
 import { FElement } from './element/baseElement'
 import { FSVG } from './element/index'
 import { getElementsInBox } from './util/common'

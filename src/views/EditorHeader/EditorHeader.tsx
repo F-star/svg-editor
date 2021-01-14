@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import CmdBtnList from './CmdBtnList'
 
 const StyledHeader = styled.div`
   border-bottom: 1px solid #444;
@@ -8,9 +9,14 @@ const StyledHeader = styled.div`
   background-color: #666;
 `
 
+
 class EditorHeader extends React.Component {
   render() {
-    return <StyledHeader></StyledHeader>
+    return (
+      <StyledHeader>
+        <CmdBtnList />
+      </StyledHeader>
+    )
   }
 }
 

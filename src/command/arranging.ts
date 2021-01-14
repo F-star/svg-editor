@@ -7,7 +7,7 @@
  * back
  */
 
-import Editor from '../editor'
+import Editor from '../Editor'
 import { FElement } from '../element/baseElement'
 import { BaseCommand } from './commands'
 

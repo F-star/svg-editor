@@ -1,6 +1,6 @@
 
 const config = {
-  tool: 'addRect',
+  tool: 'select',
   fill: '#fff',
   stroke: '#000',
   strokeWidth: '1px',

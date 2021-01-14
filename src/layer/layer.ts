@@ -5,7 +5,7 @@
  * TODO:
  */
 import { NS } from '../constants'
-import Editor from '../editor'
+import Editor from '../Editor'
 import { FElement } from '../element/baseElement'
 import { IdGenerator } from '../util/IdGenerator'
 

@@ -5,7 +5,7 @@
  * used for tool event
  */
 
-import Editor from './editor'
+import Editor from './Editor'
 
 export class EditorEventContext {
   originEvent: MouseEvent

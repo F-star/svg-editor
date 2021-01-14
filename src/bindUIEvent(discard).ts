@@ -1,4 +1,4 @@
-import Editor from './editor'
+import Editor from './Editor'
 
 function bindUIEvent(editor: Editor) {
   function activeBtn(name: string) {

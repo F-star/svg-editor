@@ -93,8 +93,6 @@ class Editor {
     // document.body.appendChild(viewportElement)
   }
   mount(selector: string) {
-    console.log('go')
-
     // const viewportW = 800
     // const viewportH = 550
     const viewportElement = document.querySelector(selector) as HTMLDivElement // document.createElement('div')
