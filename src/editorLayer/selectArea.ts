@@ -1,4 +1,5 @@
 
+import config from '../config/editorDefaultConfig'
 import { NS } from '../constants'
 
 /**
@@ -18,10 +19,9 @@ export class SelectArea {
     parent.appendChild(this.container)
 
     this.outline = document.createElementNS(NS.SVG, 'path') as SVGPathElement
-    this.outline.setAttribute('fill', 'none')
-    this.outline.setAttribute('stroke', '#054')
+    this.outline.setAttribute('fill', config.selectAreaFill)
+    this.outline.setAttribute('stroke', config.selectAreaStroke)
     this.outline.setAttribute('vector-effect', 'non-scaling-stroke')
-    this.outline.setAttribute('stroke-dasharray', '4px')
 
     this.container.appendChild(this.outline)
   }

@@ -28,7 +28,7 @@ class Zoom extends React.Component<any, States> {
           display: 'inline-block',
           marginLeft: 10,
           paddingLeft: 4,
-          width: 60,
+          minWidth: 60,
           backgroundColor: '#fff',
           color: '#333'
         }}>{this.state.zoom}</span>

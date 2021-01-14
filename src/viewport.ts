@@ -14,13 +14,13 @@ export class Viewport {
   /** scroll */
   getScroll() {
     return {
-      x: this.editor.svgContainer.scrollLeft,
-      y: this.editor.svgContainer.scrollTop,
+      x: this.editor.viewportElement.scrollLeft,
+      y: this.editor.viewportElement.scrollTop,
     }
   }
   setScroll(x: number, y: number) {
-    this.editor.svgContainer.scrollLeft = x
-    this.editor.svgContainer.scrollTop = y
+    this.editor.viewportElement.scrollLeft = x
+    this.editor.viewportElement.scrollTop = y
   }
   getContentOffset() {
     return {
@@ -63,8 +63,11 @@ export class Viewport {
     const viewBox = getViewBox(this.editor.svgRoot)
     const width = viewBox.w * zoom
     const height = viewBox.h * zoom
+
     this.editor.svgRoot.setAttribute('width', String(width))
     this.editor.svgRoot.setAttribute('height', String(height))
+    this.editor.svgContainer.style.width = width + 'px'
+    this.editor.svgContainer.style.height = height + 'px'
 
     this.emitZoomListeners()
   }

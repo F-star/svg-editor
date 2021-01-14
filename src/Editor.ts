@@ -41,7 +41,13 @@ class Editor {
     const svgStageH = 600
 
     this.viewportElement = null
-    this.svgContainer = null
+
+    const svgContainer = document.createElement('div')
+    svgContainer.id = 'svg-container'
+    svgContainer.style.backgroundColor = '#999'
+    svgContainer.style.width = svgRootW + 'px'
+    svgContainer.style.height = svgRootH + 'px'
+    this.svgContainer = svgContainer
 
     const svgRoot = document.createElementNS('http://www.w3.org/2000/svg', 'svg')
     svgRoot.id = 'svg-root'
@@ -79,6 +85,7 @@ class Editor {
     svgContent.setAttribute('y', '0')
     this.svgContent = svgContent
 
+    svgContainer.appendChild(this.svgRoot)
     svgRoot.appendChild(svgStage)
 
     svgStage.appendChild(svgBg)
@@ -100,18 +107,19 @@ class Editor {
     // viewportElement.style.border = '1px solid #000'
     // viewportElement.style.width = viewportW + 'px'
     // viewportElement.style.height = viewportH + 'px'
+    viewportElement.style.overflow = 'scroll'
     this.viewportElement = viewportElement
 
-    const svgContainer = document.createElement('div')
-    svgContainer.id = 'svg-container'
-    svgContainer.style.backgroundColor = '#999'
-    svgContainer.style.width = /* '100%' */ this.viewport.getViewportWidth() + 'px'
-    svgContainer.style.height = /* '100%' */ this.viewport.getViewportHeight() + 'px'
-    svgContainer.style.overflow = 'scroll'
-    this.svgContainer = svgContainer
+    // const svgContainer = document.createElement('div')
+    // svgContainer.id = 'svg-container'
+    // svgContainer.style.backgroundColor = '#999'
+    // svgContainer.style.width = /* '100%' */ this.viewport.getViewportWidth() + 'px'
+    // svgContainer.style.height = /* '100%' */ this.viewport.getViewportHeight() + 'px'
+    // // svgContainer.style.overflow = 'scroll'
+    // this.svgContainer = svgContainer
 
-    svgContainer.appendChild(this.svgRoot)
-    viewportElement.appendChild(svgContainer)
+
+    viewportElement.appendChild(this.svgContainer)
   }
   getCurrentLayer() {
     return this.layerManager.getCurrent()
