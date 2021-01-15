@@ -81,11 +81,15 @@ class CommandManager {
     this.commandClasses[cmdName] = commandClass
   }
 
+  // disable exec、redo、 undo temporarily
+  lock() {}
+  unlock() {}
+
+
   private emitUndoAndRedoEvent() {
     this.undoListener(this.undoStack.length)
     this.redoListener(this.redoStack.length)
   }
-
   /** event bind */
   setUndoListener(fn: listener) {
     this.undoListener = fn
