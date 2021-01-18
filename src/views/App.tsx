@@ -3,7 +3,7 @@ import './App.css'
 import ToolBar from './ToolBar/ToolBar'
 import EditorHeader from './EditorHeader/EditorHeader'
 import globalVar from './common/globalVar'
-import PanelsArea from './PanelsArea/PanelsArea'
+// import PanelsArea from './PanelsArea/PanelsArea'
 
 class App extends React.Component {
   constructor(props: any) {
@@ -30,7 +30,7 @@ class App extends React.Component {
             }}
           >
           </div>
-          <PanelsArea />
+          {/* <PanelsArea /> */}
         </div>
       </div>
     )
