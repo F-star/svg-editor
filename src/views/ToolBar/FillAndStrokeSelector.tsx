@@ -1,24 +1,35 @@
 import React from 'react'
 import config from '../../config/editorDefaultConfig'
 import globalVar from '../common/globalVar'
+import ColorPicker from './components/ColorPicker'
 
 type Props = {
   fill: string,
   stroke: string,
+  openFill: boolean,
+  openStroke: boolean,
+  pickerFill: string,
+  pickerStroke: string,
 }
 
 class FillAndStrokeSelector extends React.Component<any, Props> {
-  private setFill = (fill: string) => {
-    this.setState({ fill })
-  }
-  private setStroke = (stroke: string) => { this.setState({ stroke }) }
+  private setFill = (fill: string) => { this.setState({ fill, pickerFill: fill }) }
+  private setStroke = (stroke: string) => { this.setState({ stroke, pickerStroke: stroke }) }
+  private fillRef: React.RefObject<HTMLDivElement>
+  private strokeRef: React.RefObject<HTMLDivElement>
 
   constructor(props: any) {
     super(props)
     this.state = {
       fill: config.fill,
       stroke: config.stroke,
+      openFill: false,
+      openStroke: false,
+      pickerFill: '#fff',
+      pickerStroke: '#fff',
     }
+    this.fillRef = React.createRef()
+    this.strokeRef = React.createRef()
   }
 
   componentDidMount() {
@@ -33,47 +44,37 @@ class FillAndStrokeSelector extends React.Component<any, Props> {
     editor.setting.off('stroke', this.setStroke)
   }
 
-  changeFill() {
-    // TODO: plan to use color picker
+  changeFill(hex: string) {
+    this.setState({ openFill: false })
     const editor = globalVar.editor
-    const fill = window.prompt(
-      'Please input valid color value（like #ffce43）',
-      editor.setting.get('fill')
-    )
-    if (!fill) return
-
-    editor.setting.setFill(fill)
-    editor.activedElsManager.setElsAttr('fill', fill)
+    editor.setting.setFill(hex)
+    editor.activedElsManager.setElsAttr('fill', hex)
   }
 
-  changeStroke() {
-    // TODO: plan to use color picker
+  changeStroke(hex: string) {
+    this.setState({ openStroke: false })
     const editor = globalVar.editor
-    const stroke = window.prompt(
-      'Please input valid color value（like #ffce43）',
-      globalVar.editor.setting.get('stroke')
-    )
-    if (!stroke) return
-
-    editor.setting.setStroke(stroke)
-    editor.activedElsManager.setElsAttr('stroke', stroke)
+    editor.setting.setStroke(hex)
+    editor.activedElsManager.setElsAttr('stroke', hex)
   }
 
   render() {
     const Fill = (
       <div
+        ref={this.fillRef}
         style={{
           margin: '6px auto',
           width: 30,
           height: 30,
           backgroundColor: this.state.fill,
         }}
-        onClick={() => { this.changeFill() }}
+        onClick={() => { this.setState({ openFill: true }) }}
       ></div>
     )
 
     const Stroke = (
       <div
+        ref={this.strokeRef}
         style={{
           margin: '6px auto',
           width: 30,
@@ -81,16 +82,37 @@ class FillAndStrokeSelector extends React.Component<any, Props> {
           border: `4px solid ${this.state.stroke}`,
           boxSizing: 'border-box',
         }}
-        onClick={() => { this.changeStroke() }}
+        onClick={() => { this.setState({ openStroke: true }) }}
       ></div>
     )
 
     return (
-      <div style={{
-        paddingTop: 15,
-      }}>
+      <div
+        style={{
+          paddingTop: 15,
+        }}
+      >
         {Fill}
         {Stroke}
+        <ColorPicker
+          open={ this.state.openFill }
+          anchorEl={ this.fillRef.current }
+          color={ this.state.fill }
+          pickerColor={this.state.pickerFill}
+          onChange={(color) => { this.setState({ pickerFill: color }) } }
+          onAccept= {(color: string) => this.changeFill(color) }
+          onCancel= {() => { this.setState({ openFill: false }) } }
+        />
+
+        <ColorPicker
+          open={ this.state.openStroke }
+          anchorEl={ this.fillRef.current }
+          color={ this.state.stroke }
+          pickerColor={this.state.pickerStroke}
+          onChange={(color) => { this.setState({ pickerStroke: color }) } }
+          onAccept= {(color: string) => this.changeStroke(color) }
+          onCancel= {() => { this.setState({ openStroke: false }) } }
+        />
       </div>
     )
   }
