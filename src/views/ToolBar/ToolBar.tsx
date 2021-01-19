@@ -27,12 +27,12 @@ class ToolBar extends React.Component<any, any> {
     `
 
     const toolItems = [
-      { name: 'select', iconName: 'icon-select', cmdName: 'select' },
-      { name: 'rect', iconName: 'icon-rect', cmdName: 'addRect' },
-      { name: 'pencil', iconName: 'icon-pencil', cmdName: 'pencil' },
-      { name: 'path', iconName: 'icon-pen', cmdName: 'addPath' },
-      { name: 'pan', iconName: 'icon-pan', cmdName: 'dragCanvas' },
-      { name: 'zoom', iconName: 'icon-zoom', cmdName: 'zoom' },
+      { name: 'Select', iconName: 'icon-select', cmdName: 'select' },
+      { name: 'Rect', iconName: 'icon-rect', cmdName: 'addRect' },
+      { name: 'Pencil', iconName: 'icon-pencil', cmdName: 'pencil' },
+      { name: 'Pen', iconName: 'icon-pen', cmdName: 'addPath' },
+      { name: 'Drag Canvas', iconName: 'icon-pan', cmdName: 'dragCanvas' },
+      { name: 'Zoom', iconName: 'icon-zoom', cmdName: 'zoom' },
     ]
 
     const items = toolItems.map(item => {
