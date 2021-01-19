@@ -4,9 +4,9 @@ import { EditorEventContext } from '../editorEventContext'
 export abstract class ToolAbstract {
   protected editor: Editor
 
-  setEditor(editor: Editor) {
-    this.editor = editor
-  }
+  setEditor(editor: Editor) { this.editor = editor }
+  afterMount() {}
+  beforeUnmount() {}
   abstract name(): string
   abstract cursorNormal(): string
   abstract cursorPress(): string

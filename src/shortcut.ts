@@ -10,39 +10,42 @@ interface IRegisterItem {
 }
 
 export class Shortcut {
-  editor: Editor
-  registeredFns: { [key: string]: IRegisterItem }
+  private editor: Editor
+  private registerItems: { [key: string]: Array<IRegisterItem> }
 
   constructor(editor: Editor) {
     this.editor = editor
-    this.registeredFns = {}
+    this.registerItems = {}
 
     window.addEventListener('keydown', e => {
       const pressKeyName = getPressKeyName(e)
-      const fn = this.registeredFns[pressKeyName]
-      if (fn) {
+      if (isDebug) { console.log(pressKeyName) }
+      const registeredInstance = this.registerItems[pressKeyName] || []
+      if (registeredInstance.length > 0) {
         /** debug */
-        if (isDebug) {
-          console.log(pressKeyName)
-        }
         /** debug end */
         e.preventDefault()
-        fn.fn(e)
+        registeredInstance.forEach(item => item.fn(e))
       }
     }, false)
   }
-  // this.register('undo', 'Ctrl+Z', () => { editor.execCommand('undo') })
+  // usage: this.register('undo', 'Ctrl+Z', () => { editor.execCommand('undo') })
   register(cmdName: string, shortcutName: string, fn: Function) {
     // TODO: valid shortcutName
-    this.registeredFns[shortcutName] = { cmdName, fn }
-  }
-  formatPrint() {
-    const arr = []
-    for (const shortcutName in this.registeredFns) {
-      const cmdName = this.registeredFns[shortcutName].cmdName
-      arr.push(cmdName + ': ' + shortcutName)
+    const item = { cmdName, fn }
+    if (!this.registerItems[shortcutName]) {
+      this.registerItems[shortcutName] = [item]
+    } else {
+      this.registerItems[shortcutName].push(item)
     }
-    return arr.join(', ')
+  }
+
+  unregister(shortcutName: string, fn: Function) {
+    const items = this.registerItems[shortcutName] || []
+    const idx = items.findIndex(item => item.fn === fn)
+    if (idx > -1) {
+      items.splice(idx, 1)
+    }
   }
 }
 
@@ -55,6 +58,10 @@ function getPressKeyName(e: KeyboardEvent) {
   // TODO: resolve all key
   if (/Key./.test(e.code)) {
     pressedKeys.push(e.code[e.code.length - 1])
+  } else if (/Digit./.test(e.code)) {
+    pressedKeys.push(e.code[e.code.length - 1])
+  } else if (e.code === 'Escape') {
+    pressedKeys.push('Esc')
   } else {
     pressedKeys.push(e.code)
   }

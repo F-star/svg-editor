@@ -116,6 +116,8 @@ class SegmentDraw {
     this.anchorNode.hide()
     this.handleInNode.hide()
     this.handleOutNode.hide()
+    this.handleInLine.hide()
+    this.handleOutLine.hide()
   }
 }
 
@@ -206,5 +208,7 @@ export class PathDraw {
     this.path.hide()
     this.path.removeAttr('d')
     this.segs = []
+
+    this.segDraw.clear()
   }
 }

@@ -31,7 +31,7 @@ class ColorPicker extends React.Component<Props> {
         }}
         transformOrigin={{
           vertical: 'center',
-          horizontal: 'left',
+          horizontal: -15,
         }}
       >
         <div>

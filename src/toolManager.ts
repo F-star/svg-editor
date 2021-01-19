@@ -32,16 +32,24 @@ export class ToolManager {
     this.registerTool(new Zoom())
   }
   setCurrentTool(name: string) {
+    const prevTool = this.getCurrentTool()
+    prevTool && prevTool.beforeUnmount()
+
     this.currentTool = this.tools[name]
-    // set normal cursor
+    this.currentTool.afterMount()
+
     const cursor = this.currentTool.cursorNormal()
     this.editor.setCursor(cursor)
 
+    // emit event
     const toolName = this.getCurrentToolName()
     this.invokeWhenSwitch(toolName)
   }
   onSwitchTool(fn: Function) {
     this.invokeWhenSwitch = fn
+  }
+  getCurrentTool() {
+    return this.currentTool
   }
   getCurrentToolName() {
     return this.currentTool.name()

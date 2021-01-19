@@ -17,6 +17,7 @@ export class AddPath extends ToolAbstract {
   private isInit = true
   private x: number
   private y: number
+  private fn: Function
 
   constructor() {
     super()
@@ -36,21 +37,28 @@ export class AddPath extends ToolAbstract {
     const { x, y } = ctx.getPos()
     this.x = x
     this.y = y
-    // if (this.isInit) {
     this.editor.hudManager.pathDraw.addSeg({ x, y, handleIn: null, handleOut: null })
-    // }
-    // this.isInit = false
   }
   move(ctx: EditorEventContext) {
     const handleOut = ctx.getPos()
     const handleIn = getSymmetryPoint(handleOut, this.x, this.y)
     this.editor.hudManager.pathDraw.updateTailSegHandle(handleIn, handleOut)
   }
-  end() {
-    // this.editor.executeCommand('addPathSeg')
+  end() {}
+  endOutside() {}
+  finishPath() {
+    console.log('Finish Path')
+    this.editor.hudManager.pathDraw.clear()
   }
-
-  endOutside() {
-
+  afterMount() {
+    console.log('mounted.')
+    this.fn = () => {
+      this.finishPath()
+    }
+    this.editor.shortcut.register('path temp mount', 'Esc', this.fn)
+  }
+  beforeUnmount() {
+    this.editor.shortcut.unregister('Esc', this.fn)
+    this.editor.hudManager.pathDraw.clear()
   }
 }
