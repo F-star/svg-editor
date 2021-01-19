@@ -22,24 +22,25 @@ class ToolBar extends React.Component<any, any> {
 
   render() {
     const StyleToolBar = styled.div`
-      padding-top: 10px;
+      padding-top: 6px;
       background-color: #555;
     `
 
     const toolItems = [
-      { name: 'select', value: 'select' },
-      { name: 'rect', value: 'addRect' },
-      { name: 'pencil', value: 'pencil' },
-      { name: 'path', value: 'addPath' },
-      { name: 'pan', value: 'dragCanvas' },
-      { name: 'zoom', value: 'zoom' },
+      { name: 'select', iconName: 'icon-select', cmdName: 'select' },
+      { name: 'rect', iconName: 'icon-rect', cmdName: 'addRect' },
+      { name: 'pencil', iconName: 'icon-pencil', cmdName: 'pencil' },
+      { name: 'path', iconName: 'icon-pen', cmdName: 'addPath' },
+      { name: 'pan', iconName: 'icon-pan', cmdName: 'dragCanvas' },
+      { name: 'zoom', iconName: 'icon-zoom', cmdName: 'zoom' },
     ]
 
     const items = toolItems.map(item => {
       return (
         <ToolItem
           name={item.name}
-          value={item.value}
+          iconName={item.iconName}
+          cmdName={item.cmdName}
           currentTool={this.state.tool}
           key={item.name}
           onClick={v => this.switchEditorTool(v)}

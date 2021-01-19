@@ -7,29 +7,41 @@ const Div = styled.div`
   border: 1px solid #666;
   border-radius: 4px;
   width: 40px;
-  height: 30px;
-  line-height: 30px;
+  height: 40px;
+  line-height: 40px;
   text-align: center;
-  font-size: 12px;
+
   color: #fff;
   background-color: #666;
   cursor: default;
   user-select: none;
 
+  i {
+    font-size: 24px;
+  }
+
   &:hover, &.active {
     background-color: #333;
-    font-weight: bold;
     border-color: #322;
   }
 `
 
-function ToolItem(props: { name: string, value: string, currentTool: string, onClick: (val: string) => void }) {
+type Props ={
+  name: string,
+  cmdName: string,
+  iconName: string,
+  currentTool: string,
+  onClick: (val: string) => void
+}
+
+
+function ToolItem(props: Props) {
   return (
     <Div
-      className={props.currentTool === props.value ? 'active' : '' }
-      onClick={() => { props.onClick(props.value) }}
+      className={props.currentTool === props.cmdName ? 'active' : '' }
+      onClick={() => { props.onClick(props.cmdName) }}
     >
-      {props.name}
+      <i className={`svg-editor-iconfont ${props.iconName}`}></i>
     </Div>
   )
 }

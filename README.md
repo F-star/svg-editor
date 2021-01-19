@@ -29,13 +29,13 @@ The simple features has added(of course with some bugs):
 - Arranging elements(front, frontward, backwar, back)
 - Different tool cursors
 - Pencil tool
-- UI(using React)
+- UI layer(powered by React)
+- Tool icons (powered by iconfont)
 
 To do recently:
 
-- Contectmenu
+- Contentmenu
 - Draw bezier curve
-- Making icons
 - Layer operation
 - Export svg file
 - Record coordinate when move
