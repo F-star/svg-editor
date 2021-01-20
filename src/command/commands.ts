@@ -1,8 +1,6 @@
 import Editor from '../Editor'
 import { FElement } from '../element/baseElement'
-import { FSVG } from '../element/index'
-import { Path } from '../element/path'
-import { Rect } from '../element/rect'
+import { FSVG, IFSVG } from '../element/index'
 import { EditorSetting } from '../setting/editorSetting'
 
 function setDefaultAttrsBySetting(el: FElement, setting: EditorSetting) {
@@ -33,11 +31,12 @@ export abstract class BaseCommand {
  *
  * add rect svg element
  */
+
 export class AddRect extends BaseCommand {
   // private editor: Editor
   nextSibling: Element
   parent: Element
-  rect: Rect
+  rect: IFSVG['Rect']
 
   constructor(editor: Editor, x: number, y: number, w: number, h: number) {
     super(editor)
@@ -80,7 +79,7 @@ export class AddPath extends BaseCommand {
   // private editor: Editor
   nextSibling: Element
   parent: Element
-  el: Path
+  el: IFSVG['Path']
 
   constructor(editor: Editor, d: string) {
     super(editor)

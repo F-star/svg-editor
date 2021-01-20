@@ -31,3 +31,13 @@ export const FSVG = {
   Path,
   Line,
 }
+
+interface IFSVG {
+  Rect: Rect
+  Box: Box
+  Group: Group
+  Path: Path
+  Line: Line
+}
+
+export { IFSVG }

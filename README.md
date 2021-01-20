@@ -34,10 +34,10 @@ The simple features has added(of course with some bugs):
 
 To do recently:
 
-- Contentmenu
 - Draw bezier curve
-- Layer operation
 - Export svg file
+- Contentmenu
+- Layer operation
 - Record coordinate when move
 - Element info card
 - Element breadcrumb

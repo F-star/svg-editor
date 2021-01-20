@@ -1,12 +1,11 @@
 
 
 import { NS } from '../constants'
-import { FSVG } from '../element/index'
-import { Path } from '../element/path'
+import { FSVG, IFSVG } from '../element/index'
 
 export class PencilDraw {
   container: SVGGElement
-  path: Path
+  path: IFSVG['Path']
 
   constructor(parent: SVGGElement) {
     this.container = document.createElementNS(NS.SVG, 'g') as SVGGElement

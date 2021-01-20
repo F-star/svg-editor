@@ -1,18 +1,9 @@
 
 
 import { NS } from '../constants'
-import { FSVG } from '../element/index'
-import { Line } from '../element/line'
-import { Path } from '../element/path'
-import { Rect } from '../element/rect'
-import { IPoint } from '../interface'
+import { FSVG, IFSVG } from '../element/index'
+import { IPoint, ISegment } from '../interface'
 
-interface ISegment {
-  x: number
-  y: number
-  handleIn: IPoint
-  handleOut: IPoint
-}
 
 // TODO: replace ISegment
 class Segment {
@@ -45,13 +36,13 @@ class Segment {
  */
 class SegmentDraw {
   private container: SVGGElement
-  private path: Path
+  private path: IFSVG['Path']
 
-  private anchorNode: Rect
-  private handleInNode: Rect
-  private handleOutNode: Rect
-  private handleInLine: Line
-  private handleOutLine: Line
+  private anchorNode: IFSVG['Rect']
+  private handleInNode: IFSVG['Rect']
+  private handleOutNode: IFSVG['Rect']
+  private handleInLine: IFSVG['Line']
+  private handleOutLine: IFSVG['Line']
 
   constructor(parent: SVGGElement) {
     this.container = document.createElementNS(NS.SVG, 'g') as SVGGElement
@@ -126,7 +117,7 @@ class SegmentDraw {
  */
 export class PathDraw {
   private container: SVGGElement
-  private path: Path
+  private path: IFSVG['Path']
   private segs: Array<ISegment> = []
   segDraw: SegmentDraw
 

@@ -9,6 +9,7 @@
 import Editor from '../Editor'
 import { ArrangingBack, ArrangingBackward, ArrangingForward, ArrangingFront } from './arranging'
 import { AddPath, AddRect, BaseCommand, DMove, RemoveElements, SetAttr } from './commands'
+import { AddPathSeg } from './path'
 
 type listener = (n: number) => void
 
@@ -28,6 +29,7 @@ class CommandManager {
 
     this.resigterCommandClass(AddRect, AddRect.cmdName())
     this.resigterCommandClass(AddPath, AddPath.cmdName())
+    this.resigterCommandClass(AddPathSeg, AddPathSeg.cmdName())
     this.resigterCommandClass(DMove, DMove.cmdName())
     this.resigterCommandClass(SetAttr, SetAttr.cmdName())
     this.resigterCommandClass(RemoveElements, RemoveElements.cmdName())

@@ -3,26 +3,28 @@
  * quadratic Bezier curves
  */
 import { EditorEventContext } from '../../editorEventContext'
+import { FSVG, IFSVG } from '../../element/index'
+import { ISegment } from '../../interface'
 import { getSymmetryPoint } from '../../util/math'
 import { ToolAbstract } from '../ToolAbstract'
 
-enum State {
-  // INIT: 0,
-  DragHandle,
-  DrawPoint,
-}
+// enum State {
+//   DragHandle,
+//   DrawPoint,
+// }
 
 export class AddPath extends ToolAbstract {
-  private state: State = State.DrawPoint
-  private isInit = true
+  // private state: State = State.DrawPoint
+  // private isInit = true
   private x: number
   private y: number
   private fn: Function
+  private path: IFSVG['Path']
 
   constructor() {
     super()
     this.editor = null
-    this.state = State.DrawPoint
+    // this.state = State.DrawPoint
   }
   name() {
     return 'addPath'
@@ -37,27 +39,39 @@ export class AddPath extends ToolAbstract {
     const { x, y } = ctx.getPos()
     this.x = x
     this.y = y
-    this.editor.hudManager.pathDraw.addSeg({ x, y, handleIn: null, handleOut: null })
+    const seg: ISegment = { x, y, handleIn: null, handleOut: null }
+    this.editor.activedElsManager.clear()
+    this.editor.hudManager.pathDraw.addSeg(seg)
   }
   move(ctx: EditorEventContext) {
     const handleOut = ctx.getPos()
     const handleIn = getSymmetryPoint(handleOut, this.x, this.y)
     this.editor.hudManager.pathDraw.updateTailSegHandle(handleIn, handleOut)
   }
-  end() {}
+  end() {
+    if (!this.path) {
+      this.path = new FSVG.Path()
+    }
+    this.editor.executeCommand('addPathSeg', this.path, null, null)
+  }
   endOutside() {}
-  finishPath() {
+  completePath() {
     console.log('Finish Path')
-    this.editor.hudManager.pathDraw.clear()
+    const pathDraw = this.editor.hudManager.pathDraw
+    const d = pathDraw.getD()
+
+    d && this.editor.executeCommand('addPath', d)
+    pathDraw.clear()
   }
   afterMount() {
     console.log('mounted.')
     this.fn = () => {
-      this.finishPath()
+      this.completePath()
     }
-    this.editor.shortcut.register('path temp mount', 'Esc', this.fn)
+    this.editor.shortcut.register('Path tool: temp mount', 'Esc', this.fn)
   }
   beforeUnmount() {
+    this.completePath()
     this.editor.shortcut.unregister('Esc', this.fn)
     this.editor.hudManager.pathDraw.clear()
   }

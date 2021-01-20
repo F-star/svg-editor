@@ -1,14 +1,4 @@
-
-type configType = {
-  readonly tool: string;
-  readonly fill: string;
-  readonly stroke: string;
-  readonly strokeWidth: string;
-  readonly selectAreaFill: string;
-  readonly selectAreaStroke: string;
-}
-
-const config: configType = {
+const config = {
   tool: 'select',
 
   fill: '#fff',
@@ -19,4 +9,8 @@ const config: configType = {
   selectAreaStroke: '#888',
 }
 
-export default config
+type DeepReadonly<T> = {
+  readonly [P in keyof T]: DeepReadonly<T[P]>;
+}
+
+export default config as DeepReadonly<typeof config>
