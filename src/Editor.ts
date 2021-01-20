@@ -7,6 +7,7 @@ import { Shortcut } from './shortcut'
 import { ToolManager } from './toolManager'
 import { Viewport } from './viewport'
 import { LayerManager } from './layer/layer'
+import Export from './Export'
 
 class Editor {
   setting: EditorSetting
@@ -17,6 +18,7 @@ class Editor {
   viewport: Viewport
   layerManager: LayerManager
   hudManager: HudManager
+  export: Export
 
   // elements
   viewportElement: HTMLElement
@@ -34,6 +36,7 @@ class Editor {
     this.viewport = new Viewport(this)
     this.layerManager = new LayerManager(this)
     this.hudManager = new HudManager()
+    this.export = new Export(this)
 
     const svgRootW = 3000
     const svgRootH = 1500
