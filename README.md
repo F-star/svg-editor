@@ -31,11 +31,11 @@ The simple features has added(of course with some bugs):
 - Pencil tool
 - UI layer(powered by React)
 - Tool icons (powered by iconfont)
+- Export svg file
 
 To do recently:
 
 - Draw bezier curve
-- Export svg file
 - Contentmenu
 - Layer operation
 - Record coordinate when move

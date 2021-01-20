@@ -2,17 +2,10 @@ import React from 'react'
 import globalVar from '../common/globalVar'
 import CmdBtnItem from './CmdBtnItem'
 
-function execCmd(cmd: string) {
-  const editor = globalVar.editor
-  if (cmd === 'undo' || cmd === 'redo' || editor.activedElsManager.isNoEmpty()) {
-    editor.executeCommand(cmd)
-  }
-}
-
 type States = {
   redoStackSize: number,
   undoStackSize: number,
-  items: Array<{ label: string, cmd: string, }>
+  items: Array<{ label: string, cb: () => void }>
 }
 class CmdBtnList extends React.Component<any, States> {
   constructor(props: any) {
@@ -21,15 +14,38 @@ class CmdBtnList extends React.Component<any, States> {
       redoStackSize: 0,
       undoStackSize: 0,
       items: [
-        { label: 'undo', cmd: 'undo' },
-        { label: 'redo', cmd: 'redo' },
-        { label: 'delete', cmd: 'removeElements' },
-        { label: 'front', cmd: 'front' },
-        { label: 'forward', cmd: 'forward' },
-        { label: 'backward', cmd: 'backward' },
-        { label: 'back', cmd: 'back' },
+        { label: 'undo', cb: () => { globalVar.editor.executeCommand('undo') } },
+        { label: 'redo', cb: () => { globalVar.editor.executeCommand('redo') } },
+        {
+          label: 'delete',
+          cb: () => { globalVar.editor.activedElsManager.isNoEmpty() && globalVar.editor.executeCommand('removeElements') }
+        },
+        {
+          label: 'front',
+          cb: () => { globalVar.editor.activedElsManager.isNoEmpty() && globalVar.editor.executeCommand('front') }
+        },
+        {
+          label: 'forward',
+          cb: () => { globalVar.editor.activedElsManager.isNoEmpty() && globalVar.editor.executeCommand('forward') }
+        },
+        {
+          label: 'backward',
+          cb: () => { globalVar.editor.activedElsManager.isNoEmpty() && globalVar.editor.executeCommand('backward') }
+        },
+        {
+          label: 'back',
+          cb: () => { globalVar.editor.activedElsManager.isNoEmpty() && globalVar.editor.executeCommand('back') }
+        },
+        {
+          label: 'export',
+          cb: () => { globalVar.editor.export.downloadSVG('Untitled-1.svg') }
+        },
       ]
     }
+  }
+
+  execCmd(index: number) {
+    this.state.items[index].cb()
   }
 
   componentDidMount() {
@@ -39,16 +55,15 @@ class CmdBtnList extends React.Component<any, States> {
   }
 
   render() {
-    const elements = this.state.items.map(item => (
+    const elements = this.state.items.map((item, index) => (
       <CmdBtnItem
         label={item.label}
-        cmd={item.cmd}
-        key={item.cmd}
+        key={item.label}
         disabled={
-          (item.cmd === 'undo' && this.state.undoStackSize === 0) ||
-          (item.cmd === 'redo' && this.state.redoStackSize === 0)
+          (item.label === 'undo' && this.state.undoStackSize === 0) ||
+          (item.label === 'redo' && this.state.redoStackSize === 0)
         }
-        onClick={v => execCmd(v)}
+        onClick={() => this.execCmd(index)}
       />
     ))
 

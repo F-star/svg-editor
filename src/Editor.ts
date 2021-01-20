@@ -103,25 +103,9 @@ class Editor {
     // document.body.appendChild(viewportElement)
   }
   mount(selector: string) {
-    // const viewportW = 800
-    // const viewportH = 550
-    const viewportElement = document.querySelector(selector) as HTMLDivElement // document.createElement('div')
-    // viewportElement.id = 'viewportElement'
-    // viewportElement.style.border = '1px solid #000'
-    // viewportElement.style.width = viewportW + 'px'
-    // viewportElement.style.height = viewportH + 'px'
+    const viewportElement = document.querySelector(selector) as HTMLDivElement
     viewportElement.style.overflow = 'scroll'
     this.viewportElement = viewportElement
-
-    // const svgContainer = document.createElement('div')
-    // svgContainer.id = 'svg-container'
-    // svgContainer.style.backgroundColor = '#999'
-    // svgContainer.style.width = /* '100%' */ this.viewport.getViewportWidth() + 'px'
-    // svgContainer.style.height = /* '100%' */ this.viewport.getViewportHeight() + 'px'
-    // // svgContainer.style.overflow = 'scroll'
-    // this.svgContainer = svgContainer
-
-
     viewportElement.appendChild(this.svgContainer)
   }
   getCurrentLayer() {

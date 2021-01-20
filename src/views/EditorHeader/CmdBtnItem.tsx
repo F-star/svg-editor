@@ -28,13 +28,12 @@ const Div = styled.div`
 
 function CmdBtnItem(props: {
   label: string,
-  cmd: string,
   disabled: boolean,
-  onClick: (val: string) => void }) {
+  onClick: () => void }) {
   return (
     <Div
       className={props.disabled ? 'disabled' : ''}
-      onClick={() => { !props.disabled && props.onClick(props.cmd) }}
+      onClick={() => { !props.disabled && props.onClick() }}
     >
       {props.label}
     </Div>

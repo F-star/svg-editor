@@ -1,26 +1,29 @@
+import { NS } from './constants'
 import Editor from './Editor'
 
 class Export {
   constructor(private editor: Editor) {}
-  getSVGData(): string {
-    const g = this.editor.svgContent
-    return g.outerHTML
+  private getSVGData(): string {
+    const svgStage = this.editor.svgStage
+    const w = parseFloat(svgStage.getAttribute('width'))
+    const h = parseFloat(svgStage.getAttribute('height'))
+    const group = this.editor.svgContent
+    const arr = [
+      `<svg viewBox="0 0 ${w} ${h}" `,
+      `xmlns="${NS.SVG}" xmlns:svg="${NS.SVG}">`,
+      group.outerHTML,
+      '</svg>'
+    ]
+    return arr.join('')
   }
   downloadSVG(filename: string) {
-    const obj = {
-      a: 'test1',
-      b: 'test2'
-    }
-    const content = JSON.stringify(obj)
-    const blob = new Blob([content], { type: 'application/json' })
+    const content = this.getSVGData()
+    const blob = new Blob([content], { type: 'image/svg+xml' })
     const url = URL.createObjectURL(blob)
-
     const a = document.createElement('a')
     a.href = url
     a.download = filename
-    // document.documentElement.appendChild(a)
     a.click()
-    // document.documentElement.removeChild(a)
   }
 }
 

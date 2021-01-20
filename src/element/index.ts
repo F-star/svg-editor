@@ -3,6 +3,7 @@ import { Rect } from './rect'
 import { Group } from './group'
 import { Path } from './path'
 import { Line } from './line'
+import { Div } from './div'
 import { FElement } from './baseElement'
 
 /**
@@ -30,6 +31,7 @@ export const FSVG = {
   Group,
   Path,
   Line,
+  Div,
 }
 
 interface IFSVG {
