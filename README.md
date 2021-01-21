@@ -50,6 +50,15 @@ To fix bugs:
 
 ---
 
+About Electron Package(To do)
+
+```
+npx webpack --config webpack.electron.prod.js
+electron-builder
+```
+
+---
+
 Code construction:
 
 ```
@@ -72,3 +81,4 @@ event summary(bind listener):
 - Redo/undo stack is empty
 - Fill/stroke/strokeWidth change
 - Switch tool
+

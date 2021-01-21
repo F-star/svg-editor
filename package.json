@@ -3,9 +3,11 @@
   "version": "0.1.0",
   "description": "",
   "private": true,
+  "main": "electron.main.js",
   "scripts": {
     "dev": "webpack serve",
     "build": "webpack --env prod",
+    "electron": "electron .",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
