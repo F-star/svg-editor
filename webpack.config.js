@@ -62,7 +62,15 @@ module.exports = env => {
             env.prod ? MiniCssExtractPlugin.loader : 'style-loader',
             'css-loader'
           ]
-        }
+        },
+        {
+          test: /\.(png|svg|jpg|jpeg|gif)$/i,
+          type: 'asset/resource',
+        },
+        {
+          test: /\.(woff|woff2|eot|ttf|otf)$/i,
+          type: 'asset/resource',
+        },
       ],
     },
     // TODO: how does it work

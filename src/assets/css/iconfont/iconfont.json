@@ -1,0 +1,51 @@
+{
+  "id": "2334912",
+  "name": "svg-editor",
+  "font_family": "svg-editor-iconfont",
+  "css_prefix_text": "icon-",
+  "description": "svg editor",
+  "glyphs": [
+    {
+      "icon_id": "19512746",
+      "name": "zoom",
+      "font_class": "zoom",
+      "unicode": "e60b",
+      "unicode_decimal": 58891
+    },
+    {
+      "icon_id": "19512739",
+      "name": "pan",
+      "font_class": "pan",
+      "unicode": "e60a",
+      "unicode_decimal": 58890
+    },
+    {
+      "icon_id": "19512729",
+      "name": "pen",
+      "font_class": "pen",
+      "unicode": "e609",
+      "unicode_decimal": 58889
+    },
+    {
+      "icon_id": "19512683",
+      "name": "pencil",
+      "font_class": "pencil",
+      "unicode": "e608",
+      "unicode_decimal": 58888
+    },
+    {
+      "icon_id": "19512675",
+      "name": "rect",
+      "font_class": "rect",
+      "unicode": "e607",
+      "unicode_decimal": 58887
+    },
+    {
+      "icon_id": "19512644",
+      "name": "select",
+      "font_class": "select",
+      "unicode": "e606",
+      "unicode_decimal": 58886
+    }
+  ]
+}
