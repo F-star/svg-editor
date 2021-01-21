@@ -63,14 +63,14 @@ export class AddPath extends ToolAbstract {
     d && this.editor.executeCommand('addPath', d)
     pathDraw.clear()
   }
-  afterMount() {
+  mounted() {
     console.log('mounted.')
     this.fn = () => {
       this.completePath()
     }
     this.editor.shortcut.register('Path tool: temp mount', 'Esc', this.fn)
   }
-  beforeUnmount() {
+  willUnmount() {
     this.completePath()
     this.editor.shortcut.unregister('Esc', this.fn)
     this.editor.hudManager.pathDraw.clear()

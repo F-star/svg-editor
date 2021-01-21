@@ -33,10 +33,10 @@ export class ToolManager {
   }
   setCurrentTool(name: string) {
     const prevTool = this.getCurrentTool()
-    prevTool && prevTool.beforeUnmount()
+    prevTool && prevTool.willUnmount()
 
     this.currentTool = this.tools[name]
-    this.currentTool.afterMount()
+    this.currentTool.mounted()
 
     const cursor = this.currentTool.cursorNormal()
     this.editor.setCursor(cursor)
