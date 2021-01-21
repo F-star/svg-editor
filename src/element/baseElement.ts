@@ -14,6 +14,9 @@ export class FElement {
   el() {
     return this.el_
   }
+  setID(id: string) {
+    this.el_.id = id
+  }
   setAttr(prop: string, val: string) {
     return this.el_.setAttribute(prop, val)
   }

@@ -4,30 +4,25 @@
  *
  * TODO:
  */
-import { NS } from '../constants'
 import Editor from '../Editor'
 import { FElement } from '../element/baseElement'
+import { FSVG, IFSVG } from '../element/index'
 import { IdGenerator } from '../util/IdGenerator'
 
 
 class Layer {
-  el_: SVGGElement
+  el_: IFSVG['Group']
 
   constructor(private editor: Editor, id: number) {
-    this.el_ = document.createElementNS(NS.SVG, 'g') as SVGGElement
-    this.el_.id = 'layer-' + id
+    this.el_ = new FSVG.Group()
+    this.el_.setID('layer-' + id)
   }
-  el() {
-    return this.el_
-  }
+  el() { return this.el_.el() }
   getVisible() {}
-  setVisible(val: boolean) {}
-  addChild(child: FElement) {
-    this.el_.appendChild(child.el())
-  }
-  remove() {
-    this.el_.remove()
-  }
+  visible() { this.el_.visible() }
+  hide() { this.el_.hide() }
+  addChild(child: FElement) { this.el_.append(child) }
+  remove() { this.el_.remove() }
 }
 
 export class LayerManager {

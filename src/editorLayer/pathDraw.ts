@@ -35,7 +35,7 @@ class Segment {
  * predict segment
  */
 class SegmentDraw {
-  private container: SVGGElement
+  private container: IFSVG['Group']
   private path: IFSVG['Path']
 
   private anchorNode: IFSVG['Rect']
@@ -45,12 +45,12 @@ class SegmentDraw {
   private handleOutLine: IFSVG['Line']
 
   constructor(parent: SVGGElement) {
-    this.container = document.createElementNS(NS.SVG, 'g') as SVGGElement
-    this.container.id = 'segment-draw'
+    this.container = new FSVG.Group()
+    this.container.setID('segment-draw')
 
     // predict line
     this.path = new FSVG.Path()
-    parent.appendChild(this.container)
+    parent.appendChild(this.container.el())
 
     this.path.setAttr('fill', 'none')
     this.path.setAttr('stroke', '#f04')
@@ -60,30 +60,30 @@ class SegmentDraw {
     this.handleInLine = new FSVG.Line(0, 0, 0, 0)
     this.handleInLine.setAttr('stroke', '#f04')
     this.handleInLine.hide()
-    this.container.appendChild(this.handleInLine.el())
+    this.container.append(this.handleInLine)
 
     this.handleOutLine = new FSVG.Line(0, 0, 0, 0)
     this.handleOutLine.setAttr('stroke', '#f04')
     this.handleOutLine.hide()
-    this.container.appendChild(this.handleOutLine.el())
+    this.container.append(this.handleOutLine)
 
     this.anchorNode = new FSVG.Rect(0, 0, 6, 6)
     this.anchorNode.setAttr('stroke', '#000')
     this.anchorNode.setAttr('fill', '#fff')
     this.anchorNode.hide()
-    this.container.appendChild(this.anchorNode.el())
+    this.container.append(this.anchorNode)
 
     this.handleInNode = new FSVG.Rect(0, 0, 6, 6)
     this.handleInNode.setAttr('stroke', '#000')
     this.handleInNode.setAttr('fill', '#fff')
     this.handleInNode.hide()
-    this.container.appendChild(this.handleInNode.el())
+    this.container.append(this.handleInNode)
 
     this.handleOutNode = new FSVG.Rect(0, 0, 6, 6)
     this.handleOutNode.setAttr('stroke', '#000')
     this.handleOutNode.setAttr('fill', '#fff')
     this.handleOutNode.hide()
-    this.container.appendChild(this.handleOutNode.el())
+    this.container.append(this.handleOutNode)
   }
   render(seg: ISegment) {
     // 3 points
