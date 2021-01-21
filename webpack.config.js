@@ -59,7 +59,12 @@ module.exports = env => {
         {
           test: /\.css$/,
           use: [
-            env.prod ? MiniCssExtractPlugin.loader : 'style-loader',
+            env.prod
+              ? {
+                  loader: MiniCssExtractPlugin.loader,
+                  options: { publicPath: '' }, // fix issue: https://stackoverflow.com/questions/64294706/webpack5-automatic-publicpath-is-not-supported-in-this-browser
+                }
+              : 'style-loader',
             'css-loader'
           ]
         },
