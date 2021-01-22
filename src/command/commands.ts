@@ -238,3 +238,27 @@ export class SetAttr extends BaseCommand {
     })
   }
 }
+
+/**
+ * transform: scale
+ */
+export class Scale extends BaseCommand {
+  constructor(
+    editor: Editor, private el: FElement,
+    private scaleX: number, private scaleY: number,
+    private cx?: number, private cy?: number
+  ) {
+    super(editor)
+    //
+    this.el.scale(scaleX, scaleY)
+  }
+  static cmdName() {
+    return 'scale'
+  }
+  redo() {
+
+  }
+  undo() {
+
+  }
+}

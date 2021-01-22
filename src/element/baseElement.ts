@@ -82,7 +82,7 @@ export class FElement {
     }
   }
   backward() {
-    const previousSibling = this.el_.previousElementSibling // FIXME:
+    const previousSibling = this.el_.previousElementSibling
     if (previousSibling) {
       this.before(previousSibling as SVGElement)
     }
@@ -123,5 +123,17 @@ export class FElement {
   }
   visible() {
     this.el_.removeAttribute('style')
+  }
+
+  /** transform */
+  scale(scaleX: number, scaleY: number, cx?: number, cy?: number) {
+    if (cx === undefined || cy === undefined) {
+      // TODO: get center pos
+    }
+    const scale = [
+      `scale(${scaleX} ${scaleY})`
+    ]
+    const transfrom = this.getAttr('transform') || ''
+    this.setAttr('tranform', transfrom + ' ' + scale)
   }
 }
