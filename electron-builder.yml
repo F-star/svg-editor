@@ -1,0 +1,6 @@
+productName: "SVG Editor"
+appId: "com.electron.svg-editor"
+
+
+directories:
+  output: ./release
