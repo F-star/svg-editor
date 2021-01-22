@@ -3,6 +3,7 @@
  *
  */
 
+import Editor from '../Editor'
 import { IBox } from '../element/box'
 import { FSVG, IFSVG } from '../element/index'
 class TransformGrids {
@@ -11,30 +12,34 @@ class TransformGrids {
   private topRight: IFSVG['Rect']
   private bottomLeft: IFSVG['Rect']
   private bottomRight: IFSVG['Rect']
+  private size = 6
 
-
-  constructor(parent: SVGGElement) {
+  constructor(parent: SVGGElement, private editor: Editor) {
     this.container = new FSVG.Group()
     this.container.setID('segment-draw')
 
-    this.topLeft = new FSVG.Rect(0, 0, 6, 6)
+    this.topLeft = new FSVG.Rect(0, 0, this.size, this.size)
     this.topLeft.setAttr('stroke', '#000')
     this.topLeft.setAttr('fill', '#fff')
+    this.topLeft.setNonScalingStroke()
     this.topLeft.hide()
 
-    this.topRight = new FSVG.Rect(0, 0, 6, 6)
+    this.topRight = new FSVG.Rect(0, 0, this.size, this.size)
     this.topRight.setAttr('stroke', '#000')
     this.topRight.setAttr('fill', '#fff')
+    this.topRight.setNonScalingStroke()
     this.topRight.hide()
 
-    this.bottomRight = new FSVG.Rect(0, 0, 6, 6)
+    this.bottomRight = new FSVG.Rect(0, 0, this.size, this.size)
     this.bottomRight.setAttr('stroke', '#000')
     this.bottomRight.setAttr('fill', '#fff')
+    this.bottomRight.setNonScalingStroke()
     this.bottomRight.hide()
 
-    this.bottomLeft = new FSVG.Rect(0, 0, 6, 6)
+    this.bottomLeft = new FSVG.Rect(0, 0, this.size, this.size)
     this.bottomLeft.setAttr('stroke', '#000')
     this.bottomLeft.setAttr('fill', '#fff')
+    this.bottomLeft.setNonScalingStroke()
     this.bottomLeft.hide()
 
     this.container.append(this.topLeft)
@@ -43,6 +48,18 @@ class TransformGrids {
     this.container.append(this.bottomLeft)
 
     parent.appendChild(this.container.el())
+    this.adjustSizeWhenZoom()
+  }
+  private adjustSizeWhenZoom() {
+    this.editor.viewport.onZoomChange(zoom => {
+      const size = this.size / zoom
+      ;[this.topLeft, this.topRight, this.bottomRight, this.bottomLeft].forEach(grid => {
+        const { x, y } = grid.getCenterPos()
+        grid.setAttr('width', String(size))
+        grid.setAttr('height', String(size))
+        grid.setCenterPos(x, y)
+      })
+    })
   }
   drawPoints(outline: OutlineBoxHud) {
     const box = outline.getBox()
@@ -74,7 +91,7 @@ export class OutlineBoxHud {
   outline: IFSVG['Path']
   transformGrids: TransformGrids
 
-  constructor(parent: SVGGElement) {
+  constructor(parent: SVGGElement, editor: Editor) {
     this.x = 0
     this.y = 0
     this.w = 0
@@ -91,7 +108,7 @@ export class OutlineBoxHud {
     this.container.append(this.outline)
     parent.appendChild(this.container.el())
 
-    this.transformGrids = new TransformGrids(parent)
+    this.transformGrids = new TransformGrids(parent, editor)
   }
   clear() {
     this.outline.hide()

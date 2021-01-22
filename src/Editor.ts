@@ -35,7 +35,7 @@ class Editor {
     this.toolManager = null
     this.viewport = new Viewport(this)
     this.layerManager = new LayerManager(this)
-    this.hudManager = new HudManager()
+    this.hudManager = new HudManager(this)
     this.export = new Export(this)
 
     const svgRootW = 3000
@@ -96,7 +96,7 @@ class Editor {
     svgStage.appendChild(svgContent)
 
     this.layerManager.createInitLayerAndMount()
-    this.hudManager.mount(svgStage)
+    this.hudManager.mount()
 
     /** mount!! */
     // viewportElement.appendChild(svgContainer)

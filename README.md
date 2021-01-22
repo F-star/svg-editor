@@ -62,6 +62,7 @@ To do recently:
 
 - Draw bezier curve
 - Contentmenu
+- Design logo
 - Layer operation
 - Record coordinate when move
 - Element info card

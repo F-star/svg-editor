@@ -1,6 +1,7 @@
 
 
 import { NS } from '../constants'
+import Editor from '../Editor'
 import { FSVG, IFSVG } from '../element/index'
 import { IPoint, ISegment } from '../interface'
 
@@ -37,6 +38,7 @@ class Segment {
 class SegmentDraw {
   private container: IFSVG['Group']
   private path: IFSVG['Path']
+  private size = 6
 
   private anchorNode: IFSVG['Rect']
   private handleInNode: IFSVG['Rect']
@@ -44,7 +46,7 @@ class SegmentDraw {
   private handleInLine: IFSVG['Line']
   private handleOutLine: IFSVG['Line']
 
-  constructor(parent: SVGGElement) {
+  constructor(parent: SVGGElement, private editor: Editor) {
     this.container = new FSVG.Group()
     this.container.setID('segment-draw')
 
@@ -54,36 +56,55 @@ class SegmentDraw {
 
     this.path.setAttr('fill', 'none')
     this.path.setAttr('stroke', '#f04')
-    this.path.setAttr('vector-effect', 'non-scaling-stroke')
+    this.path.setNonScalingStroke()
 
     // point and handle line nodes
     this.handleInLine = new FSVG.Line(0, 0, 0, 0)
     this.handleInLine.setAttr('stroke', '#f04')
+    this.handleInLine.setNonScalingStroke()
     this.handleInLine.hide()
     this.container.append(this.handleInLine)
 
     this.handleOutLine = new FSVG.Line(0, 0, 0, 0)
     this.handleOutLine.setAttr('stroke', '#f04')
+    this.handleOutLine.setNonScalingStroke()
     this.handleOutLine.hide()
     this.container.append(this.handleOutLine)
 
-    this.anchorNode = new FSVG.Rect(0, 0, 6, 6)
+    this.anchorNode = new FSVG.Rect(0, 0, this.size, this.size)
     this.anchorNode.setAttr('stroke', '#000')
     this.anchorNode.setAttr('fill', '#fff')
+    this.anchorNode.setNonScalingStroke()
     this.anchorNode.hide()
     this.container.append(this.anchorNode)
 
-    this.handleInNode = new FSVG.Rect(0, 0, 6, 6)
+    this.handleInNode = new FSVG.Rect(0, 0, this.size, this.size)
     this.handleInNode.setAttr('stroke', '#000')
     this.handleInNode.setAttr('fill', '#fff')
+    this.handleInNode.setNonScalingStroke()
     this.handleInNode.hide()
     this.container.append(this.handleInNode)
 
-    this.handleOutNode = new FSVG.Rect(0, 0, 6, 6)
+    this.handleOutNode = new FSVG.Rect(0, 0, this.size, this.size)
     this.handleOutNode.setAttr('stroke', '#000')
     this.handleOutNode.setAttr('fill', '#fff')
+    this.handleOutNode.setNonScalingStroke()
     this.handleOutNode.hide()
     this.container.append(this.handleOutNode)
+
+    this.adjustSizeWhenZoom()
+  }
+
+  private adjustSizeWhenZoom() {
+    this.editor.viewport.onZoomChange(zoom => {
+      const size = this.size / zoom
+      ;[this.anchorNode, this.handleInNode, this.handleOutNode].forEach(grid => {
+        const { x, y } = grid.getCenterPos()
+        grid.setAttr('width', String(size))
+        grid.setAttr('height', String(size))
+        grid.setCenterPos(x, y)
+      })
+    })
   }
   render(seg: ISegment) {
     // 3 points
@@ -121,7 +142,7 @@ export class PathDraw {
   private segs: Array<ISegment> = []
   segDraw: SegmentDraw
 
-  constructor(parent: SVGGElement) {
+  constructor(parent: SVGGElement, editor: Editor) {
     this.container = document.createElementNS(NS.SVG, 'g') as SVGGElement
     this.container.id = 'path-draw'
 
@@ -134,7 +155,7 @@ export class PathDraw {
 
     this.container.appendChild(this.path.el())
 
-    this.segDraw = new SegmentDraw(parent)
+    this.segDraw = new SegmentDraw(parent, editor)
   }
   addSeg(seg: ISegment) {
     this.path.visible()

@@ -26,6 +26,9 @@ export class FElement {
   removeAttr(prop: string) {
     this.el_.removeAttribute(prop)
   }
+  setNonScalingStroke() {
+    this.setAttr('vector-effect', 'non-scaling-stroke')
+  }
   getBBox() {
     return (this.el_ as SVGGraphicsElement).getBBox()
   }
