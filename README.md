@@ -13,12 +13,10 @@ npm run dev
 
 ## Build Electron App
 
-There is not electron dependency in `package.json`, because electron Installation is too big and someone maybe want not to build electron app. So you have to install in manually :
+There is not electron dependency in `package.json`, because electron Installation is too big and someone maybe want not to build electron app. So you have to (checkout a new branch and) install it manually:
 
 ```sh
 npm install -D electron
-// or install globally
-npm install -g electron
 ```
 
 If you are in China, maybe you should set npm config before install electron:

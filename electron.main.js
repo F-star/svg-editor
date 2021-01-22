@@ -8,6 +8,7 @@ function createWindow() {
       nodeIntegration: true
     },
   })
+  win.menuBarVisible = false
   win.loadFile('./dist/index.html')
 }
 
