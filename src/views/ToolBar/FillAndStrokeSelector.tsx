@@ -3,7 +3,7 @@ import config from '../../config/editorDefaultConfig'
 import globalVar from '../common/globalVar'
 import ColorPicker from './components/ColorPicker'
 
-type Props = {
+type State = {
   fill: string,
   stroke: string,
   openFill: boolean,
@@ -12,7 +12,7 @@ type Props = {
   pickerStroke: string,
 }
 
-class FillAndStrokeSelector extends React.Component<any, Props> {
+class FillAndStrokeSelector extends React.Component<any, State> {
   private setFill = (fill: string) => { this.setState({ fill, pickerFill: fill }) }
   private setStroke = (stroke: string) => { this.setState({ stroke, pickerStroke: stroke }) }
   private fillRef: React.RefObject<HTMLDivElement>
@@ -67,6 +67,8 @@ class FillAndStrokeSelector extends React.Component<any, Props> {
           width: 30,
           height: 30,
           backgroundColor: this.state.fill,
+          border: '1px solid #fff',
+          boxShadow: '0 0 0 1px #111',
         }}
         onClick={() => { this.setState({ openFill: true }) }}
       ></div>
@@ -77,10 +79,11 @@ class FillAndStrokeSelector extends React.Component<any, Props> {
         ref={this.strokeRef}
         style={{
           margin: '6px auto',
-          width: 30,
-          height: 30,
-          border: `4px solid ${this.state.stroke}`,
+          width: 32,
+          height: 32,
+          border: `8px solid ${this.state.stroke}`,
           boxSizing: 'border-box',
+          boxShadow: '0 0 0 1px #fff, inset 0 0 0 1px #fff',
         }}
         onClick={() => { this.setState({ openStroke: true }) }}
       ></div>

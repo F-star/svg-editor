@@ -125,7 +125,8 @@ export class OutlineBoxHud {
     this.outline.setAttr('d', d)
     this.outline.visible()
 
-    this.transformGrids.drawPoints(this)
+    // TODO: temporarily comment
+    // this.transformGrids.drawPoints(this)
   }
   getWidth() { return this.w }
   getHeight() { return this.h }

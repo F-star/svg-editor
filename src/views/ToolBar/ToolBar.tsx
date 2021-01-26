@@ -4,8 +4,7 @@ import ToolItem from './ToolItem'
 import defaultConfig from '../../config/editorDefaultConfig'
 import globalVar from '../common/globalVar'
 import FillAndStrokeSelector from './FillAndStrokeSelector'
-import ShortcustsDialog from '../_components/ShortcutsDialog'
-
+import ShortcutBtn from './ShortcutBtn'
 class ToolBar extends React.Component<any, any> {
   constructor(props: any) {
     super(props)
@@ -50,6 +49,7 @@ class ToolBar extends React.Component<any, any> {
 
     return (
       <div style={{
+        position: 'relative',
         height: '100%',
         width: '60px',
         flexShrink: 0,
@@ -60,21 +60,7 @@ class ToolBar extends React.Component<any, any> {
         </StyleToolBar>
         <FillAndStrokeSelector />
 
-        <div
-          style={{
-            color: '#fff',
-            fontSize: 12,
-            textAlign: 'center',
-            cursor: 'pointer',
-          }}
-          onClick={() => { this.setState({ open: true }) }}
-        >
-          shortcuts
-        </div>
-        <ShortcustsDialog
-          open={this.state.open}
-          onClose={() => { this.setState({ open: false }) }}
-        />
+        <ShortcutBtn></ShortcutBtn>
       </div>
     )
   }
