@@ -1,6 +1,4 @@
 import React from 'react'
-import styled from 'styled-components'
-
 class PanelsArea extends React.Component {
   render() {
     return (
@@ -10,7 +8,7 @@ class PanelsArea extends React.Component {
         height: '100%',
         backgroundColor: '#555',
       }}>
-        panels area
+
       </div>
     )
   }
