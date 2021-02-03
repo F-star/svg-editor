@@ -12,40 +12,37 @@ export class EditorSetting {
     this.listeners = {}
     this.setFill(defaultConfig.fill)
     this.setStroke(defaultConfig.stroke)
-    this.set('stroke-width', defaultConfig.strokeWidth)
+    this.setStrokeWidth(defaultConfig.strokeWidth)
   }
-  setFill(val: string) {
-    this.set('fill', val)
-  }
-  setStroke(val: string) {
-    this.set('stroke', val)
-  }
+  setFill(val: string) { this.set('fill', val) }
+  setStroke(val: string) { this.set('stroke', val) }
+  setStrokeWidth(val: string) { this.set('stroke-width', val) }
   set(name: string, val: string) {
     this.setting[name] = val
 
-    const toCallFns = this.listeners[name]
-    if (toCallFns) {
-      toCallFns.forEach(fn => {
-        fn(val)
+    const toCallHandlers = this.listeners[name]
+    if (toCallHandlers) {
+      toCallHandlers.forEach(handler => {
+        handler(val)
       })
     }
   }
   get(name: string) {
     return this.setting[name]
   }
-  on(name: string, fn: listener) {
+  on(name: string, handler: listener) {
     if (!this.listeners[name]) {
       this.listeners[name] = []
     }
-    this.listeners[name].push(fn)
+    this.listeners[name].push(handler)
   }
   // TODO: to test
-  off(name: string, fn: listener): boolean {
-    const spListeners = this.listeners[name]
+  off(name: string, handler: listener): boolean {
+    const targetListeners = this.listeners[name]
     if (this.listeners) {
-      const idx = spListeners.indexOf(fn)
+      const idx = targetListeners.indexOf(handler)
       if (idx > -1) {
-        spListeners.splice(idx, 1)
+        targetListeners.splice(idx, 1)
         return true
       }
     }

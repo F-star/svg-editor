@@ -71,7 +71,6 @@ class CmdBtnList extends React.Component<any, States> {
       <div style={{
         display: 'flex',
         alignItems: 'center',
-        paddingLeft: 140,
         height: '100%',
       }}>
         {elements}

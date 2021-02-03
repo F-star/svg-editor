@@ -15,17 +15,14 @@ type listener = (n: number) => void
 
 class CommandManager {
   private editor: Editor
-  private redoStack: Array<BaseCommand>
-  private undoStack: Array<BaseCommand>
-  private commandClasses: { [key: string]: {new (editor: Editor, ...args: any): BaseCommand} }
+  private redoStack: Array<BaseCommand> = []
+  private undoStack: Array<BaseCommand> = []
+  private commandClasses: { [key: string]: {new (editor: Editor, ...args: any): BaseCommand} } = {}
   private undoListener: listener
   private redoListener: listener
 
   constructor(editor: Editor) {
     this.editor = editor
-    this.redoStack = []
-    this.undoStack = []
-    this.commandClasses = {}
 
     this.resigterCommandClass(AddRect, AddRect.cmdName())
     this.resigterCommandClass(AddPath, AddPath.cmdName())
@@ -87,7 +84,6 @@ class CommandManager {
   lock() {}
   unlock() {}
 
-
   private emitUndoAndRedoEvent() {
     this.undoListener(this.undoStack.length)
     this.redoListener(this.redoStack.length)
@@ -105,6 +101,9 @@ class CommandManager {
   removeUndoListener() {
     this.undoListener = null
   }
+  /* getHistorySnapshot(): string[] {
+    return this.undoStack.map(item => item.constructor.cmdName())
+  } */
 }
 
 export default CommandManager

@@ -7,10 +7,6 @@ const config = {
 
   selectAreaFill: 'rgba(200, 200, 200, .2)',
   selectAreaStroke: '#888',
-}
+} as const
 
-type DeepReadonly<T> = {
-  readonly [P in keyof T]: DeepReadonly<T[P]>;
-}
-
-export default config as DeepReadonly<typeof config>
+export default config
