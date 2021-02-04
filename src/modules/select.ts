@@ -4,6 +4,13 @@ import { FElement } from '../element/baseElement'
 import { getBoxBy2points } from '../util/math'
 import { ToolAbstract } from './ToolAbstract'
 
+enum Mode {
+  Init,
+  SelectArea,
+  AcitveEls,
+  Scale,
+}
+
 /**
  * select
  *
@@ -12,7 +19,7 @@ import { ToolAbstract } from './ToolAbstract'
  * 1. 鼠标按下时，选中单个元素
  * 2. 鼠标按下为空，拖拽时产生选中框，可以选择多个元素
  * 3. 选中单个（或选区选中多个） 缩放 等控制点，拖拽改变宽高
- * 3. 切断刀这个工具时，激活的元素进入被选中状态（轮廓线+控制点）。
+ * 3. 切断到这个工具时，激活的元素进入被选中状态（轮廓线+控制点）。
  * 4. 选区和元素相交的判定
  * 5. 激活元素如何保存，保存到哪里
  */
@@ -20,6 +27,7 @@ export class Select extends ToolAbstract {
   private selectedEls: Array<FElement>
   private outlineStartX: number
   private outlineStartY: number
+  private mode = Mode.Init
 
   constructor() {
     super()
@@ -41,24 +49,34 @@ export class Select extends ToolAbstract {
     return this.selectedEls.length > 0
   }
   start(ctx: EditorEventContext) {
-    const targetElement = ctx.originEvent.target
-    if (!this.editor.isContentElement(targetElement)) {
+    const target = ctx.originEvent.target
+    const activedElsManager = this.editor.activedElsManager
+    const outlineBoxHud = this.editor.hudManager.outlineBoxHud
+
+    const transformGrid = outlineBoxHud.containsGrip(target as SVGElement)
+    if (transformGrid) {
+      // TODO: enter "Scale" mode
+      this.mode = Mode.Scale
+      return
+    }
+    // no exist in g#content (the content drawing area), enter "Select Area" mode
+    if (!this.editor.isContentElement(target)) {
+      this.mode = Mode.SelectArea
       return
     }
 
-    const targetFElement = FSVG.create(targetElement as SVGElement)
-    const activedElsManager = this.editor.activedElsManager
-
-    if (activedElsManager.contains(targetElement as SVGElement)) {
+    // encapsulate svg element
+    const targetFElement = FSVG.create(target as SVGElement)
+    // check whether target element is part of activedEls.
+    if (activedElsManager.contains(target as SVGElement)) {
       activedElsManager.heighligthEls()
     } else {
       activedElsManager.setEls(targetFElement)
     }
 
+    this.mode = Mode.AcitveEls
     this.selectedEls = activedElsManager.getEls()
-
-    const outlineBoxHud = this.editor.hudManager.outlineBoxHud
-
+    // record outline pos for move it when move lately.
     this.outlineStartX = outlineBoxHud.getX()
     this.outlineStartY = outlineBoxHud.getY()
   }

@@ -6,6 +6,8 @@ module.exports = {
   extends: [
     'standard',
     'plugin:react/recommended',
+    'plugin:@typescript-eslint/eslint-recommended',
+    'plugin:@typescript-eslint/recommended',
   ],
   parser: '@typescript-eslint/parser',
   parserOptions: {
@@ -24,5 +26,7 @@ module.exports = {
     'no-multiple-empty-lines': ['error', { max: 2 }],
     'lines-between-class-members': 'off',
     'no-useless-constructor': 'off',
+    // ts
+    '@typescript-eslint/explicit-module-boundary-types': 'off'
   },
 }

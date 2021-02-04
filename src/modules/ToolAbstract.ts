@@ -5,8 +5,8 @@ export abstract class ToolAbstract {
   protected editor: Editor
 
   setEditor(editor: Editor) { this.editor = editor }
-  mounted() {}
-  willUnmount() {}
+  mounted() { /** Do Nothing */ }
+  willUnmount() { /** Do Nothing */ }
   abstract name(): string
   abstract cursorNormal(): string
   abstract cursorPress(): string

@@ -18,29 +18,10 @@ class TransformGrids {
     this.container = new FSVG.Group()
     this.container.setID('segment-draw')
 
-    this.topLeft = new FSVG.Rect(0, 0, this.size, this.size)
-    this.topLeft.setAttr('stroke', '#000')
-    this.topLeft.setAttr('fill', '#fff')
-    this.topLeft.setNonScalingStroke()
-    this.topLeft.hide()
-
-    this.topRight = new FSVG.Rect(0, 0, this.size, this.size)
-    this.topRight.setAttr('stroke', '#000')
-    this.topRight.setAttr('fill', '#fff')
-    this.topRight.setNonScalingStroke()
-    this.topRight.hide()
-
-    this.bottomRight = new FSVG.Rect(0, 0, this.size, this.size)
-    this.bottomRight.setAttr('stroke', '#000')
-    this.bottomRight.setAttr('fill', '#fff')
-    this.bottomRight.setNonScalingStroke()
-    this.bottomRight.hide()
-
-    this.bottomLeft = new FSVG.Rect(0, 0, this.size, this.size)
-    this.bottomLeft.setAttr('stroke', '#000')
-    this.bottomLeft.setAttr('fill', '#fff')
-    this.bottomLeft.setNonScalingStroke()
-    this.bottomLeft.hide()
+    this.topLeft = this.getInitGrip()
+    this.topRight = this.getInitGrip()
+    this.bottomRight = this.getInitGrip()
+    this.bottomLeft = this.getInitGrip()
 
     this.container.append(this.topLeft)
     this.container.append(this.topRight)
@@ -50,6 +31,25 @@ class TransformGrids {
     parent.appendChild(this.container.el())
     this.adjustSizeWhenZoom()
   }
+  private getInitGrip(): IFSVG['Rect'] {
+    const grid = new FSVG.Rect(0, 0, this.size, this.size)
+    grid.setAttr('stroke', '#000')
+    grid.setAttr('fill', '#fff')
+    grid.setNonScalingStroke()
+    grid.hide()
+    return grid
+  }
+  contains(el: SVGElement): IFSVG['Path'] {
+    // TODO:
+    if (this.topLeft.el() === el) return this.topLeft
+    if (this.topRight.el() === el) return this.topRight
+    if (this.bottomRight.el() === el) return this.bottomRight
+    if (this.bottomLeft.el() === el) return this.bottomLeft
+    return null
+  }
+  // getMatchedGripPos() {
+  //   const matchGrip = null
+  // }
   private adjustSizeWhenZoom() {
     this.editor.viewport.onZoomChange(zoom => {
       const size = this.size / zoom
@@ -110,10 +110,6 @@ export class OutlineBoxHud {
 
     this.transformGrids = new TransformGrids(parent, editor)
   }
-  clear() {
-    this.outline.hide()
-    this.transformGrids.clear()
-  }
   drawRect(x: number, y: number, w: number, h: number) {
     this.x = x
     this.y = y
@@ -126,7 +122,14 @@ export class OutlineBoxHud {
     this.outline.visible()
 
     // TODO: temporarily comment
-    // this.transformGrids.drawPoints(this)
+    this.transformGrids.drawPoints(this)
+  }
+  clear() {
+    this.outline.hide()
+    this.transformGrids.clear()
+  }
+  containsGrip(el: SVGElement): IFSVG['Path'] {
+    return this.transformGrids.contains(el)
   }
   getWidth() { return this.w }
   getHeight() { return this.h }
