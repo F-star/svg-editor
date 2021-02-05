@@ -1,13 +1,13 @@
-import Editor from './Editor'
-import { EditorEventContext } from './editorEventContext'
-import AddRect from './modules/addRect'
-import { DragCanvas } from './modules/dragCanvas'
-import { Select } from './modules/select'
-import { Pencil } from './modules/pencil'
-import { AddPath } from './modules/addPath/addPath'
-import { Zoom } from './modules/zoom'
+import Editor from '../Editor'
+import { EditorEventContext } from '../editorEventContext'
+import AddRect from './addRect'
+import { DragCanvas } from './dragCanvas'
+import { Select } from './select/select'
+import { Pencil } from './pencil'
+import { AddPath } from './addPath/addPath'
+import { Zoom } from './zoom'
 
-import { ToolAbstract } from './modules/ToolAbstract'
+import { ToolAbstract } from './ToolAbstract'
 
 export class ToolManager {
   private editor: Editor
@@ -24,12 +24,12 @@ export class ToolManager {
 
     this.ctx = null // tool context
 
-    this.registerTool(new AddRect())
-    this.registerTool(new DragCanvas())
-    this.registerTool(new Select())
-    this.registerTool(new Pencil())
-    this.registerTool(new AddPath())
-    this.registerTool(new Zoom())
+    this.registerTool(new AddRect(editor))
+    this.registerTool(new DragCanvas(editor))
+    this.registerTool(new Select(editor))
+    this.registerTool(new Pencil(editor))
+    this.registerTool(new AddPath(editor))
+    this.registerTool(new Zoom(editor))
   }
   setCurrentTool(name: string) {
     const prevTool = this.getCurrentTool()
@@ -55,8 +55,8 @@ export class ToolManager {
     return this.currentTool.name()
   }
   registerTool(tool: ToolAbstract) {
-    this.tools[tool.name()] = tool
-    tool.setEditor(this.editor) // dependency injection
+    const toolName = tool.name()
+    this.tools[toolName] = tool
   }
 
   bindToolEvent() {

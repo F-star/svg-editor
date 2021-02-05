@@ -2,7 +2,7 @@
 import Editor from './Editor'
 import CommandManager from './command/commandManager'
 import { EditorSetting } from './setting/editorSetting'
-import { ToolManager } from './toolManager'
+import { ToolManager } from './modules/toolManager'
 import defaultConfig from './config/editorDefaultConfig'
 
 function initEditor() {

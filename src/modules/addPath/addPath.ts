@@ -2,6 +2,7 @@
 /**
  * quadratic Bezier curves
  */
+import Editor from '../../Editor'
 import { EditorEventContext } from '../../editorEventContext'
 import { FSVG, IFSVG } from '../../element/index'
 import { ISegment } from '../../interface'
@@ -18,12 +19,11 @@ export class AddPath extends ToolAbstract {
   // private isInit = true
   private x: number
   private y: number
-  private fn: Function
+  private CompleteDrawHandler: () => void
   private path: IFSVG['Path']
 
-  constructor() {
-    super()
-    this.editor = null
+  constructor(editor: Editor) {
+    super(editor)
     // this.state = State.DrawPoint
   }
   name() {
@@ -54,7 +54,7 @@ export class AddPath extends ToolAbstract {
     }
     this.editor.executeCommand('addPathSeg', this.path, null, null)
   }
-  endOutside() {}
+  endOutside() { /** Do Nothing */ }
   completePath() {
     console.log('Finish Path')
     const pathDraw = this.editor.hudManager.pathDraw
@@ -65,14 +65,14 @@ export class AddPath extends ToolAbstract {
   }
   mounted() {
     console.log('mounted.')
-    this.fn = () => {
+    this.CompleteDrawHandler = () => {
       this.completePath()
     }
-    this.editor.shortcut.register('Path tool: temp mount', 'Esc', this.fn)
+    this.editor.shortcut.register('Path tool: temp mount', 'Esc', this.CompleteDrawHandler)
   }
   willUnmount() {
     this.completePath()
-    this.editor.shortcut.unregister('Esc', this.fn)
+    this.editor.shortcut.unregister('Esc', this.CompleteDrawHandler)
     this.editor.hudManager.pathDraw.clear()
   }
 }

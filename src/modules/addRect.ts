@@ -1,12 +1,12 @@
 
+import Editor from '../Editor'
 import { EditorEventContext } from '../editorEventContext'
 import { getBoxBy2points } from '../util/math'
 import { ToolAbstract } from './ToolAbstract'
 
 class AddRect extends ToolAbstract {
-  constructor() {
-    super()
-    this.editor = null
+  constructor(editor: Editor) {
+    super(editor)
   }
   name() {
     return 'addRect'

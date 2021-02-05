@@ -1,11 +1,11 @@
 
+import Editor from '../Editor'
 import { EditorEventContext } from '../editorEventContext'
 import { ToolAbstract } from './ToolAbstract'
 
 export class Zoom extends ToolAbstract {
-  constructor() {
-    super()
-    this.editor = null
+  constructor(editor: Editor) {
+    super(editor)
   }
   name() {
     return 'zoom'

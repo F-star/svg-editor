@@ -8,7 +8,7 @@
 import Editor from './Editor'
 
 export class EditorEventContext {
-  originEvent: MouseEvent
+  nativeEvent: MouseEvent
   isEndInside: boolean
   private mousePressed: boolean
   private editor: Editor
@@ -25,7 +25,7 @@ export class EditorEventContext {
   constructor(editor: Editor, e: MouseEvent) {
     this.editor = editor
     this.mousePressed = false
-    this.originEvent = e
+    this.nativeEvent = e
     this.isEndInside = false
 
     this.startX = 0
@@ -42,7 +42,7 @@ export class EditorEventContext {
     this.setStartPos()
   }
   setOriginEvent(e: MouseEvent) {
-    this.originEvent = e
+    this.nativeEvent = e
   }
   setStartPos() {
     const { x, y } = this.getPos()
@@ -50,8 +50,8 @@ export class EditorEventContext {
     this.startX = x
     this.startY = y
 
-    this.startClientX = this.originEvent.clientX
-    this.startClientY = this.originEvent.clientY
+    this.startClientX = this.nativeEvent.clientX
+    this.startClientY = this.nativeEvent.clientY
   }
   releaseMouse() {
     this.mousePressed = false
@@ -63,8 +63,8 @@ export class EditorEventContext {
     const zoom = this.editor.viewport.getZoom()
     const { x, y } = this.editor.viewport.getContentOffset()
     return {
-      x: this.originEvent.offsetX / zoom - x,
-      y: this.originEvent.offsetY / zoom - y,
+      x: this.nativeEvent.offsetX / zoom - x,
+      y: this.nativeEvent.offsetY / zoom - y,
     }
   }
   getStartPos() {
@@ -75,8 +75,8 @@ export class EditorEventContext {
   }
   // without calc with zoom value
   getDiffPos() {
-    const x = this.originEvent.clientX - this.startClientX
-    const y = this.originEvent.clientY - this.startClientY
+    const x = this.nativeEvent.clientX - this.startClientX
+    const y = this.nativeEvent.clientY - this.startClientY
     return { x, y }
   }
 }

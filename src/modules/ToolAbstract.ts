@@ -2,9 +2,7 @@ import Editor from '../Editor'
 import { EditorEventContext } from '../editorEventContext'
 
 export abstract class ToolAbstract {
-  protected editor: Editor
-
-  setEditor(editor: Editor) { this.editor = editor }
+  constructor(protected editor: Editor) {}
   mounted() { /** Do Nothing */ }
   willUnmount() { /** Do Nothing */ }
   abstract name(): string

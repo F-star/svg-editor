@@ -1,3 +1,4 @@
+import Editor from '../Editor'
 import { EditorEventContext } from '../editorEventContext'
 import { ToolAbstract } from './ToolAbstract'
 
@@ -5,8 +6,8 @@ export class DragCanvas extends ToolAbstract {
   private startOffsetX: number
   private startOffsetY: number
 
-  constructor() {
-    super()
+  constructor(editor: Editor) {
+    super(editor)
     this.startOffsetX = 0
     this.startOffsetY = 0
   }
