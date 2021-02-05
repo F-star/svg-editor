@@ -3,25 +3,28 @@
  *
  */
 
+import editorDefaultConfig from '../config/editorDefaultConfig'
 import Editor from '../Editor'
 import { IBox } from '../element/box'
 import { FSVG, IFSVG } from '../element/index'
-class TransformGrids {
+
+
+class ScaleGrids {
   private container: IFSVG['Group']
   private topLeft: IFSVG['Rect']
   private topRight: IFSVG['Rect']
   private bottomLeft: IFSVG['Rect']
   private bottomRight: IFSVG['Rect']
-  private size = 6
+  private size = editorDefaultConfig.scaleGridSize
 
   constructor(parent: SVGGElement, private editor: Editor) {
     this.container = new FSVG.Group()
     this.container.setID('segment-draw')
 
-    this.topLeft = this.getInitGrip()
-    this.topRight = this.getInitGrip()
-    this.bottomRight = this.getInitGrip()
-    this.bottomLeft = this.getInitGrip()
+    this.topLeft = this.createGrip()
+    this.topRight = this.createGrip()
+    this.bottomRight = this.createGrip()
+    this.bottomLeft = this.createGrip()
 
     this.container.append(this.topLeft)
     this.container.append(this.topRight)
@@ -31,7 +34,7 @@ class TransformGrids {
     parent.appendChild(this.container.el())
     this.adjustSizeWhenZoom()
   }
-  private getInitGrip(): IFSVG['Rect'] {
+  private createGrip(): IFSVG['Rect'] {
     const grid = new FSVG.Rect(0, 0, this.size, this.size)
     grid.setAttr('stroke', '#000')
     grid.setAttr('fill', '#fff')
@@ -39,7 +42,15 @@ class TransformGrids {
     grid.hide()
     return grid
   }
-  contains(el: SVGElement): IFSVG['Path'] {
+  getOppositeGrip(grip: IFSVG['Rect']): IFSVG['Rect'] {
+    let targetGrip = null
+    if (grip === this.topLeft) targetGrip = this.bottomRight
+    else if (grip === this.topRight) targetGrip = this.bottomLeft
+    else if (grip === this.bottomRight) targetGrip = this.topLeft
+    else if (grip === this.bottomLeft) targetGrip = this.topRight
+    return targetGrip
+  }
+  getGripIfExist(el: SVGElement): IFSVG['Rect'] {
     // TODO:
     if (this.topLeft.el() === el) return this.topLeft
     if (this.topRight.el() === el) return this.topRight
@@ -83,20 +94,15 @@ class TransformGrids {
 }
 
 export class OutlineBoxHud {
-  x = 0
-  y = 0
-  w = 0
-  h = 0
-  container: IFSVG['Group']
-  outline: IFSVG['Path']
-  transformGrids: TransformGrids
+  private x = 0
+  private y = 0
+  private w = 0
+  private h = 0
+  private container: IFSVG['Group']
+  private outline: IFSVG['Path']
+  scaleGrids: ScaleGrids
 
   constructor(parent: SVGGElement, editor: Editor) {
-    this.x = 0
-    this.y = 0
-    this.w = 0
-    this.h = 0
-
     this.container = new FSVG.Group() // document.createElementNS(NS.SVG, 'g') as SVGGElement
     this.container.setID('outline-box-hud')
 
@@ -108,28 +114,37 @@ export class OutlineBoxHud {
     this.container.append(this.outline)
     parent.appendChild(this.container.el())
 
-    this.transformGrids = new TransformGrids(parent, editor)
+    this.scaleGrids = new ScaleGrids(parent, editor)
   }
+  // drawRectByDir(dir: 'tl' | 'tr' | 'br' | 'bl', x: number, y: number) {
+  //   if (dir === 'br') {
+  //     //
+  //   }
+  // }
   drawRect(x: number, y: number, w: number, h: number) {
     this.x = x
     this.y = y
     this.w = w
     this.h = h
 
-    // why don't I use rect, just solve the condition when width or height is 0 the outline is disapper
-    const d = `M ${x} ${y} L ${x + w} ${y} L ${x + w} ${y + h} L ${x} ${y + h} Z`
+    this.drawRectWithPoints(x, y, x + w, y, x + w, y + h, x, y + h)
+  }
+  private drawRectWithPoints(
+    x1: number, y1: number, x2: number, y2: number,
+    x3: number, y3: number, x4: number, y4: number
+  ) {
+    const d = `M ${x1} ${y1} L ${x2} ${y2} L ${x3} ${y3} L ${x4} ${y4} Z`
     this.outline.setAttr('d', d)
     this.outline.visible()
 
-    // TODO: temporarily comment
-    this.transformGrids.drawPoints(this)
+    this.scaleGrids.drawPoints(this)
   }
   clear() {
     this.outline.hide()
-    this.transformGrids.clear()
+    this.scaleGrids.clear()
   }
-  containsGrip(el: SVGElement): IFSVG['Path'] {
-    return this.transformGrids.contains(el)
+  getGripIfExist(el: SVGElement): IFSVG['Rect'] {
+    return this.scaleGrids.getGripIfExist(el)
   }
   getWidth() { return this.w }
   getHeight() { return this.h }

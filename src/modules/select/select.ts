@@ -1,6 +1,6 @@
 import { EditorEventContext } from '../../editorEventContext'
 import { ToolAbstract } from '../ToolAbstract'
-import { Strategy, ModeFactory } from './modes'
+import { Mode, ModeFactory } from './modes'
 import Editor from '../../Editor'
 
 /**
@@ -16,7 +16,7 @@ import Editor from '../../Editor'
  * 5. 激活元素如何保存，保存到哪里
  */
 export class Select extends ToolAbstract {
-  private strategy: Strategy
+  private mode: Mode
   private modeFactory: ModeFactory
 
   constructor(editor: Editor) {
@@ -30,26 +30,25 @@ export class Select extends ToolAbstract {
     const target = ctx.nativeEvent.target
     const outlineBoxHud = this.editor.hudManager.outlineBoxHud
 
-    const transformGrid = outlineBoxHud.containsGrip(target as SVGElement)
+    const transformGrid = outlineBoxHud.getGripIfExist(target as SVGElement)
     if (transformGrid) {
-      this.strategy = this.modeFactory.getStrategy('scaleElements')
-    } else if (!this.editor.isContentElement(ctx.nativeEvent.target)) {
-      // Target element no exist in g#content (the content drawing area), enter "Select Area" mode
-      this.strategy = this.modeFactory.getStrategy('selectArea')
+      this.mode = this.modeFactory.getStrategy('scaleElements')
+    } else if (this.editor.isContentElement(ctx.nativeEvent.target)) {
+      this.mode = this.modeFactory.getStrategy('moveElements')
     } else {
-      this.strategy = this.modeFactory.getStrategy('moveElements')
+      this.mode = this.modeFactory.getStrategy('selectArea')
     }
 
-    this.strategy.start(ctx)
+    this.mode.start(ctx)
   }
   move(ctx: EditorEventContext) {
-    this.strategy.move(ctx)
+    this.mode.move(ctx)
   }
   end(ctx: EditorEventContext) {
-    this.strategy.end(ctx)
+    this.mode.end(ctx)
   }
   // mousedown outside viewport
   endOutside(ctx: EditorEventContext) {
-    this.strategy.endOutside(ctx)
+    this.mode.endOutside(ctx)
   }
 }

@@ -4,7 +4,6 @@ import { FElement } from '../../element/baseElement'
 import { FSVG } from '../../element/index'
 import { getBoxBy2points } from '../../util/math'
 
-
 abstract class Mode {
   constructor(protected editor: Editor) {}
   abstract start(ctx: EditorEventContext): void
@@ -81,11 +80,29 @@ class MoveElementsMode extends Mode {
 }
 
 class ScaleElementMode extends Mode {
-  start() {
+  private cx: number
+  private cy: number
+
+  start(ctx: EditorEventContext) {
     console.log('scale mode: start')
+    /**
+     * 1. record match position
+     */
+    const target = ctx.nativeEvent.target
+    const outlineBoxHud = this.editor.hudManager.outlineBoxHud
+
+    const grid = outlineBoxHud.getGripIfExist(target as SVGElement)
+    const centerGrid = outlineBoxHud.scaleGrids.getOppositeGrip(grid)
+    const pos = centerGrid.getPos()
+    this.cx = pos.x
+    this.cy = pos.y
   }
-  move() {
+  move(ctx: EditorEventContext) {
     console.log('scale mode: move')
+    /**
+     * 2. get current pos
+     */
+    const { x, y } = ctx.getDiffPos()
   }
   end() {
     console.log('scale mode: end')
@@ -113,6 +130,6 @@ class ModeFactory {
 }
 
 export {
-  Mode as Strategy,
+  Mode,
   ModeFactory,
 }

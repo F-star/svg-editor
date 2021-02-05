@@ -1,4 +1,4 @@
-const config = {
+const editorDefaultConfig = {
   tool: 'select',
 
   fill: '#fff',
@@ -7,6 +7,8 @@ const config = {
 
   selectAreaFill: 'rgba(200, 200, 200, .2)',
   selectAreaStroke: '#888',
+
+  scaleGridSize: 6,
 } as const
 
-export default config
+export default editorDefaultConfig
