@@ -30,7 +30,7 @@ export class Select extends ToolAbstract {
     const target = ctx.nativeEvent.target
     const outlineBoxHud = this.editor.hudManager.outlineBoxHud
 
-    const transformGrid = outlineBoxHud.getGripIfExist(target as SVGElement)
+    const transformGrid = outlineBoxHud.getGripIfMatch(target as SVGElement)
     if (transformGrid) {
       this.mode = this.modeFactory.getStrategy('scaleElements')
     } else if (this.editor.isContentElement(ctx.nativeEvent.target)) {

@@ -91,7 +91,7 @@ class ScaleElementMode extends Mode {
     const target = ctx.nativeEvent.target
     const outlineBoxHud = this.editor.hudManager.outlineBoxHud
 
-    const grid = outlineBoxHud.getGripIfExist(target as SVGElement)
+    const grid = outlineBoxHud.getGripIfMatch(target as SVGElement)
     const centerGrid = outlineBoxHud.scaleGrids.getOppositeGrip(grid)
     const pos = centerGrid.getPos()
     this.cx = pos.x

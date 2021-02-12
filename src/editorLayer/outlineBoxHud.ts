@@ -11,32 +11,49 @@ import { FSVG, IFSVG } from '../element/index'
 
 class ScaleGrids {
   private container: IFSVG['Group']
+
   private topLeft: IFSVG['Rect']
   private topRight: IFSVG['Rect']
   private bottomLeft: IFSVG['Rect']
   private bottomRight: IFSVG['Rect']
+
+  private top: IFSVG['Rect']
+  private right: IFSVG['Rect']
+  private bottom: IFSVG['Rect']
+  private left: IFSVG['Rect']
+
   private size = editorDefaultConfig.scaleGridSize
 
   constructor(parent: SVGGElement, private editor: Editor) {
     this.container = new FSVG.Group()
     this.container.setID('segment-draw')
 
-    this.topLeft = this.createGrip()
-    this.topRight = this.createGrip()
-    this.bottomRight = this.createGrip()
-    this.bottomLeft = this.createGrip()
+    this.topLeft = this.createGrip('topLeft')
+    this.topRight = this.createGrip('topRight')
+    this.bottomRight = this.createGrip('bottomRight')
+    this.bottomLeft = this.createGrip('bottomLeft')
+
+    this.top = this.createGrip('top')
+    this.right = this.createGrip('right')
+    this.bottom = this.createGrip('bottom')
+    this.left = this.createGrip('left')
 
     this.container.append(this.topLeft)
     this.container.append(this.topRight)
     this.container.append(this.bottomRight)
     this.container.append(this.bottomLeft)
+    this.container.append(this.top)
+    this.container.append(this.right)
+    this.container.append(this.bottom)
+    this.container.append(this.left)
 
     parent.appendChild(this.container.el())
-    this.adjustSizeWhenZoom()
+    this.changeSizeWhenZoom()
   }
-  private createGrip(): IFSVG['Rect'] {
+  private createGrip(id: string): IFSVG['Rect'] {
     const grid = new FSVG.Rect(0, 0, this.size, this.size)
-    grid.setAttr('stroke', '#000')
+    grid.setID(id)
+    grid.setAttr('stroke', editorDefaultConfig.outlineColor)
     grid.setAttr('fill', '#fff')
     grid.setNonScalingStroke()
     grid.hide()
@@ -50,18 +67,18 @@ class ScaleGrids {
     else if (grip === this.bottomLeft) targetGrip = this.topRight
     return targetGrip
   }
-  getGripIfExist(el: SVGElement): IFSVG['Rect'] {
-    // TODO:
+  getGripIfMatch(el: SVGElement): IFSVG['Rect'] {
     if (this.topLeft.el() === el) return this.topLeft
     if (this.topRight.el() === el) return this.topRight
     if (this.bottomRight.el() === el) return this.bottomRight
     if (this.bottomLeft.el() === el) return this.bottomLeft
+    // TODO:
     return null
   }
   // getMatchedGripPos() {
   //   const matchGrip = null
   // }
-  private adjustSizeWhenZoom() {
+  private changeSizeWhenZoom() {
     this.editor.viewport.onZoomChange(zoom => {
       const size = this.size / zoom
       ;[this.topLeft, this.topRight, this.bottomRight, this.bottomLeft].forEach(grid => {
@@ -73,23 +90,38 @@ class ScaleGrids {
     })
   }
   drawPoints(outline: OutlineBoxHud) {
-    const box = outline.getBox()
+    const { x, y, width, height } = outline.getBox()
 
-    this.topLeft.setCenterPos(box.x, box.y)
-    this.topRight.setCenterPos(box.x + box.width, box.y)
-    this.bottomRight.setCenterPos(box.x + box.width, box.y + box.height)
-    this.bottomLeft.setCenterPos(box.x, box.y + box.height)
+    this.topLeft.setCenterPos(x, y)
+    this.topRight.setCenterPos(x + width, y)
+    this.bottomRight.setCenterPos(x + width, y + height)
+    this.bottomLeft.setCenterPos(x, y + height)
+
+    this.top.setCenterPos(x + width / 2, y)
+    this.right.setCenterPos(x + width, y + height / 2)
+    this.bottom.setCenterPos(x + width / 2, y + height)
+    this.left.setCenterPos(x, y + height / 2)
 
     this.topLeft.visible()
     this.topRight.visible()
     this.bottomRight.visible()
     this.bottomLeft.visible()
+
+    this.top.visible()
+    this.right.visible()
+    this.bottom.visible()
+    this.left.visible()
   }
   clear() {
     this.topLeft.hide()
     this.topRight.hide()
     this.bottomRight.hide()
     this.bottomLeft.hide()
+
+    this.top.hide()
+    this.right.hide()
+    this.bottom.hide()
+    this.left.hide()
   }
 }
 
@@ -108,7 +140,7 @@ export class OutlineBoxHud {
 
     this.outline = new FSVG.Path() // document.createElementNS(NS.SVG, 'path') as SVGPathElement
     this.outline.setAttr('fill', 'none')
-    this.outline.setAttr('stroke', '#f04')
+    this.outline.setAttr('stroke', editorDefaultConfig.outlineColor)
     this.outline.setAttr('vector-effect', 'non-scaling-stroke')
 
     this.container.append(this.outline)
@@ -143,8 +175,8 @@ export class OutlineBoxHud {
     this.outline.hide()
     this.scaleGrids.clear()
   }
-  getGripIfExist(el: SVGElement): IFSVG['Rect'] {
-    return this.scaleGrids.getGripIfExist(el)
+  getGripIfMatch(el: SVGElement): IFSVG['Rect'] {
+    return this.scaleGrids.getGripIfMatch(el)
   }
   getWidth() { return this.w }
   getHeight() { return this.h }

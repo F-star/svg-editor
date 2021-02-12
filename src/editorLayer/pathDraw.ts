@@ -92,10 +92,10 @@ class SegmentDraw {
     this.handleOutNode.hide()
     this.container.append(this.handleOutNode)
 
-    this.adjustSizeWhenZoom()
+    this.changeSizeWhenZoom()
   }
 
-  private adjustSizeWhenZoom() {
+  private changeSizeWhenZoom() {
     this.editor.viewport.onZoomChange(zoom => {
       const size = this.size / zoom
       ;[this.anchorNode, this.handleInNode, this.handleOutNode].forEach(grid => {
