@@ -205,7 +205,51 @@ export class DMove extends BaseCommand {
 /**
  * setAttr
  */
+interface Attrs { [prop: string]: string }
 export class SetAttr extends BaseCommand {
+  private els: Array<FElement>
+  private attrs: Attrs
+  private beforeAttrs: { [prop: string]: string[] } = {}
+
+  constructor(editor: Editor, els: Array<FElement> | FElement, attrs: Attrs) {
+    super(editor)
+    if (!Array.isArray(els)) els = [els]
+    this.els = els
+
+    // this.attrs = attrs
+    for (const key in attrs) {
+      this.beforeAttrs[key] = []
+      this.els.forEach(el => {
+        const value = el.getAttr(key)
+        this.beforeAttrs[key].push(value)
+
+        el.setAttr(key, attrs[key])
+      })
+    }
+    this.attrs = attrs
+  }
+  static cmdName() {
+    return 'setAttr'
+  }
+  redo() {
+    const attrs = this.attrs
+    for (const key in attrs) {
+      this.els.forEach(el => {
+        el.setAttr(key, attrs[key])
+      })
+    }
+  }
+  undo() {
+    const attrs = this.attrs
+    for (const key in attrs) {
+      this.els.forEach((el, index) => {
+        el.setAttr(key, this.beforeAttrs[key][index])
+      })
+    }
+  }
+}
+
+export class SetAttr2 extends BaseCommand {
   private els: Array<FElement>
   private attrName: string
   private beforeVal: string[]

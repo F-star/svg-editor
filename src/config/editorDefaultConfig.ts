@@ -9,7 +9,7 @@ const editorDefaultConfig = {
   selectAreaStroke: '#888',
 
   outlineColor: '#5183fb',
-  scaleGridSize: 6,
+  scaleGridSize: 7,
 } as const
 
 export default editorDefaultConfig

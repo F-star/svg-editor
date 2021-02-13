@@ -51,4 +51,13 @@ export class Select extends ToolAbstract {
   endOutside(ctx: EditorEventContext) {
     this.mode.endOutside(ctx)
   }
+  mounted() {
+    this.editor.hudManager.outlineBoxHud.enableScaleGrip()
+    if (!this.editor.activedElsManager.isEmpty()) {
+      this.editor.activedElsManager.heighligthEls()
+    }
+  }
+  willUnmount() {
+    this.editor.hudManager.outlineBoxHud.disableScaleGrip(true)
+  }
 }

@@ -1,6 +1,7 @@
 import Editor from '../../Editor'
 import { EditorEventContext } from '../../editorEventContext'
 import { FElement } from '../../element/baseElement'
+import { IBox } from '../../element/box'
 import { FSVG } from '../../element/index'
 import { getBoxBy2points } from '../../util/math'
 
@@ -14,9 +15,7 @@ abstract class Mode {
 
 
 class SelectAreaMode extends Mode {
-  start() {
-    // Do Nothing
-  }
+  start() { /** Do Nothing */ }
   move(ctx: EditorEventContext) {
     const { x: endX, y: endY } = ctx.getPos()
     const { x: startX, y: startY } = ctx.getStartPos()
@@ -82,9 +81,9 @@ class MoveElementsMode extends Mode {
 class ScaleElementMode extends Mode {
   private cx: number
   private cy: number
+  private originBox: IBox
 
   start(ctx: EditorEventContext) {
-    console.log('scale mode: start')
     /**
      * 1. record match position
      */
@@ -92,23 +91,36 @@ class ScaleElementMode extends Mode {
     const outlineBoxHud = this.editor.hudManager.outlineBoxHud
 
     const grid = outlineBoxHud.getGripIfMatch(target as SVGElement)
+    const originBox = outlineBoxHud.getBox()
+
+    /**
+     * corner scale grid
+     */
+    // TODO:
     const centerGrid = outlineBoxHud.scaleGrids.getOppositeGrip(grid)
-    const pos = centerGrid.getPos()
+    const pos = centerGrid.getCenterPos()
     this.cx = pos.x
     this.cy = pos.y
   }
   move(ctx: EditorEventContext) {
-    console.log('scale mode: move')
-    /**
-     * 2. get current pos
-     */
-    const { x, y } = ctx.getDiffPos()
+    /** 2. get current pos */
+    const { x, y } = ctx.getPos()
+    /** calc size */
+    const x1 = Math.min(x, this.cx)
+    const y1 = Math.min(y, this.cy)
+    const x2 = Math.max(x, this.cx)
+    const y2 = Math.max(y, this.cy)
+    const width = x2 - x1
+    const height = y2 - y1
+    this.editor.hudManager.outlineBoxHud.drawRect(x1, y1, width, height)
   }
   end() {
-    console.log('scale mode: end')
+    const { x, y, width, height } = this.editor.hudManager.outlineBoxHud.getBox()
+    const elements = this.editor.activedElsManager.getEls()
+    this.editor.executeCommand('setAttr', elements, { x, y, width, height })
   }
   endOutside() {
-    console.log('scale mode: endOutside')
+    this.editor.hudManager.outlineBoxHud.clear()
   }
 }
 

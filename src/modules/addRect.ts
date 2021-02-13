@@ -11,15 +11,9 @@ class AddRect extends ToolAbstract {
   name() {
     return 'addRect'
   }
-  cursorNormal() {
-    return 'crosshair'
-  }
-  cursorPress() {
-    return 'crosshair'
-  }
-  start() {
-    // do nothing
-  }
+  cursorNormal() { return 'crosshair' }
+  cursorPress() { return 'crosshair' }
+  start() { /** do nothing */ }
   move(ctx: EditorEventContext) {
     const { x: endX, y: endY } = ctx.getPos()
     const { x: startX, y: startY } = ctx.getStartPos()
