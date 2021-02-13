@@ -8,6 +8,7 @@ import { ToolManager } from './modules/toolManager'
 import { Viewport } from './viewport'
 import { LayerManager } from './layer/layer'
 import Export from './Export'
+import editorDefaultConfig from './config/editorDefaultConfig'
 
 class Editor {
   setting: EditorSetting
@@ -38,10 +39,10 @@ class Editor {
     this.hudManager = new HudManager(this)
     this.export = new Export(this)
 
-    const svgRootW = 3000
-    const svgRootH = 1500
-    const svgStageW = 900
-    const svgStageH = 600
+    const svgRootW = editorDefaultConfig.svgRootW
+    const svgRootH = editorDefaultConfig.svgRootH
+    const svgStageW = editorDefaultConfig.svgStageW
+    const svgStageH = editorDefaultConfig.svgStageH
 
     this.viewportElement = null
 
