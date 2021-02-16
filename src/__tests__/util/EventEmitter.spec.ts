@@ -1,17 +1,17 @@
 import EventEmiter from '../../util/EventEmitter'
 
 describe('EventEmitter class', () => {
-  test('on and emit method base test', () => {
+  test('on and emit method', () => {
     const emitter = new EventEmiter()
-    let isEmitted = false
-    emitter.on('event', () => {
-      isEmitted = true
+    let num = -1
+    emitter.on('event', (n: number) => {
+      num = n
     })
-    emitter.emit('event')
-    expect(isEmitted).toBe(true)
+    emitter.emit('event', 999)
+    expect(num).toBe(999)
   })
 
-  test('multi listeners call in order', () => {
+  test('multi listeners call in added order', () => {
     const emitter = new EventEmiter()
     const arr: number[] = []
     emitter
@@ -22,5 +22,18 @@ describe('EventEmitter class', () => {
     emitter.emit('event')
 
     expect(arr).toEqual([0, 1, 2, 3])
+  })
+
+  test('off method', () => {
+    const emitter = new EventEmiter()
+    const arr: number[] = []
+    const addZero = function() { arr.push(0) }
+    emitter
+      .on('event', addZero)
+      .on('event', () => { arr.push(1) })
+      .off('event', addZero)
+    emitter.emit('event')
+
+    expect(arr).toEqual([1])
   })
 })
