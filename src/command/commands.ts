@@ -12,18 +12,18 @@ function setDefaultAttrsBySetting(el: FElement, setting: EditorSetting) {
   el.setAttr('stroke-width', strokeWidth)
 }
 
-export abstract class BaseCommand {
+abstract class BaseCommand {
   protected editor: Editor
 
-  constructor(editor: Editor, ...args: any) {
+  constructor(editor: Editor, ...args: any[]) {
     this.editor = editor
   }
   // TODO: abstract static method
-  // static cmdName: () => string
+  abstract cmdName(): string
   abstract undo(): void
   abstract redo(): void
-  afterRedo() {}
-  afterUndo() {}
+  afterRedo() { /** */ }
+  afterUndo() { /** */ }
 }
 
 /**
@@ -32,7 +32,7 @@ export abstract class BaseCommand {
  * add rect svg element
  */
 
-export class AddRect extends BaseCommand {
+class AddRect extends BaseCommand {
   // private editor: Editor
   nextSibling: Element
   parent: Element
@@ -55,6 +55,9 @@ export class AddRect extends BaseCommand {
   static cmdName() {
     return 'addRect'
   }
+  cmdName() {
+    return 'addRect'
+  }
   redo() {
     const el = this.rect.el()
     if (this.nextSibling) {
@@ -75,7 +78,7 @@ export class AddRect extends BaseCommand {
  *
  * add path element
  */
-export class AddPath extends BaseCommand {
+class AddPath extends BaseCommand {
   // private editor: Editor
   nextSibling: Element
   parent: Element
@@ -98,6 +101,9 @@ export class AddPath extends BaseCommand {
   static cmdName() {
     return 'addPath'
   }
+  cmdName() {
+    return 'addPath'
+  }
   redo() {
     const el = this.el.el()
     if (this.nextSibling) {
@@ -115,7 +121,7 @@ export class AddPath extends BaseCommand {
 /**
  * remove elements
  */
-export class RemoveElements extends BaseCommand {
+class RemoveElements extends BaseCommand {
   private els: Array<FElement>
   private parents: Array<HTMLElement>
   private nextSiblings: Array<Element>
@@ -135,6 +141,9 @@ export class RemoveElements extends BaseCommand {
     this.execute()
   }
   static cmdName() {
+    return 'removeElements'
+  }
+  cmdName() {
     return 'removeElements'
   }
   private execute() {
@@ -166,7 +175,7 @@ export class RemoveElements extends BaseCommand {
  *
  * dmove elements
  */
-export class DMove extends BaseCommand {
+class DMove extends BaseCommand {
   private els: Array<FElement>
   private dx: number
   private dy: number
@@ -182,6 +191,9 @@ export class DMove extends BaseCommand {
     })
   }
   static cmdName() {
+    return 'dmove'
+  }
+  cmdName() {
     return 'dmove'
   }
   redo() {
@@ -206,7 +218,7 @@ export class DMove extends BaseCommand {
  * setAttr
  */
 interface Attrs { [prop: string]: string }
-export class SetAttr extends BaseCommand {
+class SetAttr extends BaseCommand {
   private els: Array<FElement>
   private attrs: Attrs
   private beforeAttrs: { [prop: string]: string[] } = {}
@@ -231,6 +243,9 @@ export class SetAttr extends BaseCommand {
   static cmdName() {
     return 'setAttr'
   }
+  cmdName() {
+    return 'setAttr'
+  }
   redo() {
     const attrs = this.attrs
     for (const key in attrs) {
@@ -249,44 +264,10 @@ export class SetAttr extends BaseCommand {
   }
 }
 
-export class SetAttr2 extends BaseCommand {
-  private els: Array<FElement>
-  private attrName: string
-  private beforeVal: string[]
-  private afterVal: string
-
-
-  constructor(editor: Editor, els: Array<FElement> | FElement, attrName: string, val: string) {
-    super(editor)
-    if (!Array.isArray(els)) els = [els]
-    this.els = els
-    this.attrName = attrName
-    this.beforeVal = this.els.map(el => el.getAttr(attrName))
-    this.afterVal = val
-
-    this.els.forEach(el => {
-      el.setAttr(attrName, val)
-    })
-  }
-  static cmdName() {
-    return 'setAttr'
-  }
-  redo() {
-    this.els.forEach(el => {
-      el.setAttr(this.attrName, this.afterVal)
-    })
-  }
-  undo() {
-    this.els.forEach((el, i) => {
-      el.setAttr(this.attrName, this.beforeVal[i])
-    })
-  }
-}
-
 /**
  * transform: scale
  */
-export class Scale extends BaseCommand {
+class Scale extends BaseCommand {
   constructor(
     editor: Editor, private el: FElement,
     private scaleX: number, private scaleY: number,
@@ -299,10 +280,23 @@ export class Scale extends BaseCommand {
   static cmdName() {
     return 'scale'
   }
+  cmdName() {
+    return 'scale'
+  }
   redo() {
-
+    //
   }
   undo() {
-
+    //
   }
+}
+
+export {
+  BaseCommand,
+  AddRect,
+  AddPath,
+  RemoveElements,
+  DMove,
+  SetAttr,
+  Scale,
 }

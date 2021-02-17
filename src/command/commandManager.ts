@@ -6,24 +6,40 @@
  * CommandManager.redo()
  */
 
+import EventEmitter from '../util/EventEmitter'
 import Editor from '../Editor'
 import { ArrangingBack, ArrangingBackward, ArrangingForward, ArrangingFront } from './arranging'
 import { AddPath, AddRect, BaseCommand, DMove, RemoveElements, SetAttr } from './commands'
 import { AddPathSeg } from './path'
 
-type listener = (n: number) => void
+class ArrayStack<T> {
+  private items: Array<T> = []
+
+  size(): number {
+    return this.items.length
+  }
+  push(item: T) {
+    this.items.push(item)
+  }
+  pop(): T {
+    return this.items.pop()
+  }
+  getItems(): Array<T> {
+    return this.items
+  }
+  /* peek */
+  empty() {
+    this.items = []
+  }
+}
 
 class CommandManager {
-  private editor: Editor
-  private redoStack: Array<BaseCommand> = []
-  private undoStack: Array<BaseCommand> = []
-  private commandClasses: { [key: string]: {new (editor: Editor, ...args: any): BaseCommand} } = {}
-  private undoListener: listener
-  private redoListener: listener
+  private redoStack = new ArrayStack<BaseCommand>()
+  private undoStack = new ArrayStack<BaseCommand>()
+  private commandClasses: { [key: string]: {new (editor: Editor, ...args: any[]): BaseCommand} } = {}
+  private emitter: EventEmitter = new EventEmitter()
 
-  constructor(editor: Editor) {
-    this.editor = editor
-
+  constructor(private editor: Editor) {
     this.resigterCommandClass(AddRect, AddRect.cmdName())
     this.resigterCommandClass(AddPath, AddPath.cmdName())
     this.resigterCommandClass(AddPathSeg, AddPathSeg.cmdName())
@@ -35,21 +51,18 @@ class CommandManager {
     this.resigterCommandClass(ArrangingForward, ArrangingForward.cmdName())
     this.resigterCommandClass(ArrangingBackward, ArrangingBackward.cmdName())
   }
-  setEditor(editor: Editor) {
-    this.editor = editor
-  }
-  execute(name: string, ...args: any) {
+  execute(name: string, ...args: any[]) {
     const CommandClass = this.commandClasses[name]
     if (!CommandClass) throw new Error(`editor has not the ${name} command`)
     const command = new CommandClass(this.editor, ...args) // 创建 command 实例
 
     this.undoStack.push(command)
-    this.redoStack = []
+    this.redoStack.empty()
 
-    this.emitUndoAndRedoEvent()
+    this.emitEvent()
   }
   undo() {
-    if (this.undoStack.length === 0) {
+    if (this.undoStack.size() === 0) {
       console.log('undo stack is empty now')
       return
     }
@@ -58,10 +71,10 @@ class CommandManager {
     command.undo()
     command.afterUndo()
 
-    this.emitUndoAndRedoEvent()
+    this.emitEvent()
   }
   redo() {
-    if (this.redoStack.length === 0) {
+    if (this.redoStack.size() === 0) {
       console.log('redo stack is empty now')
       return
     }
@@ -70,40 +83,29 @@ class CommandManager {
     command.redo()
     command.afterRedo()
 
-    this.emitUndoAndRedoEvent()
+    this.emitEvent()
   }
-  // 注册命令类到命令管理对象中。
   resigterCommandClass(
-    commandClass: { new (editor: Editor, ...args: any): BaseCommand },
+    commandClass: { new (editor: Editor, ...args: any[]): BaseCommand },
     cmdName: string
   ) {
     this.commandClasses[cmdName] = commandClass
   }
+  // Disable exec、redo、 undo temporarily
+  lock() { /** TODO: */ }
+  unlock() { /** TODO: */ }
 
-  // disable exec、redo、 undo temporarily
-  lock() {}
-  unlock() {}
-
-  private emitUndoAndRedoEvent() {
-    this.undoListener(this.undoStack.length)
-    this.redoListener(this.redoStack.length)
+  private emitEvent() {
+    const undoNames = this.undoStack.getItems().map(item => item.cmdName())
+    const redoNames = this.redoStack.getItems().map(item => item.cmdName())
+    this.emitter.emit('change', undoNames, redoNames)
   }
-  /** event bind */
-  setUndoListener(fn: listener) {
-    this.undoListener = fn
+  on(eventName: 'change', listener: (undos: string[], redos: string[]) => void) {
+    this.emitter.on(eventName, listener)
   }
-  setRedoListener(fn: listener) {
-    this.redoListener = fn
+  off(eventName: 'change', listener: (n: number) => void) {
+    this.emitter.off(eventName, listener)
   }
-  removeRedoListener() {
-    this.redoListener = null
-  }
-  removeUndoListener() {
-    this.undoListener = null
-  }
-  /* getHistorySnapshot(): string[] {
-    return this.undoStack.map(item => item.constructor.cmdName())
-  } */
 }
 
 export default CommandManager

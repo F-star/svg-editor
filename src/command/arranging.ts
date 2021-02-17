@@ -11,7 +11,7 @@ import Editor from '../Editor'
 import { FElement } from '../element/baseElement'
 import { BaseCommand } from './commands'
 
-export class ArrangingFront extends BaseCommand {
+class ArrangingFront extends BaseCommand {
   els: Array<FElement>
   nextSiblings: Array<FElement>
 
@@ -37,6 +37,9 @@ export class ArrangingFront extends BaseCommand {
   static cmdName() {
     return 'front'
   }
+  cmdName() {
+    return 'front'
+  }
   undo() {
     const size = this.els.length
     for (let i = size - 1; i >= 0; i--) {
@@ -55,7 +58,7 @@ export class ArrangingFront extends BaseCommand {
   }
 }
 
-export class ArrangingBack extends BaseCommand {
+class ArrangingBack extends BaseCommand {
   els: Array<FElement>
   previousSiblings: Array<FElement>
 
@@ -82,6 +85,9 @@ export class ArrangingBack extends BaseCommand {
   static cmdName() {
     return 'back'
   }
+  cmdName() {
+    return 'back'
+  }
   undo() {
     const size = this.els.length
     for (let i = 0; i < size; i++) {
@@ -106,7 +112,7 @@ export class ArrangingBack extends BaseCommand {
 /**
  * forward elements
  */
-export class ArrangingForward extends BaseCommand {
+class ArrangingForward extends BaseCommand {
   els: Array<FElement>
 
   constructor(editor: Editor, els?: Array<FElement>) {
@@ -124,6 +130,9 @@ export class ArrangingForward extends BaseCommand {
     this.exec()
   }
   static cmdName() {
+    return 'forward'
+  }
+  cmdName() {
     return 'forward'
   }
   exec() {
@@ -158,7 +167,7 @@ export class ArrangingForward extends BaseCommand {
 /**
  * backward elements
  */
-export class ArrangingBackward extends BaseCommand {
+class ArrangingBackward extends BaseCommand {
   els: Array<FElement>
 
   constructor(editor: Editor, els: Array<FElement>) {
@@ -175,6 +184,9 @@ export class ArrangingBackward extends BaseCommand {
     this.exec()
   }
   static cmdName() {
+    return 'backward'
+  }
+  cmdName() {
     return 'backward'
   }
   exec() {
@@ -204,4 +216,11 @@ export class ArrangingBackward extends BaseCommand {
     }
   }
   redo() { this.exec() }
+}
+
+export {
+  ArrangingFront,
+  ArrangingBack,
+  ArrangingForward,
+  ArrangingBackward
 }

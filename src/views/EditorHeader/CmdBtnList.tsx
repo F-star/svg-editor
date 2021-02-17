@@ -3,16 +3,16 @@ import globalVar from '../common/globalVar'
 import CmdBtnItem from './CmdBtnItem'
 
 type States = {
-  redoStackSize: number,
-  undoStackSize: number,
+  redoSize: number,
+  undoSize: number,
   items: Array<{ label: string, cb: () => void }>
 }
-class CmdBtnList extends React.Component<any, States> {
-  constructor(props: any) {
+class CmdBtnList extends React.Component<unknown, States> {
+  constructor(props: unknown) {
     super(props)
     this.state = {
-      redoStackSize: 0,
-      undoStackSize: 0,
+      redoSize: 0,
+      undoSize: 0,
       items: [
         { label: 'undo', cb: () => { globalVar.editor.executeCommand('undo') } },
         { label: 'redo', cb: () => { globalVar.editor.executeCommand('redo') } },
@@ -49,9 +49,13 @@ class CmdBtnList extends React.Component<any, States> {
   }
 
   componentDidMount() {
-    const editor = globalVar.editor
-    editor.commandManager.setRedoListener(size => { this.setState({ redoStackSize: size }) })
-    editor.commandManager.setUndoListener(size => { this.setState({ undoStackSize: size }) })
+    const cmdManager = globalVar.editor.commandManager
+    cmdManager.on('change', (undos: string[], redos: string[]) => {
+      this.setState({
+        undoSize: undos.length,
+        redoSize: redos.length,
+      })
+    })
   }
 
   render() {
@@ -60,8 +64,8 @@ class CmdBtnList extends React.Component<any, States> {
         label={item.label}
         key={item.label}
         disabled={
-          (item.label === 'undo' && this.state.undoStackSize === 0) ||
-          (item.label === 'redo' && this.state.redoStackSize === 0)
+          (item.label === 'undo' && this.state.undoSize === 0) ||
+          (item.label === 'redo' && this.state.redoSize === 0)
         }
         onClick={() => this.execCmd(index)}
       />

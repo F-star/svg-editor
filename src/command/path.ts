@@ -3,7 +3,7 @@ import { IFSVG } from '../element/index'
 import { BaseCommand } from './commands'
 import { ISegment } from '../interface'
 
-export class AddPathSeg extends BaseCommand {
+class AddPathSeg extends BaseCommand {
   private path: IFSVG['Path']
 
   constructor(editor: Editor, path: IFSVG['Path'], seg1: ISegment, seg: ISegment) {
@@ -14,10 +14,17 @@ export class AddPathSeg extends BaseCommand {
   static cmdName() {
     return 'addPathSeg'
   }
+  cmdName() {
+    return 'addPathSeg'
+  }
   redo() {
-
+    //
   }
   undo() {
-
+    //
   }
+}
+
+export {
+  AddPathSeg,
 }
