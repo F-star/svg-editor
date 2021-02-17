@@ -71,6 +71,10 @@ export class ActivedElsManager {
   // heightlight the elements
   heighligthEls() {
     const els = this.els
+    if (els.length === 0) {
+      console.warn('Can\'t heightlight Empty Elements')
+      return
+    }
     const hudManager = this.editor.hudManager
 
     const firstBox = new FSVG.Box(els[0].getBBox())

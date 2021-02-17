@@ -64,8 +64,8 @@ class CmdBtnList extends React.Component<unknown, States> {
         label={item.label}
         key={item.label}
         disabled={
-          (item.label === 'undo' && this.state.undoSize === 0) ||
-          (item.label === 'redo' && this.state.redoSize === 0)
+          (item.label === 'Undo' && this.state.undoSize === 0) ||
+          (item.label === 'Redo' && this.state.redoSize === 0)
         }
         onClick={() => this.execCmd(index)}
       />
