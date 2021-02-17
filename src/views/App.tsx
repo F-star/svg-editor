@@ -30,7 +30,7 @@ class App extends React.Component {
             }}
           >
           </div>
-          {/* <PanelsArea /> */}
+          <PanelsArea />
         </div>
       </div>
     )

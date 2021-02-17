@@ -253,6 +253,8 @@ class SetAttr extends BaseCommand {
         el.setAttr(key, attrs[key])
       })
     }
+
+    this.editor.activedElsManager.heighligthEls()
   }
   undo() {
     const attrs = this.attrs
@@ -261,6 +263,8 @@ class SetAttr extends BaseCommand {
         el.setAttr(key, this.beforeAttrs[key][index])
       })
     }
+
+    this.editor.activedElsManager.heighligthEls()
   }
 }
 

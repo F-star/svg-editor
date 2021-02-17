@@ -63,7 +63,7 @@ class CommandManager {
   }
   undo() {
     if (this.undoStack.size() === 0) {
-      console.log('undo stack is empty now')
+      console.log('Undo Stack is Empty')
       return
     }
     const command = this.undoStack.pop()
@@ -75,7 +75,7 @@ class CommandManager {
   }
   redo() {
     if (this.redoStack.size() === 0) {
-      console.log('redo stack is empty now')
+      console.log('Redo Stack is Empty!')
       return
     }
     const command = this.redoStack.pop()
@@ -84,6 +84,21 @@ class CommandManager {
     command.afterRedo()
 
     this.emitEvent()
+  }
+  go(pos: number) {
+    if (pos === 0) {
+      throw new Error('Param can not be zero!')
+    }
+    if (pos > 0) {
+      for (let i = 0; i < pos; i++) {
+        this.redo()
+      }
+    } else {
+      pos = -pos
+      for (let i = 0; i < pos; i++) {
+        this.undo()
+      }
+    }
   }
   resigterCommandClass(
     commandClass: { new (editor: Editor, ...args: any[]): BaseCommand },
@@ -97,7 +112,7 @@ class CommandManager {
 
   private emitEvent() {
     const undoNames = this.undoStack.getItems().map(item => item.cmdName())
-    const redoNames = this.redoStack.getItems().map(item => item.cmdName())
+    const redoNames = this.redoStack.getItems().map(item => item.cmdName()).reverse()
     this.emitter.emit('change', undoNames, redoNames)
   }
   on(eventName: 'change', listener: (undos: string[], redos: string[]) => void) {

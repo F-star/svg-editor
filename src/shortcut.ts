@@ -19,7 +19,7 @@ export class Shortcut {
 
     window.addEventListener('keydown', e => {
       const pressKeyName = getPressKeyName(e)
-      if (isDebug) { console.log(pressKeyName) }
+      // if (isDebug) { console.log(pressKeyName) }
       const registeredInstance = this.registerItems[pressKeyName] || []
       if (registeredInstance.length > 0) {
         /** debug */
