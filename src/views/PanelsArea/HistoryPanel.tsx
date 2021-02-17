@@ -2,8 +2,9 @@ import React from 'react'
 import styled from 'styled-components'
 import globalVar from '../common/globalVar'
 
-
 const StyledContainer = styled.div`
+  display: flex;
+  flex-direction: column;
   padding: 4px;
   width: 100%;
   box-sizing: border-box;
@@ -12,6 +13,16 @@ const StyledContainer = styled.div`
 `
 const StyledTitle = styled.div`
   border-bottom: 1px solid #999;
+`
+const StyledTotal = styled.span`
+  font-size: 12px;
+  margin-left: 4px;
+
+`
+const StyledList = styled.ul`
+  flex: 1;
+  margin-top: 5px;
+  overflow: auto;
 `
 const StyleItem = styled.li`
   line-height: 24px;
@@ -27,6 +38,7 @@ const StyleItem = styled.li`
 type State = {
   items: string[],
   currIndex: number,
+  total: number,
 }
 
 class HistoryPanel extends React.Component<any, State> {
@@ -35,6 +47,7 @@ class HistoryPanel extends React.Component<any, State> {
     this.state = {
       items: [],
       currIndex: -1,
+      total: 0,
     }
   }
 
@@ -44,6 +57,7 @@ class HistoryPanel extends React.Component<any, State> {
       this.setState({
         items: [...undos, ...redos],
         currIndex: undos.length - 1,
+        total: undos.length + redos.length,
       })
     })
   }
@@ -61,8 +75,11 @@ class HistoryPanel extends React.Component<any, State> {
   render() {
     return (
       <StyledContainer>
-        <StyledTitle>History</StyledTitle>
-        <ul onClick={ e => this.changeCurrItem(e.target as HTMLElement) }>
+        <StyledTitle>
+          History
+          <StyledTotal>{this.state.total}</StyledTotal>
+        </StyledTitle>
+        <StyledList onClick={ e => this.changeCurrItem(e.target as HTMLElement) }>
           {
             this.state.items.map((item, index) => {
               return (
@@ -70,7 +87,7 @@ class HistoryPanel extends React.Component<any, State> {
               )
             })
           }
-        </ul>
+        </StyledList>
       </StyledContainer>
     )
   }

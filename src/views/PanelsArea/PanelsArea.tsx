@@ -6,7 +6,7 @@ class PanelsArea extends React.Component {
     return (
       <div style={{
         flexShrink: 0,
-        width: 150,
+        width: 160,
         height: '100%',
         backgroundColor: '#555',
       }}>

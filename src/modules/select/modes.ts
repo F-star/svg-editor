@@ -68,8 +68,11 @@ class MoveElementsMode extends Mode {
     this.editor.hudManager.outlineBoxHud.clear()
 
     const { x: dx, y: dy } = ctx.getDiffPos()
-    const zoom = this.editor.viewport.getZoom()
-    this.editor.executeCommand('dmove', this.selectedEls, dx / zoom, dy / zoom)
+    if (dx !== 0 || dy !== 0) {
+      const zoom = this.editor.viewport.getZoom()
+      this.editor.executeCommand('dmove', this.selectedEls, dx / zoom, dy / zoom)
+    }
+
     this.editor.activedElsManager.setEls(this.selectedEls) // set global actived elements
     this.selectedEls = []
   }
