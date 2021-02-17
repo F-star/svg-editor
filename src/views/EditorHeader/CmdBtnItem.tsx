@@ -3,7 +3,7 @@ import styled from 'styled-components'
 
 const Div = styled.div`
   margin-right: 5px;
-  padding: 2px;
+  padding: 2px 4px;
   border: 1px solid #666;
   border-radius: 4px;
   height: 20px;

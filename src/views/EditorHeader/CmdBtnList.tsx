@@ -14,30 +14,30 @@ class CmdBtnList extends React.Component<unknown, States> {
       redoSize: 0,
       undoSize: 0,
       items: [
-        { label: 'undo', cb: () => { globalVar.editor.executeCommand('undo') } },
-        { label: 'redo', cb: () => { globalVar.editor.executeCommand('redo') } },
+        { label: 'Undo', cb: () => { globalVar.editor.executeCommand('undo') } },
+        { label: 'Redo', cb: () => { globalVar.editor.executeCommand('redo') } },
         {
-          label: 'delete',
+          label: 'Delete',
           cb: () => { globalVar.editor.activedElsManager.isNoEmpty() && globalVar.editor.executeCommand('removeElements') }
         },
         {
-          label: 'front',
+          label: 'Front',
           cb: () => { globalVar.editor.activedElsManager.isNoEmpty() && globalVar.editor.executeCommand('front') }
         },
         {
-          label: 'forward',
+          label: 'Forward',
           cb: () => { globalVar.editor.activedElsManager.isNoEmpty() && globalVar.editor.executeCommand('forward') }
         },
         {
-          label: 'backward',
+          label: 'Backward',
           cb: () => { globalVar.editor.activedElsManager.isNoEmpty() && globalVar.editor.executeCommand('backward') }
         },
         {
-          label: 'back',
+          label: 'Back',
           cb: () => { globalVar.editor.activedElsManager.isNoEmpty() && globalVar.editor.executeCommand('back') }
         },
         {
-          label: 'export',
+          label: 'Export',
           cb: () => { globalVar.editor.export.downloadSVG('Untitled-1.svg') }
         },
       ]

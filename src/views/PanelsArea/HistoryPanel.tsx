@@ -54,6 +54,7 @@ class HistoryPanel extends React.Component<any, State> {
   componentDidMount() {
     const cmdManager = globalVar.editor.commandManager
     cmdManager.on('change', (undos: string[], redos: string[]) => {
+      // TODO: solve string array:  addRect -> add rect, setAttr -> set Attr
       this.setState({
         items: [...undos, ...redos],
         currIndex: undos.length - 1,
