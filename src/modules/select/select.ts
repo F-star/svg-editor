@@ -1,6 +1,6 @@
 import { EditorEventContext } from '../../editorEventContext'
 import { ToolAbstract } from '../ToolAbstract'
-import { Mode, ModeFactory } from './modes'
+import { Mode, ModeFactory } from './modes/index'
 import Editor from '../../Editor'
 
 /**
@@ -32,11 +32,11 @@ export class Select extends ToolAbstract {
 
     const transformGrid = outlineBoxHud.getGripIfMatch(target as SVGElement)
     if (transformGrid) {
-      this.mode = this.modeFactory.getStrategy('scaleElements')
+      this.mode = this.modeFactory.getMode('scale')
     } else if (this.editor.isContentElement(ctx.nativeEvent.target)) {
-      this.mode = this.modeFactory.getStrategy('moveElements')
+      this.mode = this.modeFactory.getMode('move')
     } else {
-      this.mode = this.modeFactory.getStrategy('selectArea')
+      this.mode = this.modeFactory.getMode('selectArea')
     }
 
     this.mode.start(ctx)

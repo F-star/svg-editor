@@ -70,7 +70,7 @@ class ScaleGrids {
   getGripIfMatch(el: SVGElement): IFSVG['Rect'] {
     const grids = [
       this.topLeft, this.topRight, this.bottomRight, this.bottomLeft,
-      this.top, this.right, this.bottom, this.left,
+      // this.top, this.right, this.bottom, this.left,
     ]
     const matchedGrid = grids.find(grid => grid.el() === el)
     return matchedGrid || null
