@@ -11,27 +11,7 @@ import Editor from '../Editor'
 import { ArrangingBack, ArrangingBackward, ArrangingForward, ArrangingFront } from './arranging'
 import { AddPath, AddRect, BaseCommand, DMove, RemoveElements, SetAttr } from './commands'
 import { AddPathSeg } from './path'
-
-class ArrayStack<T> {
-  private items: Array<T> = []
-
-  size(): number {
-    return this.items.length
-  }
-  push(item: T) {
-    this.items.push(item)
-  }
-  pop(): T {
-    return this.items.pop()
-  }
-  getItems(): Array<T> {
-    return this.items
-  }
-  /* peek */
-  empty() {
-    this.items = []
-  }
-}
+import { ArrayStack } from '../util/typescript-ds'
 
 class CommandManager {
   private redoStack = new ArrayStack<BaseCommand>()
