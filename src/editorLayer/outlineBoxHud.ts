@@ -37,14 +37,14 @@ class ScaleGrids {
     this.bottom = this.createGrip('bottom')
     this.left = this.createGrip('left')
 
-    this.container.append(this.topLeft)
-    this.container.append(this.topRight)
-    this.container.append(this.bottomRight)
-    this.container.append(this.bottomLeft)
     this.container.append(this.top)
     this.container.append(this.right)
     this.container.append(this.bottom)
     this.container.append(this.left)
+    this.container.append(this.topLeft)
+    this.container.append(this.topRight)
+    this.container.append(this.bottomRight)
+    this.container.append(this.bottomLeft)
 
     parent.appendChild(this.container.el())
     this.changeSizeWhenZoom()
