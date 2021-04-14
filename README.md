@@ -4,6 +4,7 @@
 
 DEMO: https://blog.fstars.wang/app/svg-editor/
 
+[view English Doc](./README.EN.md)
 ## 运行项目
 
 ```sh
