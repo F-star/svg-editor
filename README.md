@@ -25,7 +25,6 @@ package.json 中没有 electron 相关的依赖，因为 electron 的包太大�
 npm install -D electron
 ```
 
-If you are in China, maybe you should set npm config before install electron:
 国内的话需要修改一下 npm config 解决下载问题：
 
 ```sh
