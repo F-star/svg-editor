@@ -27,6 +27,7 @@ module.exports = {
     'lines-between-class-members': 'off',
     'no-useless-constructor': 'off',
     // ts
-    '@typescript-eslint/explicit-module-boundary-types': 'off'
+    '@typescript-eslint/explicit-module-boundary-types': 'off',
+    '@typescript-eslint/no-explicit-any': 'off',
   },
 }
