@@ -29,7 +29,7 @@ class ToolBar extends React.Component<any, any> {
       { name: 'Select', iconName: 'icon-select', cmdName: 'select' },
       { name: 'Rect', iconName: 'icon-rect', cmdName: 'addRect' },
       { name: 'Pencil', iconName: 'icon-pencil', cmdName: 'pencil' },
-      { name: 'Pen', iconName: 'icon-pen', cmdName: 'addPath' },
+      { name: 'Pen', iconName: 'icon-pen', cmdName: 'pen' },
       { name: 'Drag Canvas', iconName: 'icon-pan', cmdName: 'dragCanvas' },
       { name: 'Zoom', iconName: 'icon-zoom', cmdName: 'zoom' },
     ]

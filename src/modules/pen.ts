@@ -2,19 +2,19 @@
  * quadratic Bezier curves
  * 三阶贝塞尔曲线（钢笔工具）
  */
-import Editor from '../../Editor'
-import { EditorEventContext } from '../../editorEventContext'
-import { FSVG, IFSVG } from '../../element/index'
-import { ISegment } from '../../interface'
-import { getSymmetryPoint } from '../../util/math'
-import { ToolAbstract } from '../ToolAbstract'
+import Editor from '../Editor'
+import { EditorEventContext } from '../editorEventContext'
+import { FSVG, IFSVG } from '../element/index'
+import { ISegment } from '../interface'
+import { getSymmetryPoint } from '../util/math'
+import { ToolAbstract } from './ToolAbstract'
 
 // enum State {
 //   DragHandle,
 //   DrawPoint,
 // }
 
-export class AddPath extends ToolAbstract {
+export class Pen extends ToolAbstract {
   // private state: State = State.DrawPoint
   // private isInit = true
   private x: number
@@ -26,7 +26,7 @@ export class AddPath extends ToolAbstract {
     super(editor)
     // this.state = State.DrawPoint
   }
-  name() { return 'addPath' }
+  name() { return 'pen' }
   cursorNormal() { return 'default' }
   cursorPress() { return 'default' }
   start(ctx: EditorEventContext) {

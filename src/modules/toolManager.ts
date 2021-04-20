@@ -4,7 +4,7 @@ import AddRect from './addRect'
 import { DragCanvas } from './dragCanvas'
 import { Select } from './select/select'
 import { Pencil } from './pencil'
-import { AddPath } from './addPath/addPath'
+import { Pen } from './pen'
 import { Zoom } from './zoom'
 
 import { ToolAbstract } from './ToolAbstract'
@@ -28,7 +28,7 @@ export class ToolManager {
     this.registerTool(new DragCanvas(editor))
     this.registerTool(new Select(editor))
     this.registerTool(new Pencil(editor))
-    this.registerTool(new AddPath(editor))
+    this.registerTool(new Pen(editor))
     this.registerTool(new Zoom(editor))
   }
   setCurrentTool(name: string) {
