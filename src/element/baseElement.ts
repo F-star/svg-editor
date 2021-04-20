@@ -5,6 +5,8 @@
 
 import { FSVG } from './index'
 
+interface hashMap { [key: string]: any }
+
 export class FElement {
   protected el_: SVGElement
 
@@ -136,4 +138,20 @@ export class FElement {
     const transfrom = this.getAttr('transform') || ''
     this.setAttr('tranform', transfrom + ' ' + scale)
   }
+
+  /**
+   * meta data store
+   * 元数据保存
+   */
+  setMetaData(key: string, value: any) {
+    const el = this.el_ as hashMap
+    if (!el.metaData) el.metaData = {} as hashMap
+    el.metaData[key] = value
+  }
+  getMetaData(key: string): any {
+    const el = this.el_ as hashMap
+    if (!el.metaData) el.metaData = {} as hashMap
+    return (el.metaData as hashMap)[key]
+  }
 }
+
