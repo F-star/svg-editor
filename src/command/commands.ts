@@ -1,6 +1,7 @@
 import Editor from '../Editor'
 import { FElement } from '../element/baseElement'
 import { FSVG, IFSVG } from '../element/index'
+import { ISegment } from '../interface'
 import { EditorSetting } from '../setting/editorSetting'
 
 function setDefaultAttrsBySetting(el: FElement, setting: EditorSetting) {
@@ -84,14 +85,24 @@ class AddPath extends BaseCommand {
   parent: Element
   el: IFSVG['Path']
 
-  constructor(editor: Editor, d: string) {
+  constructor(
+    editor: Editor,
+    params: {
+      d: string,
+      path?: IFSVG['Path'],
+      seg: ISegment
+    }
+  ) {
     super(editor)
-    const el = new FSVG.Path()
+    const el = params.path || new FSVG.Path()
 
     setDefaultAttrsBySetting(el, editor.setting)
-    el.setAttr('d', d)
-    editor.getCurrentLayer().addChild(el)
+    el.setAttr('d', params.d)
+    if (params.seg) {
+      el.setMetaData('handleOut', params.seg.handleOut)
+    }
 
+    editor.getCurrentLayer().addChild(el)
     this.nextSibling = el.el().nextElementSibling
     this.parent = el.el().parentElement
     this.el = el

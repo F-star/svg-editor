@@ -1,6 +1,6 @@
-
 /**
  * quadratic Bezier curves
+ * 三阶贝塞尔曲线（钢笔工具）
  */
 import Editor from '../../Editor'
 import { EditorEventContext } from '../../editorEventContext'
@@ -20,21 +20,15 @@ export class AddPath extends ToolAbstract {
   private x: number
   private y: number
   private CompleteDrawHandler: () => void
-  private path: IFSVG['Path']
+  private path: IFSVG['Path'] = null
 
   constructor(editor: Editor) {
     super(editor)
     // this.state = State.DrawPoint
   }
-  name() {
-    return 'addPath'
-  }
-  cursorNormal() {
-    return 'default'
-  }
-  cursorPress() {
-    return 'default'
-  }
+  name() { return 'addPath' }
+  cursorNormal() { return 'default' }
+  cursorPress() { return 'default' }
   start(ctx: EditorEventContext) {
     const { x, y } = ctx.getPos()
     this.x = x
@@ -49,19 +43,23 @@ export class AddPath extends ToolAbstract {
     this.editor.hudManager.pathDraw.updateTailSegHandle(handleIn, handleOut)
   }
   end() {
-    if (!this.path) {
+    const seg = this.editor.hudManager.pathDraw.getTailSeg()
+    if (!this.path) { // 第一个 seg，创建一个 path
       this.path = new FSVG.Path()
+      this.editor.executeCommand('addPath', {
+        d: `M ${this.x} ${this.y}`,
+        path: this.path,
+        seg
+      })
+    } else { // 在这个 path 的基础上添加 seg
+      this.editor.executeCommand('addPathSeg', this.path, seg)
     }
-    this.editor.executeCommand('addPathSeg', this.path, null, null)
   }
   endOutside() { /** Do Nothing */ }
   completePath() {
     console.log('Finish Path')
-    const pathDraw = this.editor.hudManager.pathDraw
-    const d = pathDraw.getD()
-
-    d && this.editor.executeCommand('addPath', d)
-    pathDraw.clear()
+    this.editor.hudManager.pathDraw.clear()
+    this.path = null
   }
   mounted() {
     console.log('mounted.')
