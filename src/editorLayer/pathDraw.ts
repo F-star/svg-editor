@@ -1,4 +1,6 @@
-
+/**
+ * 贝塞尔曲线绘制相关辅助线
+ */
 
 import { NS } from '../constants'
 import Editor from '../Editor'
@@ -34,12 +36,14 @@ class Segment {
 
 /**
  * predict segment
+ * 绘制中的 seg
  */
 class SegmentDraw {
   private container: IFSVG['Group']
   private path: IFSVG['Path']
   private size = 6
 
+  // 锚点 x 1，控制点 x 2，锚点和控制点连线 x 2
   private anchorNode: IFSVG['Rect']
   private handleInNode: IFSVG['Rect']
   private handleOutNode: IFSVG['Rect']
@@ -50,9 +54,7 @@ class SegmentDraw {
     this.container = new FSVG.Group()
     this.container.setID('segment-draw')
 
-    // predict line
     this.path = new FSVG.Path()
-    parent.appendChild(this.container.el())
 
     this.path.setAttr('fill', 'none')
     this.path.setAttr('stroke', '#f04')
@@ -93,6 +95,8 @@ class SegmentDraw {
     this.container.append(this.handleOutNode)
 
     this.changeSizeWhenZoom()
+
+    parent.appendChild(this.container.el())
   }
 
   private changeSizeWhenZoom() {
@@ -134,7 +138,7 @@ class SegmentDraw {
 }
 
 /**
- * path
+ *
  */
 export class PathDraw {
   private container: SVGGElement
@@ -147,7 +151,6 @@ export class PathDraw {
     this.container.id = 'path-draw'
 
     this.path = new FSVG.Path()
-    parent.appendChild(this.container)
 
     this.path.setAttr('fill', 'none')
     this.path.setAttr('stroke', '#f04')
@@ -156,6 +159,8 @@ export class PathDraw {
     this.container.appendChild(this.path.el())
 
     this.segDraw = new SegmentDraw(parent, editor)
+
+    parent.appendChild(this.container)
   }
   addSeg(seg: ISegment) {
     this.path.visible()

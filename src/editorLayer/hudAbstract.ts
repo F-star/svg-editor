@@ -1,5 +1,6 @@
 /**
  * elements outline
+ * 对多个元素进行轮廓线高亮
  */
 
 export abstract class Hud {
