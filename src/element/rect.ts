@@ -4,6 +4,7 @@
  */
 
 import { NS } from '../constants'
+import { IPoint } from '../interface'
 import { FElement } from './baseElement'
 
 export class Rect extends FElement {
@@ -32,7 +33,7 @@ export class Rect extends FElement {
     const h = parseFloat(this.getAttr('height'))
     this.setPos(cx - w / 2, cy - h / 2)
   }
-  getCenterPos() {
+  getCenterPos(): IPoint {
     const { x, y } = this.getPos()
     const w = parseFloat(this.getAttr('width'))
     const h = parseFloat(this.getAttr('height'))
@@ -41,11 +42,17 @@ export class Rect extends FElement {
       y: y + h / 2,
     }
   }
-  // getPos() {
-  //   const x = parseFloat(this.getAttr('x'))
-  //   const y = parseFloat(this.getAttr('y'))
-  //   return { x, y }
-  // }
+  getPos(): IPoint {
+    const x = parseFloat(this.getAttr('x'))
+    const y = parseFloat(this.getAttr('y'))
+    return { x, y }
+  }
+  getWidth(): number {
+    return parseFloat(this.getAttr('width'))
+  }
+  getHeight(): number {
+    return parseFloat(this.getAttr('height'))
+  }
   // dmove(dx: number, dy: number) {
   //   const pos = this.getPos()
   //   this.setAttr('x', pos.x + dx + '')

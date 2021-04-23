@@ -16,6 +16,10 @@ export class FElement {
   el() {
     return this.el_
   }
+  tagName() {
+    if (!this.el_) return ''
+    return this.el_.tagName
+  }
   setID(id: string) {
     this.el_.id = id
   }

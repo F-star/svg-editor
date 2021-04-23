@@ -19,4 +19,7 @@ export class Group extends FElement {
       this.el_ = document.createElementNS(NS.SVG, 'g') as SVGElement
     }
   }
+  clear() {
+    this.el_.innerHTML = ''
+  }
 }
