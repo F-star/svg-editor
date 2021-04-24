@@ -48,6 +48,7 @@ class ScaleMode extends Mode {
   }
   endOutside() {
     this.editor.hudManager.outlineBoxHud.clear()
+    this.editor.hudManager.elsOutlinesHub.clear()
   }
 }
 

@@ -38,6 +38,7 @@ class MoveMode extends Mode {
   }
   end(ctx: EditorEventContext) {
     this.editor.hudManager.outlineBoxHud.clear()
+    this.editor.hudManager.elsOutlinesHub.clear()
 
     const { x: dx, y: dy } = ctx.getDiffPos()
     if (dx !== 0 || dy !== 0) {

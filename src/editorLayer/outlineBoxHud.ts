@@ -144,7 +144,7 @@ export class OutlineBoxHud {
     this.outline.setAttr('fill', 'none')
     this.outline.setAttr('stroke', editorDefaultConfig.outlineColor)
     this.outline.setAttr('stroke-width', '1px')
-    this.outline.setAttr('vector-effect', 'non-scaling-stroke')
+    this.outline.setNonScalingStroke()
 
     this.container.append(this.outline)
     parent.appendChild(this.container.el())

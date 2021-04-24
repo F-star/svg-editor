@@ -17,7 +17,6 @@ export class ActivedElsManager {
   setEls(els: Array<FElement> | FElement) {
     if (!Array.isArray(els)) els = [els]
     this.els = els
-    // console.log(this.editor.toolManager.getCurrentToolName())
     // TODO: highlight outline, according to current tool
     this.heighligthEls()
 
@@ -52,6 +51,7 @@ export class ActivedElsManager {
     // clear outline
     const hudManager = this.editor.hudManager
     hudManager.outlineBoxHud.clear()
+    hudManager.elsOutlinesHub.clear()
   }
   contains(el: HTMLOrSVGElement) {
     for (let i = 0; i < this.els.length; i++) {
@@ -83,7 +83,8 @@ export class ActivedElsManager {
       return pre.merge(new FSVG.Box(curBox))
     }, firstBox)
 
-    hudManager.outlineBoxHud.drawRect(mergedBox.x, mergedBox.y, mergedBox.width, mergedBox.height)
+    hudManager.outlineBoxHud.drawRect(mergedBox.x, mergedBox.y, mergedBox.width, mergedBox.height) // 绘制元素的包围盒子
+    hudManager.elsOutlinesHub.draw(els)
   }
   setSetting(name: string) {
     const els = this.els

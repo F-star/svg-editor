@@ -22,6 +22,7 @@ class AddRect extends ToolAbstract {
   }
   end(ctx: EditorEventContext) {
     this.editor.hudManager.outlineBoxHud.clear()
+    this.editor.hudManager.elsOutlinesHub.clear()
 
     const { x: endX, y: endY } = ctx.getPos()
     const { x: startX, y: startY } = ctx.getStartPos()
@@ -36,6 +37,7 @@ class AddRect extends ToolAbstract {
   // mousedown outside viewport
   endOutside() {
     this.editor.hudManager.outlineBoxHud.clear()
+    this.editor.hudManager.elsOutlinesHub.clear()
   }
 }
 
