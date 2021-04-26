@@ -142,6 +142,9 @@ export class FElement {
     const transfrom = this.getAttr('transform') || ''
     this.setAttr('tranform', transfrom + ' ' + scale)
   }
+  translate(x: number, y: number) {
+    this.setAttr('transform', `translate(${x} ${y})`)
+  }
 
   /**
    * meta data store

@@ -7,14 +7,11 @@ import { FSVG } from '../../../element/index'
 
 class MoveMode extends Mode {
   private selectedEls: Array<FElement> = []
-  private outlineStartX = 0
-  private outlineStartY = 0
 
   start(ctx: EditorEventContext) {
     // encapsulate svg element
     const target = ctx.nativeEvent.target
     const activedElsManager = this.editor.activedElsManager
-    const outlineBoxHud = this.editor.hudManager.outlineBoxHud
 
     const targetFElement = FSVG.create(target as SVGElement)
     // check whether target element is part of activedEls.
@@ -24,17 +21,11 @@ class MoveMode extends Mode {
       activedElsManager.setEls(targetFElement)
     }
     this.selectedEls = activedElsManager.getEls()
-    // record outline pos for move it when move lately.
-    this.outlineStartX = outlineBoxHud.getX()
-    this.outlineStartY = outlineBoxHud.getY()
   }
   move(ctx: EditorEventContext) {
     const { x: dx, y: dy } = ctx.getDiffPos()
     const zoom = this.editor.viewport.getZoom()
-    const outlineBoxHud = this.editor.hudManager.outlineBoxHud
-    const w = outlineBoxHud.getWidth()
-    const h = outlineBoxHud.getHeight()
-    outlineBoxHud.drawRect(this.outlineStartX + dx / zoom, this.outlineStartY + dy / zoom, w, h)
+    this.editor.hudManager.elsOutlinesHub.translate(dx / zoom, dy / zoom)
   }
   end(ctx: EditorEventContext) {
     this.editor.hudManager.outlineBoxHud.clear()

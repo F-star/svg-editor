@@ -18,23 +18,33 @@ class ElementsOutlinesHub {
   }
   draw(els: Array<FElement>) {
     this.clear()
+
+    let baseOutline: FElement
     for (const el of els) {
       if (el.tagName() === 'rect') {
-        // 生成一个空心 rect 放 container 下。
         const rect = el as IFSVG['Rect']
         const pos = rect.getPos()
         const outline = new FSVG.Rect(pos.x, pos.y, rect.getWidth(), rect.getHeight())
-        outline.setAttr('fill', 'none')
-        outline.setAttr('stroke', editorDefaultConfig.outlineColor)
-        outline.setAttr('stroke-width', '1px')
-        outline.setNonScalingStroke()
-        this.container.append(outline)
+        baseOutline = outline
+      } if (el.tagName() === 'path') {
+        const path = el as IFSVG['Path']
+        const outline = new FSVG.Path()
+        outline.setAttr('d', path.getAttr('d'))
+        baseOutline = outline
       }
-      // TODO： path
+      baseOutline.setAttr('fill', 'none')
+      baseOutline.setAttr('stroke', editorDefaultConfig.outlineColor)
+      baseOutline.setAttr('stroke-width', '1px')
+      baseOutline.setNonScalingStroke()
+      this.container.append(baseOutline)
     }
+  }
+  translate(x: number, y: number) {
+    this.container.translate(x, y)
   }
   clear() {
     this.container.clear()
+    this.container.removeAttr('transform')
   }
 }
 
