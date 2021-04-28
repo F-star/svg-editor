@@ -1,27 +1,23 @@
 import Mode from './Mode'
 import { EditorEventContext } from '../../../editorEventContext'
-import { IBox } from '../../../element/box'
+// import { IBox } from '../../../element/box'
 
 class ScaleMode extends Mode {
   private cx: number
   private cy: number
-  private originBox: IBox
+  // private originBox: IBox
 
   start(ctx: EditorEventContext) {
     /**
      * 1. record match position
+     * 记录相匹配位置
      */
     const target = ctx.nativeEvent.target
     const outlineBoxHud = this.editor.hudManager.outlineBoxHud
-
+    // 根据 target 获取对应缩放点（比如是左上还是右下）
     const grid = outlineBoxHud.getGripIfMatch(target as SVGElement)
-    const originBox = outlineBoxHud.getBox()
-
-    /**
-     * corner scale grid
-     */
-    // TODO:
-    const centerGrid = outlineBoxHud.scaleGrids.getOppositeGrip(grid)
+    // const originBox = outlineBoxHud.getBox()
+    const centerGrid = outlineBoxHud.scaleGrids.getOppositeGrip(grid) // 获取缩放中心点
     const pos = centerGrid.getCenterPos()
     this.cx = pos.x
     this.cy = pos.y
