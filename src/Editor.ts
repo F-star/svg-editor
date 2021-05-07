@@ -1,6 +1,6 @@
 import { ActivedElsManager } from './activedElsManager'
 import CommandManager from './command/commandManager'
-import { HudManager } from './editorLayer/hudManager'
+import { Huds } from './huds/index'
 import { ToolAbstract } from './modules/ToolAbstract'
 import { EditorSetting } from './setting/editorSetting'
 import { Shortcut } from './shortcut'
@@ -18,7 +18,7 @@ class Editor {
   toolManager: ToolManager
   viewport: Viewport
   layerManager: LayerManager
-  hudManager: HudManager
+  huds: Huds
   export: Export
 
   // elements
@@ -36,7 +36,7 @@ class Editor {
     this.toolManager = null
     this.viewport = new Viewport(this)
     this.layerManager = new LayerManager(this)
-    this.hudManager = new HudManager(this)
+    this.huds = new Huds(this)
     this.export = new Export(this)
 
     const svgRootW = editorDefaultConfig.svgRootW
@@ -97,7 +97,7 @@ class Editor {
     svgStage.appendChild(svgContent)
 
     this.layerManager.createInitLayerAndMount()
-    this.hudManager.mount()
+    this.huds.mount()
 
     /** mount!! */
     // viewportElement.appendChild(svgContainer)

@@ -49,9 +49,9 @@ export class ActivedElsManager {
   clear() {
     this.els = []
     // clear outline
-    const hudManager = this.editor.hudManager
-    hudManager.outlineBoxHud.clear()
-    hudManager.elsOutlinesHub.clear()
+    const huds = this.editor.huds
+    huds.outlineBoxHud.clear()
+    huds.elsOutlinesHub.clear()
   }
   contains(el: HTMLOrSVGElement) {
     for (let i = 0; i < this.els.length; i++) {
@@ -75,7 +75,7 @@ export class ActivedElsManager {
       console.warn('Can\'t heightlight Empty Elements')
       return
     }
-    const hudManager = this.editor.hudManager
+    const huds = this.editor.huds
 
     const firstBox = new FSVG.Box(els[0].getBBox())
     const mergedBox = els.reduce((pre, curEl) => {
@@ -83,8 +83,8 @@ export class ActivedElsManager {
       return pre.merge(new FSVG.Box(curBox))
     }, firstBox)
 
-    hudManager.outlineBoxHud.drawRect(mergedBox.x, mergedBox.y, mergedBox.width, mergedBox.height) // 绘制元素的包围盒子
-    hudManager.elsOutlinesHub.draw(els)
+    huds.outlineBoxHud.drawRect(mergedBox.x, mergedBox.y, mergedBox.width, mergedBox.height) // 绘制元素的包围盒子
+    huds.elsOutlinesHub.draw(els)
   }
   setSetting(name: string) {
     const els = this.els

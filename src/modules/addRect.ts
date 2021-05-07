@@ -18,11 +18,11 @@ class AddRect extends ToolAbstract {
     const { x: endX, y: endY } = ctx.getPos()
     const { x: startX, y: startY } = ctx.getStartPos()
     const { x, y, w, h } = getBoxBy2points(startX, startY, endX, endY)
-    this.editor.hudManager.outlineBoxHud.drawRect(x, y, w, h)
+    this.editor.huds.outlineBoxHud.drawRect(x, y, w, h)
   }
   end(ctx: EditorEventContext) {
-    this.editor.hudManager.outlineBoxHud.clear()
-    this.editor.hudManager.elsOutlinesHub.clear()
+    this.editor.huds.outlineBoxHud.clear()
+    this.editor.huds.elsOutlinesHub.clear()
 
     const { x: endX, y: endY } = ctx.getPos()
     const { x: startX, y: startY } = ctx.getStartPos()
@@ -36,8 +36,8 @@ class AddRect extends ToolAbstract {
   }
   // mousedown outside viewport
   endOutside() {
-    this.editor.hudManager.outlineBoxHud.clear()
-    this.editor.hudManager.elsOutlinesHub.clear()
+    this.editor.huds.outlineBoxHud.clear()
+    this.editor.huds.elsOutlinesHub.clear()
   }
 }
 

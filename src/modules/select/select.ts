@@ -28,7 +28,7 @@ export class Select extends ToolAbstract {
   cursorPress() { return 'default' }
   start(ctx: EditorEventContext) {
     const target = ctx.nativeEvent.target
-    const outlineBoxHud = this.editor.hudManager.outlineBoxHud
+    const outlineBoxHud = this.editor.huds.outlineBoxHud
 
     const transformGrid = outlineBoxHud.getGripIfMatch(target as SVGElement)
     if (transformGrid) {
@@ -52,12 +52,12 @@ export class Select extends ToolAbstract {
     this.mode.endOutside(ctx)
   }
   mounted() {
-    this.editor.hudManager.outlineBoxHud.enableScaleGrip()
+    this.editor.huds.outlineBoxHud.enableScaleGrip()
     if (!this.editor.activedElsManager.isEmpty()) {
       this.editor.activedElsManager.heighligthEls()
     }
   }
   willUnmount() {
-    this.editor.hudManager.outlineBoxHud.disableScaleGrip(true)
+    this.editor.huds.outlineBoxHud.disableScaleGrip(true)
   }
 }

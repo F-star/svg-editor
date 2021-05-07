@@ -25,11 +25,11 @@ class MoveMode extends Mode {
   move(ctx: EditorEventContext) {
     const { x: dx, y: dy } = ctx.getDiffPos()
     const zoom = this.editor.viewport.getZoom()
-    this.editor.hudManager.elsOutlinesHub.translate(dx / zoom, dy / zoom)
+    this.editor.huds.elsOutlinesHub.translate(dx / zoom, dy / zoom)
   }
   end(ctx: EditorEventContext) {
-    this.editor.hudManager.outlineBoxHud.clear()
-    this.editor.hudManager.elsOutlinesHub.clear()
+    this.editor.huds.outlineBoxHud.clear()
+    this.editor.huds.elsOutlinesHub.clear()
 
     const { x: dx, y: dy } = ctx.getDiffPos()
     if (dx !== 0 || dy !== 0) {

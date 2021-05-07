@@ -13,7 +13,7 @@ class ScaleMode extends Mode {
      * 记录相匹配位置
      */
     const target = ctx.nativeEvent.target
-    const outlineBoxHud = this.editor.hudManager.outlineBoxHud
+    const outlineBoxHud = this.editor.huds.outlineBoxHud
     // 根据 target 获取对应缩放点（比如是左上还是右下）
     const grid = outlineBoxHud.getGripIfMatch(target as SVGElement)
     // const originBox = outlineBoxHud.getBox()
@@ -32,19 +32,19 @@ class ScaleMode extends Mode {
     const y2 = Math.max(y, this.cy)
     const width = x2 - x1
     const height = y2 - y1
-    this.editor.hudManager.outlineBoxHud.drawRect(x1, y1, width, height)
+    this.editor.huds.outlineBoxHud.drawRect(x1, y1, width, height)
   }
   end(ctx: EditorEventContext) {
     const { x: dx, y: dy } = ctx.getDiffPos()
     if (dx === 0 && dy === 0) return
 
-    const { x, y, width, height } = this.editor.hudManager.outlineBoxHud.getBox()
+    const { x, y, width, height } = this.editor.huds.outlineBoxHud.getBox()
     const elements = this.editor.activedElsManager.getEls()
     this.editor.executeCommand('setAttr', elements, { x, y, width, height })
   }
   endOutside() {
-    this.editor.hudManager.outlineBoxHud.clear()
-    this.editor.hudManager.elsOutlinesHub.clear()
+    this.editor.huds.outlineBoxHud.clear()
+    this.editor.huds.elsOutlinesHub.clear()
   }
 }
 
