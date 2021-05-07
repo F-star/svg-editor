@@ -6,22 +6,20 @@ import { Select } from './select/select'
 import { Pencil } from './pencil'
 import { Pen } from './pen'
 import { Zoom } from './zoom'
-
 import { ToolAbstract } from './ToolAbstract'
 
 export class ToolManager {
   private editor: Editor
   private tools: { [name: string]: ToolAbstract }
   private currentTool: ToolAbstract
-  private invokeWhenSwitch: Function
+  private invokeWhenSwitch: (toolName: string) => void
   private ctx: EditorEventContext
 
   constructor(editor: Editor) {
     this.editor = editor
     this.tools = {}
     this.currentTool = null
-    this.invokeWhenSwitch = () => {}
-
+    this.invokeWhenSwitch = () => { /* nope */ }
     this.ctx = null // tool context
 
     this.registerTool(new AddRect(editor))
@@ -45,7 +43,7 @@ export class ToolManager {
     const toolName = this.getCurrentToolName()
     this.invokeWhenSwitch(toolName)
   }
-  onSwitchTool(fn: Function) {
+  onSwitchTool(fn: (toolName: string) => void) {
     this.invokeWhenSwitch = fn
   }
   getCurrentTool() {
@@ -75,8 +73,8 @@ export class ToolManager {
 
     svgRoot.addEventListener('mousemove', e => {
       const ctx = this.ctx
-
-      if (!ctx) return // if ctx exits, present mousedown event emit just before
+      // 通过 ctx 是否存在，来判断是否为 “拖拽” 形式的鼠标移动事件
+      if (!ctx) return
       ctx.setOriginEvent(e)
       ctx.pressMouse()
       this.currentTool.move(ctx) // move
