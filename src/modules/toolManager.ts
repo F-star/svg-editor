@@ -60,7 +60,6 @@ export class ToolManager {
   bindToolEvent() {
     const svgRoot = this.editor.svgRoot
 
-
     svgRoot.addEventListener('mousedown', e => {
       const ctx = new EditorEventContext(this.editor, e)
       this.ctx = ctx
@@ -73,18 +72,21 @@ export class ToolManager {
 
     svgRoot.addEventListener('mousemove', e => {
       const ctx = this.ctx
-      // 通过 ctx 是否存在，来判断是否为 “拖拽” 形式的鼠标移动事件
-      if (!ctx) return
-      ctx.setOriginEvent(e)
-      ctx.pressMouse()
+      if (!ctx) {
+        // TODO: 添加一个配置项，来确定是否调用 moveNoDrag
+        this.currentTool.moveNoDrag(new EditorEventContext(this.editor, e))
+        return
+      }
+      // ctx 存在，为 “拖拽” 形式的鼠标移动事件
+      ctx.setOriginEvent(e) // 修改了源 event 对象
       this.currentTool.move(ctx) // move
     }, false)
 
-    svgRoot.addEventListener('mouseup', e => {
-      // this.ctx.releaseMouse()
+    svgRoot.addEventListener('mouseup', () => {
       const ctx = this.ctx
       if (!ctx) return
-      // ctx.setOriginEvent(e) // the offsetX and offsetY in mouseup and the last mousemove is not equal ??
+      // 最后一次 `鼠标移动时间的光标位置` 不等于 “释放鼠标时光标位置”。这是因为鼠标移动事件的触发是有间隔的。
+      // 所以不可以调用 ctx.setOriginEvent(e)
       const cursor = this.currentTool.cursorNormal()
       this.editor.setCursor(cursor)
 
