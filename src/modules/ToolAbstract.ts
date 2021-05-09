@@ -10,6 +10,7 @@ export abstract class ToolAbstract {
   abstract cursorPress(): string
   abstract start(ctx: EditorEventContext): void
   abstract move(ctx: EditorEventContext): void
+  moveNoDrag(ctx: EditorEventContext) { /* nope */ }
   abstract end(ctx: EditorEventContext): void
   abstract endOutside(ctx: EditorEventContext): void
   /*  beforeActive() {

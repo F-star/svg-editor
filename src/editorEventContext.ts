@@ -10,36 +10,23 @@ import Editor from './Editor'
 export class EditorEventContext {
   nativeEvent: MouseEvent
   isEndInside: boolean
-  private mousePressed: boolean
   private editor: Editor
 
-  private startX: number
+  private startX: number // 最近一次的鼠标按下的坐标
   private startY: number
-  private offsetX: number
-  private offsetY: number
   private startClientX: number
   private startClientY: number
-  private dx: number
-  private dy: number
 
   constructor(editor: Editor, e: MouseEvent) {
     this.editor = editor
-    this.mousePressed = false
     this.nativeEvent = e
     this.isEndInside = false
-
     this.startX = 0
     this.startY = 0
-
-    this.offsetX = 0
-    this.offsetY = 0
-
-    this.startClientX = 0 // used to calc dx and dy.
+    this.startClientX = 0 // 用于计算相对位移（dx 和 dy）
     this.startClientY = 0
-    this.dx = 0
-    this.dy = 0
 
-    this.setStartPos()
+    this.setStartPos() // 记录起始位置
   }
   setOriginEvent(e: MouseEvent) {
     this.nativeEvent = e
@@ -52,12 +39,6 @@ export class EditorEventContext {
 
     this.startClientX = this.nativeEvent.clientX
     this.startClientY = this.nativeEvent.clientY
-  }
-  releaseMouse() {
-    this.mousePressed = false
-  }
-  pressMouse() {
-    this.mousePressed = true
   }
   getPos() {
     const zoom = this.editor.viewport.getZoom()
