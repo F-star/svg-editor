@@ -25,7 +25,6 @@ class AddPathSeg extends BaseCommand {
      * 根据传入的 path 的 d 和 seg，
      * 更新 metaData.handOut，并追加 d 片段
      */
-    console.log(this.seg)
     const path = this.path
     const seg = this.seg
     // const handleInOfPath = path.getMetaData('handleIn') as IPoint

@@ -31,7 +31,6 @@ export class Pen extends ToolAbstract {
     this.editor.huds.pathDraw.addSeg(seg)
   }
   moveNoDrag(ctx: EditorEventContext) {
-    console.log('预测线绘制')
     if (!this.path) {
       return
     }
@@ -63,13 +62,11 @@ export class Pen extends ToolAbstract {
   }
   endOutside() { /** Do Nothing */ }
   private completePath() {
-    console.log('Finish Path')
     this.editor.huds.pathDraw.clear()
     this.editor.huds.predictedCurve.clear()
     this.path = null
   }
   mounted() {
-    console.log('mounted.')
     this.CompleteDrawHandler = () => {
       this.completePath()
     }
