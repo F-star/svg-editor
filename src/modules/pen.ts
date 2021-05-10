@@ -9,22 +9,14 @@ import { ISegment } from '../interface'
 import { getSymmetryPoint } from '../util/math'
 import { ToolAbstract } from './ToolAbstract'
 
-// enum State {
-//   DragHandle,
-//   DrawPoint,
-// }
 
 export class Pen extends ToolAbstract {
-  // private state: State = State.DrawPoint
-  // private isInit = true
   private x: number
   private y: number
   private CompleteDrawHandler: () => void
   private path: IFSVG['Path'] = null
-
   constructor(editor: Editor) {
     super(editor)
-    // this.state = State.DrawPoint
   }
   name() { return 'pen' }
   cursorNormal() { return 'default' }
@@ -35,15 +27,28 @@ export class Pen extends ToolAbstract {
     this.y = y
     const seg: ISegment = { x, y, handleIn: null, handleOut: null }
     this.editor.activedElsManager.clear()
-    this.editor.hudManager.pathDraw.addSeg(seg)
+    this.editor.huds.pathDraw.addSeg(seg)
+  }
+  moveNoDrag(ctx: EditorEventContext) {
+    console.log('预测线绘制')
+    if (!this.path) {
+      return
+    }
+    const currPos = ctx.getPos()
+    this.editor.huds.predictedCurve.draw(
+      { x: this.x, y: this.y },
+      currPos,
+      this.path.getMetaData('handleOut'),
+      currPos,
+    )
   }
   move(ctx: EditorEventContext) {
     const handleOut = ctx.getPos()
     const handleIn = getSymmetryPoint(handleOut, this.x, this.y)
-    this.editor.hudManager.pathDraw.updateTailSegHandle(handleIn, handleOut)
+    this.editor.huds.pathDraw.updateTailSegHandle(handleIn, handleOut)
   }
   end() {
-    const seg = this.editor.hudManager.pathDraw.getTailSeg()
+    const seg = this.editor.huds.pathDraw.getTailSeg()
     if (!this.path) { // 第一个 seg，创建一个 path
       this.path = new FSVG.Path()
       this.editor.executeCommand('addPath', {
@@ -58,7 +63,7 @@ export class Pen extends ToolAbstract {
   endOutside() { /** Do Nothing */ }
   completePath() {
     console.log('Finish Path')
-    this.editor.hudManager.pathDraw.clear()
+    this.editor.huds.pathDraw.clear()
     this.path = null
   }
   mounted() {
@@ -71,6 +76,6 @@ export class Pen extends ToolAbstract {
   willUnmount() {
     this.completePath()
     this.editor.shortcut.unregister('Esc', this.CompleteDrawHandler)
-    this.editor.hudManager.pathDraw.clear()
+    this.editor.huds.pathDraw.clear()
   }
 }
