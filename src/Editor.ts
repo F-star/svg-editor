@@ -1,10 +1,10 @@
 import { ActivedElsManager } from './activedElsManager'
 import CommandManager from './command/commandManager'
 import { Huds } from './huds/index'
-import { ToolAbstract } from './modules/ToolAbstract'
+import { ToolAbstract } from './tools/ToolAbstract'
 import { EditorSetting } from './setting/editorSetting'
 import { Shortcut } from './shortcut'
-import { ToolManager } from './modules/toolManager'
+import { ToolManager } from './tools/index'
 import { Viewport } from './viewport'
 import { LayerManager } from './layer/layer'
 import Export from './Export'
@@ -15,7 +15,7 @@ class Editor {
   commandManager: CommandManager
   activedElsManager: ActivedElsManager
   shortcut: Shortcut
-  toolManager: ToolManager
+  tools: ToolManager
   viewport: Viewport
   layerManager: LayerManager
   huds: Huds
@@ -33,7 +33,7 @@ class Editor {
     this.commandManager = null
     this.activedElsManager = new ActivedElsManager(this)
     this.shortcut = new Shortcut(this)
-    this.toolManager = null
+    this.tools = null
     this.viewport = new Viewport(this)
     this.layerManager = new LayerManager(this)
     this.huds = new Huds(this)
@@ -113,15 +113,15 @@ class Editor {
     return this.layerManager.getCurrent()
   }
 
-  setToolManager(toolManager: ToolManager) {
-    this.toolManager = toolManager
+  setToolManager(tools: ToolManager) {
+    this.tools = tools
   }
   // tool relatived methods
   setCurrentTool(name: string) {
-    this.toolManager.setCurrentTool(name)
+    this.tools.setCurrentTool(name)
   }
   registerTool(tool: ToolAbstract) {
-    this.toolManager.registerTool(tool)
+    this.tools.registerTool(tool)
   }
   setSetting(setting: EditorSetting) {
     this.setting = setting

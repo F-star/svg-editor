@@ -2,7 +2,7 @@
 import Editor from './Editor'
 import CommandManager from './command/commandManager'
 import { EditorSetting } from './setting/editorSetting'
-import { ToolManager } from './modules/toolManager'
+import { ToolManager } from './tools/index'
 import defaultConfig from './config/editorDefaultConfig'
 
 function initEditor() {
@@ -12,10 +12,10 @@ function initEditor() {
   const commandManager = new CommandManager(editor)
   editor.setCommandManager(commandManager)
   editor.setSetting(new EditorSetting())
-  const toolManager = new ToolManager(editor)
-  editor.setToolManager(toolManager)
-  toolManager.setCurrentTool(defaultConfig.tool)
-  toolManager.bindToolEvent()
+  const tools = new ToolManager(editor)
+  editor.setToolManager(tools)
+  tools.setCurrentTool(defaultConfig.tool)
+  tools.bindToolEvent()
 
   // register shortcut
   editor.shortcut.register('Undo', 'Cmd+Z', () => { editor.executeCommand('undo') })
