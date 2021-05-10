@@ -1,38 +1,11 @@
 /**
  * 贝塞尔曲线绘制相关辅助线
  */
-
 import { NS } from '../constants'
 import Editor from '../Editor'
 import { FSVG, IFSVG } from '../element/index'
 import { IPoint, ISegment } from '../interface'
-
-
-// TODO: replace ISegment
-class Segment {
-  constructor(
-    public x: number, public y: number,
-    public handleIn: IPoint, public handleOut: IPoint
-  ) {}
-  getHandleInOrAnchor(): IPoint {
-    if (this.handleIn) {
-      return this.handleIn
-    }
-    return { x: this.x, y: this.y }
-  }
-  getHandleOutOrAnchor(): IPoint {
-    if (this.handleOut) {
-      return this.handleOut
-    }
-    return { x: this.x, y: this.y }
-  }
-  hasHandleIn() {
-    return !!this.handleIn
-  }
-  hasHandleOut() {
-    return !!this.handleOut
-  }
-}
+import editorDefaultConfig from '../config/editorDefaultConfig'
 
 /**
  * predict segment
@@ -57,18 +30,18 @@ class SegmentDraw {
     this.path = new FSVG.Path()
 
     this.path.setAttr('fill', 'none')
-    this.path.setAttr('stroke', '#f04')
+    this.path.setAttr('stroke', editorDefaultConfig.outlineColor)
     this.path.setNonScalingStroke()
 
     // point and handle line nodes
     this.handleInLine = new FSVG.Line(0, 0, 0, 0)
-    this.handleInLine.setAttr('stroke', '#f04')
+    this.handleInLine.setAttr('stroke', editorDefaultConfig.outlineColor)
     this.handleInLine.setNonScalingStroke()
     this.handleInLine.hide()
     this.container.append(this.handleInLine)
 
     this.handleOutLine = new FSVG.Line(0, 0, 0, 0)
-    this.handleOutLine.setAttr('stroke', '#f04')
+    this.handleOutLine.setAttr('stroke', editorDefaultConfig.outlineColor)
     this.handleOutLine.setNonScalingStroke()
     this.handleOutLine.hide()
     this.container.append(this.handleOutLine)
@@ -151,16 +124,12 @@ export class PathDraw {
     this.container.id = 'path-draw'
 
     this.path = new FSVG.Path()
-
     this.path.setAttr('fill', 'none')
-    this.path.setAttr('stroke', '#f04')
+    this.path.setAttr('stroke', editorDefaultConfig.outlineColor)
     this.path.setAttr('vector-effect', 'non-scaling-stroke')
-
     this.container.appendChild(this.path.el())
-
-    this.segDraw = new SegmentDraw(parent, editor)
-
     parent.appendChild(this.container)
+    this.segDraw = new SegmentDraw(parent, editor)
   }
   addSeg(seg: ISegment) {
     this.path.visible()
