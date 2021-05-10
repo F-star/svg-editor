@@ -27,6 +27,7 @@ export class Pen extends ToolAbstract {
     this.y = y
     const seg: ISegment = { x, y, handleIn: null, handleOut: null }
     this.editor.activedElsManager.clear()
+    this.editor.huds.predictedCurve.clear()
     this.editor.huds.pathDraw.addSeg(seg)
   }
   moveNoDrag(ctx: EditorEventContext) {
@@ -61,9 +62,10 @@ export class Pen extends ToolAbstract {
     }
   }
   endOutside() { /** Do Nothing */ }
-  completePath() {
+  private completePath() {
     console.log('Finish Path')
     this.editor.huds.pathDraw.clear()
+    this.editor.huds.predictedCurve.clear()
     this.path = null
   }
   mounted() {

@@ -21,7 +21,7 @@ class PredictedCurve {
     parent.appendChild(this.curve.el())
   }
   draw(p1: IPoint, p2: IPoint, cp1: IPoint, cp2: IPoint) {
-    this.curve.setAttr('d', `M ${p1.x} ${p1.y} C ${p2.x} ${p2.y} ${cp1.x} ${cp1.y} ${cp2.x} ${cp2.y}`)
+    this.curve.setAttr('d', `M ${p1.x} ${p1.y} C ${cp1.x} ${cp1.y} ${cp2.x} ${cp2.y} ${p2.x} ${p2.y}`)
     this.curve.visible()
   }
   clear() {
