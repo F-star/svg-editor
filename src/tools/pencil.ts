@@ -24,7 +24,7 @@ export class Pencil extends ToolAbstract {
     this.editor.huds.pencilDraw.clear()
 
     this.editor.setting.set('fill', 'none')
-    this.editor.executeCommand('addPath', d)
+    this.editor.executeCommand('addPath', { d })
   }
   end() { this.doWhenEndOrEndOutside() }
   endOutside() { this.doWhenEndOrEndOutside() }
