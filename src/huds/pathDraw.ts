@@ -26,39 +26,35 @@ class SegmentDraw {
   constructor(parent: SVGGElement, private editor: Editor) {
     this.container = new FSVG.Group()
     this.container.setID('segment-draw')
+    this.container.hide()
 
     // point and handle line nodes
     this.handleInLine = new FSVG.Line(0, 0, 0, 0)
     this.handleInLine.setAttr('stroke', editorDefaultConfig.outlineColor)
     this.handleInLine.setNonScalingStroke()
-    this.handleInLine.hide()
     this.container.append(this.handleInLine)
 
     this.handleOutLine = new FSVG.Line(0, 0, 0, 0)
     this.handleOutLine.setAttr('stroke', editorDefaultConfig.outlineColor)
     this.handleOutLine.setNonScalingStroke()
-    this.handleOutLine.hide()
     this.container.append(this.handleOutLine)
 
     this.anchorNode = new FSVG.Rect(0, 0, this.size, this.size)
     this.anchorNode.setAttr('stroke', '#000')
     this.anchorNode.setAttr('fill', '#fff')
     this.anchorNode.setNonScalingStroke()
-    this.anchorNode.hide()
     this.container.append(this.anchorNode)
 
     this.handleInNode = new FSVG.Rect(0, 0, this.size, this.size)
     this.handleInNode.setAttr('stroke', '#000')
     this.handleInNode.setAttr('fill', '#fff')
     this.handleInNode.setNonScalingStroke()
-    this.handleInNode.hide()
     this.container.append(this.handleInNode)
 
     this.handleOutNode = new FSVG.Rect(0, 0, this.size, this.size)
     this.handleOutNode.setAttr('stroke', '#000')
     this.handleOutNode.setAttr('fill', '#fff')
     this.handleOutNode.setNonScalingStroke()
-    this.handleOutNode.hide()
     this.container.append(this.handleOutNode)
 
     this.changeSizeWhenZoom()
@@ -81,42 +77,28 @@ class SegmentDraw {
     this.seg = seg
     // 3 points
     this.anchorNode.setCenterPos(seg.x, seg.y)
-    this.anchorNode.visible()
-
     this.handleInNode.setCenterPos(seg.handleIn.x, seg.handleIn.y)
-    this.handleInNode.visible()
-
     this.handleOutNode.setCenterPos(seg.handleOut.x, seg.handleOut.y)
-    this.handleOutNode.visible()
     // 2 handle lines
     this.handleInLine.setPos(seg.x, seg.y, seg.handleIn.x, seg.handleIn.y)
-    this.handleInLine.visible()
-
     this.handleOutLine.setPos(seg.x, seg.y, seg.handleOut.x, seg.handleOut.y)
-    this.handleOutLine.visible()
+    this.container.visible()
   }
   getSeg() {
     return this.seg
   }
   clear() {
-    // TODO: 这里可以改为隐藏容器元素
-    this.anchorNode.hide()
-    this.handleInNode.hide()
-    this.handleOutNode.hide()
-    this.handleInLine.hide()
-    this.handleOutLine.hide()
+    this.container.hide()
     this.seg = null
   }
 }
 
 /**
- *
+ * path 路径高亮
  */
 export class PathDraw {
   private container: SVGGElement
   private path: IFSVG['Path']
-  // segs 没什么用，去掉好了。
-  private segs: Array<ISegment> = []
   segDraw: SegmentDraw
 
   constructor(parent: SVGGElement, editor: Editor) {
@@ -131,41 +113,15 @@ export class PathDraw {
     parent.appendChild(this.container)
     this.segDraw = new SegmentDraw(parent, editor)
   }
-  addSeg(seg: ISegment) {
-    this.path.visible()
-    // const { x, y, handleIn, handleOut } = seg
-    let x1: number, y1: number, x2: number, y2: number
-
-    let d = this.getD()
-    if (!d) {
-      d = `M ${seg.x} ${seg.y}`
-    } else {
-      const prevSeg = this.segs[this.segs.length - 1]
-      x1 = prevSeg.handleOut ? prevSeg.handleOut.x : prevSeg.x
-      y1 = prevSeg.handleOut ? prevSeg.handleOut.y : prevSeg.y
-      x2 = seg.handleIn ? seg.handleIn.x : seg.x
-      y2 = seg.handleIn ? seg.handleIn.y : seg.y
-
-      d += ` C ${x1} ${y1} ${x2} ${y2} ${seg.x} ${seg.y}`
-    }
-    this.segs.push(seg)
-    this.path.setAttr('d', d)
-  }
-  getTailSeg() {
-    if (this.segs.length === 0) return null
-    return this.segs[this.segs.length - 1]
-  }
-  getD() {
+  /* getD() {
     return this.path.getAttr('d')
-  }
+  } */
   setD(d: string) {
     this.path.setAttr('d', d)
   }
   clear() {
     this.path.hide()
     this.path.removeAttr('d')
-    this.segs = []
-
     this.segDraw.clear()
   }
 }
