@@ -5,7 +5,7 @@
 import Editor from '../Editor'
 import { EditorEventContext } from '../editorEventContext'
 import { FSVG, IFSVG } from '../element/index'
-import { ISegment } from '../interface'
+// import { ISegment } from '../interface'
 import { getSymmetryPoint } from '../util/math'
 import { ToolAbstract } from './ToolAbstract'
 
@@ -13,6 +13,8 @@ import { ToolAbstract } from './ToolAbstract'
 export class Pen extends ToolAbstract {
   private x: number
   private y: number
+  private prevX: number // 用于绘制 预测曲线（predictedCurve）
+  private prevY: number
   private CompleteDrawHandler: () => void
   private path: IFSVG['Path'] = null
   constructor(editor: Editor) {
@@ -23,12 +25,13 @@ export class Pen extends ToolAbstract {
   cursorPress() { return 'default' }
   start(ctx: EditorEventContext) {
     const { x, y } = ctx.getPos()
+    this.prevX = this.x
+    this.prevY = this.y
     this.x = x
     this.y = y
-    const seg: ISegment = { x, y, handleIn: null, handleOut: null }
     this.editor.activedElsManager.clear()
     this.editor.huds.predictedCurve.clear()
-    this.editor.huds.pathDraw.addSeg(seg)
+    this.editor.huds.pathDraw.segDraw.render({ x, y, handleIn: { x, y }, handleOut: { x, y } })
   }
   moveNoDrag(ctx: EditorEventContext) {
     if (!this.path) {
@@ -45,10 +48,19 @@ export class Pen extends ToolAbstract {
   move(ctx: EditorEventContext) {
     const handleOut = ctx.getPos()
     const handleIn = getSymmetryPoint(handleOut, this.x, this.y)
-    this.editor.huds.pathDraw.updateTailSegHandle(handleIn, handleOut)
+
+    this.editor.huds.pathDraw.segDraw.render({ x: this.x, y: this.y, handleIn, handleOut })
+    if (this.path) { // 需要先绘制出第一个 seg
+      this.editor.huds.predictedCurve.draw(
+        { x: this.prevX, y: this.prevY },
+        { x: this.x, y: this.y },
+        this.path.getMetaData('handleOut'),
+        handleIn,
+      )
+    }
   }
   end() {
-    const seg = this.editor.huds.pathDraw.getTailSeg()
+    const seg = this.editor.huds.pathDraw.segDraw.getSeg()
     if (!this.path) { // 第一个 seg，创建一个 path
       this.path = new FSVG.Path()
       this.editor.executeCommand('addPath', {
@@ -58,6 +70,7 @@ export class Pen extends ToolAbstract {
       })
     } else { // 在这个 path 的基础上添加 seg
       this.editor.executeCommand('addPathSeg', this.path, seg)
+      this.editor.huds.pathDraw.setD(this.path.getAttr('d'))
     }
   }
   endOutside() { /** Do Nothing */ }

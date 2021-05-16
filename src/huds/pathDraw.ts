@@ -4,7 +4,7 @@
 import { NS } from '../constants'
 import Editor from '../Editor'
 import { FSVG, IFSVG } from '../element/index'
-import { IPoint, ISegment } from '../interface'
+import { ISegment } from '../interface'
 import editorDefaultConfig from '../config/editorDefaultConfig'
 
 /**
@@ -13,8 +13,8 @@ import editorDefaultConfig from '../config/editorDefaultConfig'
  */
 class SegmentDraw {
   private container: IFSVG['Group']
-  private path: IFSVG['Path']
   private size = 6
+  private seg: ISegment = null
 
   // 锚点 x 1，控制点 x 2，锚点和控制点连线 x 2
   private anchorNode: IFSVG['Rect']
@@ -26,12 +26,6 @@ class SegmentDraw {
   constructor(parent: SVGGElement, private editor: Editor) {
     this.container = new FSVG.Group()
     this.container.setID('segment-draw')
-
-    this.path = new FSVG.Path()
-
-    this.path.setAttr('fill', 'none')
-    this.path.setAttr('stroke', editorDefaultConfig.outlineColor)
-    this.path.setNonScalingStroke()
 
     // point and handle line nodes
     this.handleInLine = new FSVG.Line(0, 0, 0, 0)
@@ -84,6 +78,7 @@ class SegmentDraw {
     })
   }
   render(seg: ISegment) {
+    this.seg = seg
     // 3 points
     this.anchorNode.setCenterPos(seg.x, seg.y)
     this.anchorNode.visible()
@@ -100,13 +95,17 @@ class SegmentDraw {
     this.handleOutLine.setPos(seg.x, seg.y, seg.handleOut.x, seg.handleOut.y)
     this.handleOutLine.visible()
   }
+  getSeg() {
+    return this.seg
+  }
   clear() {
-    this.path.hide()
+    // TODO: 这里可以改为隐藏容器元素
     this.anchorNode.hide()
     this.handleInNode.hide()
     this.handleOutNode.hide()
     this.handleInLine.hide()
     this.handleOutLine.hide()
+    this.seg = null
   }
 }
 
@@ -116,6 +115,7 @@ class SegmentDraw {
 export class PathDraw {
   private container: SVGGElement
   private path: IFSVG['Path']
+  // segs 没什么用，去掉好了。
   private segs: Array<ISegment> = []
   segDraw: SegmentDraw
 
@@ -151,44 +151,15 @@ export class PathDraw {
     this.segs.push(seg)
     this.path.setAttr('d', d)
   }
-  updateTailSegHandle(handleIn: IPoint, handleOut: IPoint) {
-    const tailSeg = this.getTailSeg()
-    if (tailSeg === null) {
-      throw new Error('the path has not segments')
-    }
-    tailSeg.handleIn = handleIn
-    tailSeg.handleOut = handleOut
-    // TODO: optimize
-    this.updateDBySegs()
-    this.segDraw.render(this.getTailSeg())
-  }
-  updateDBySegs() {
-    if (this.segs.length === 0) {
-      return ''
-    }
-    let d
-    const head = this.segs[0]
-    d = `M ${head.x} ${head.y}`
-    for (let i = 1; i < this.segs.length; i++) {
-      const { x, y, handleIn } = this.segs[i]
-      const x2 = handleIn ? handleIn.x : x
-      const y2 = handleIn ? handleIn.y : y
-
-      const prev = this.segs[i - 1]
-      const x1 = prev.handleOut ? prev.handleOut.x : prev.x
-      const y1 = prev.handleOut ? prev.handleOut.y : prev.y
-
-      const c = ` C ${x1} ${y1} ${x2} ${y2} ${x} ${y}`
-      d += c
-    }
-    this.path.setAttr('d', d)
-  }
   getTailSeg() {
     if (this.segs.length === 0) return null
     return this.segs[this.segs.length - 1]
   }
   getD() {
     return this.path.getAttr('d')
+  }
+  setD(d: string) {
+    this.path.setAttr('d', d)
   }
   clear() {
     this.path.hide()
