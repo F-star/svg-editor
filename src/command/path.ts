@@ -43,9 +43,18 @@ class AddPathSeg extends BaseCommand {
     return this.doit()
   }
   undo() {
-    const d = this.path.getAttr('d')
+    let d = this.path.getAttr('d')
     const endIndex = d.lastIndexOf('C')
-    this.path.setAttr('d', d.slice(0, endIndex).trim())
+    const lastCurve = d.slice(endIndex)
+    d = d.slice(0, endIndex).trim()
+    this.path.setAttr('d', d)
+    // 取最后一个 curve 的 cp1 作为 path 的 meta.handleOut
+    const cp1 = lastCurve.split(/\s+/).slice(1, 3).map(v => parseFloat(v))
+    this.path.setMetaData('handleOut', { x: cp1[0], y: cp1[1] })
+    // 辅助线的修正
+    this.editor.huds.predictedCurve.clear()
+    this.editor.huds.pathDraw.segDraw.clear()
+    this.editor.huds.pathDraw.setD(d)
   }
 }
 

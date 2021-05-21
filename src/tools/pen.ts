@@ -13,8 +13,6 @@ import { ToolAbstract } from './ToolAbstract'
 export class Pen extends ToolAbstract {
   private x: number
   private y: number
-  private prevX: number // 用于绘制 预测曲线（predictedCurve）
-  private prevY: number
   private CompleteDrawHandler: () => void
   private path: IFSVG['Path'] = null
   constructor(editor: Editor) {
@@ -25,8 +23,6 @@ export class Pen extends ToolAbstract {
   cursorPress() { return 'default' }
   start(ctx: EditorEventContext) {
     const { x, y } = ctx.getPos()
-    this.prevX = this.x
-    this.prevY = this.y
     this.x = x
     this.y = y
     this.editor.activedElsManager.clear()
@@ -39,7 +35,7 @@ export class Pen extends ToolAbstract {
     }
     const currPos = ctx.getPos()
     this.editor.huds.predictedCurve.draw(
-      { x: this.x, y: this.y },
+      this.path.tail(),
       currPos,
       this.path.getMetaData('handleOut'),
       currPos,
@@ -50,9 +46,9 @@ export class Pen extends ToolAbstract {
     const handleIn = getSymmetryPoint(handleOut, this.x, this.y)
 
     this.editor.huds.pathDraw.segDraw.render({ x: this.x, y: this.y, handleIn, handleOut })
-    if (this.path) { // 需要先绘制出第一个 seg
+    if (this.path) {
       this.editor.huds.predictedCurve.draw(
-        { x: this.prevX, y: this.prevY },
+        this.path.tail(),
         { x: this.x, y: this.y },
         this.path.getMetaData('handleOut'),
         handleIn,
