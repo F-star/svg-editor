@@ -19,7 +19,7 @@ class EventEmiter {
     this.hashMap[name].push(listener)
     return this
   }
-  emit(eventName: EventName, ...args: any[]): boolean {
+  emit(eventName: EventName, ...args: any): boolean {
     const listeners = this.hashMap[eventName as string]
     if (!listeners || listeners.length === 0) return false
     listeners.forEach(listener => {

@@ -14,6 +14,7 @@ export class ToolManager {
   private currentTool: ToolAbstract
   private invokeWhenSwitch: (toolName: string) => void
   private ctx: EditorEventContext
+  private isInitEvent = false
 
   constructor(editor: Editor) {
     this.editor = editor
@@ -57,10 +58,17 @@ export class ToolManager {
     this.tools[toolName] = tool
   }
 
-  bindToolEvent() {
+  // 绑定鼠标事件，传递给工具对象。
+  initToolEvent() {
+    if (this.isInitEvent) {
+      console.warn('已经初始化过工具类事件，而你再尝试进行第二次初始化，静默失败')
+      return
+    }
+    this.isInitEvent = true
     const svgRoot = this.editor.svgRoot
 
     svgRoot.addEventListener('mousedown', e => {
+      if (e.button !== 0) return // 必须为左键鼠标
       const ctx = new EditorEventContext(this.editor, e)
       this.ctx = ctx
 
@@ -99,6 +107,12 @@ export class ToolManager {
         this.currentTool.endOutside(this.ctx)
       }
       this.ctx = null
+    }, false)
+
+    svgRoot.addEventListener('contextmenu', e => {
+      const { editor } = this
+      e.preventDefault() // 阻止默认菜单事件
+      editor.contextMenu.show(e.clientX, e.clientY)
     }, false)
   }
 }

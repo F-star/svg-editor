@@ -9,6 +9,7 @@ import { Viewport } from './viewport'
 import { LayerManager } from './layer/layer'
 import Export from './Export'
 import editorDefaultConfig from './config/editorDefaultConfig'
+import ContextMenu from './ContextMenu/index'
 
 class Editor {
   setting: EditorSetting
@@ -20,6 +21,7 @@ class Editor {
   layerManager: LayerManager
   huds: Huds
   export: Export
+  contextMenu: ContextMenu
 
   // elements
   viewportElement: HTMLElement
@@ -30,6 +32,7 @@ class Editor {
 
   constructor() {
     this.setting = null
+    this.contextMenu = new ContextMenu(this)
     this.commandManager = null
     this.activedElsManager = new ActivedElsManager(this)
     this.shortcut = new Shortcut(this)

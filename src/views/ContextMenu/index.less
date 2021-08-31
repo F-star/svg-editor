@@ -1,0 +1,45 @@
+.contextmenu-mask {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  /* background-color: #000; */
+  /* opacity: .2; */
+  z-index: 45;
+}
+.contextmenu-content {
+  position: fixed;
+  left: 999999px;
+  top: 999999px;
+  z-index: 50;
+  font-size: 14px;
+  user-select: none;
+  /* 内容 */
+  .list {
+    padding: 3px;
+    border: 1px solid #666;
+    border-radius: 4px;
+    min-width: 130px;
+    background-color: #fff;
+    // overflow: hidden; /* 处理圆角 */
+  }
+  .item {
+    box-sizing: border-box;
+    padding: 0 5px;
+    border-radius: 4px;
+    height: 28px;
+    line-height: 28px;
+    word-break: keep-all; /* 很重要，否则会换行 */
+    background-color: #fff;
+    cursor: default;
+    &.disabled {
+      color: #ddd;
+      pointer-events: none;
+    }
+  }
+  .item:hover {
+    background-color: dodgerblue;
+    color: #fff;
+  }
+}

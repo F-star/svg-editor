@@ -15,7 +15,7 @@ function initEditor() {
   const tools = new ToolManager(editor)
   editor.setToolManager(tools)
   tools.setCurrentTool(defaultConfig.tool)
-  tools.bindToolEvent()
+  tools.initToolEvent()
 
   // register shortcut
   editor.shortcut.register('Undo', 'Cmd+Z', () => { editor.executeCommand('undo') })

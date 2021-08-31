@@ -4,6 +4,7 @@ import ToolBar from './ToolBar/ToolBar'
 import EditorHeader from './EditorHeader/EditorHeader'
 import globalVar from './common/globalVar'
 import PanelsArea from './PanelsArea/PanelsArea'
+import ContextMenu from './ContextMenu'
 
 class App extends React.Component {
   constructor(props: any) {
@@ -31,6 +32,7 @@ class App extends React.Component {
           >
           </div>
           <PanelsArea />
+          <ContextMenu />
         </div>
       </div>
     )
