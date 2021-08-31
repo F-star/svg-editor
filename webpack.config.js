@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
 const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
@@ -10,16 +11,14 @@ function createPlugins(env) {
       new CleanWebpackPlugin(),
       new HtmlWebpackPlugin({ template: 'src/index.html' }),
       new MiniCssExtractPlugin({
-        filename: '[name].[contenthash:8].css'
-      })
+        filename: '[name].[contenthash:8].css',
+      }),
     ]
   }
-  return [
-    new HtmlWebpackPlugin({ template: 'src/index.html' }),
-  ]
+  return [new HtmlWebpackPlugin({ template: 'src/index.html' })]
 }
 
-module.exports = env => {
+module.exports = (env) => {
   // use production config when `env.prod` is true
   console.log('env:', env.prod ? 'production' : 'development')
 
@@ -52,9 +51,9 @@ module.exports = env => {
               presets: [
                 ['@babel/preset-env', { targets: 'defaults' }],
                 '@babel/preset-react',
-              ]
+              ],
             },
-          }
+          },
         },
         {
           test: /\.css$/,
@@ -65,8 +64,24 @@ module.exports = env => {
                   options: { publicPath: '' }, // fix issue: https://stackoverflow.com/questions/64294706/webpack5-automatic-publicpath-is-not-supported-in-this-browser
                 }
               : 'style-loader',
-            'css-loader'
-          ]
+            'css-loader',
+            'postcss-loader',
+          ],
+        },
+        {
+          test: /\.less$/,
+          exclude: /node_modules/,
+          use: [
+            env.prod
+              ? {
+                  loader: MiniCssExtractPlugin.loader,
+                  options: { publicPath: '' }, // fix issue: https://stackoverflow.com/questions/64294706/webpack5-automatic-publicpath-is-not-supported-in-this-browser
+                }
+              : 'style-loader',
+            'css-loader',
+            'postcss-loader',
+            'less-loader',
+          ],
         },
         {
           test: /\.(png|svg|jpg|jpeg|gif)$/i,
