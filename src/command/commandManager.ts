@@ -66,6 +66,7 @@ class CommandManager {
     command.afterRedo()
 
     this.emitEvent()
+    this.editor.contextMenu.hide()
   }
   go(pos: number) {
     if (pos === 0) {
