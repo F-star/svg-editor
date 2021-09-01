@@ -5,6 +5,9 @@ import './index.less'
 import { ShowEventOptions, ItemGroupType } from '../../ContextMenu'
 import classnames from 'classnames'
 
+const PADDING_RIGHT = 6 // 右边留点空位，防止直接贴边了，不好看
+const PADDING_BOTTOM = 6 // 底部也留点空位
+
 const ContexMenu: React.FunctionComponent = () => {
   const [items, setItems] = useState<ItemGroupType[]>([])
   const [x, setX] = useState(99999)
@@ -19,11 +22,8 @@ const ContexMenu: React.FunctionComponent = () => {
   }
 
   useEffect(() => {
-    //
     const contextMenu = globalVar.editor.contextMenu
     const adjustPos = (x: number, y: number, w: number, h: number) => {
-      const PADDING_RIGHT = 6 // 右边留点空位，防止直接贴边了，不好看
-      const PADDING_BOTTOM = 6 // 底部也留点空位
       const vw = document.documentElement.clientWidth
       const vh = document.documentElement.clientHeight
       if (x + w > vw - PADDING_RIGHT) x -= w

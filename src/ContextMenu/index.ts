@@ -36,7 +36,7 @@ class ContextMenu {
         items: [
           {
             name: '撤销',
-            disable: true,
+            disable: false,
             command: () => {
               this.editor.executeCommand('undo')
               this.hide()
@@ -44,7 +44,7 @@ class ContextMenu {
           },
           {
             name: '重做',
-            disable: true,
+            disable: false,
             command: () => {
               this.editor.executeCommand('redo')
               this.hide()
@@ -61,16 +61,44 @@ class ContextMenu {
     return this.items
   }
   show(x: number, y: number) {
+    // 1. 检测是否要禁用 undo 或 redo
+    this.setItemsByEditorState()
     this.eventEmitter.emit('show', { x, y, items: this.items })
   }
   hide() {
     this.eventEmitter.emit('hide')
   }
   on<T>(eventName: EventName, handler: (options: T) => void) {
-    this.eventEmitter.on(eventName, handler)
+    return this.eventEmitter.on(eventName, handler)
   }
   off(eventName: EventName, handler: (...args: any) => void) {
-    this.eventEmitter.off(eventName, handler)
+    return this.eventEmitter.off(eventName, handler)
+  }
+  // 根据编辑器状态，调整 items
+  private setItemsByEditorState() {
+    this.items = [
+      {
+        group: 'history',
+        items: [
+          {
+            name: '撤销',
+            disable: !!this.editor.commandManager.undoSize(),
+            command: () => {
+              this.editor.executeCommand('undo')
+              this.hide()
+            }
+          },
+          {
+            name: '重做',
+            disable: !!this.editor.commandManager.redoSize(),
+            command: () => {
+              this.editor.executeCommand('redo')
+              this.hide()
+            }
+          }
+        ]
+      }
+    ]
   }
 }
 
