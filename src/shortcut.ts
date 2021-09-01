@@ -1,12 +1,14 @@
 /**
  * editor global shortcut
  */
-import { isDebug } from './config/devConfig'
+// import { isDebug } from './config/devConfig'
 import Editor from './Editor'
 
+
+type FnType = (e: KeyboardEvent) => void
 interface IRegisterItem {
   cmdName: string
-  fn: Function
+  fn: FnType
 }
 
 export class Shortcut {
@@ -30,7 +32,7 @@ export class Shortcut {
     }, false)
   }
   // usage: this.register('undo', 'Ctrl+Z', () => { editor.execCommand('undo') })
-  register(cmdName: string, shortcutName: string, fn: Function) {
+  register(cmdName: string, shortcutName: string, fn: FnType) {
     // TODO: valid shortcutName
     const item = { cmdName, fn }
     if (!this.registerItems[shortcutName]) {
@@ -40,7 +42,7 @@ export class Shortcut {
     }
   }
 
-  unregister(shortcutName: string, fn: Function) {
+  unregister(shortcutName: string, fn: FnType) {
     const items = this.registerItems[shortcutName] || []
     const idx = items.findIndex(item => item.fn === fn)
     if (idx > -1) {
