@@ -1,7 +1,6 @@
 /**
  * editor global shortcut
  */
-// import { isDebug } from './config/devConfig'
 import Editor from './Editor'
 
 
