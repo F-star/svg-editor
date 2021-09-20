@@ -15,6 +15,7 @@ npm run dev
 ## 项目相关的博客
 
 - [图形编辑器开发（1）——模块设计与认识](https://blog.fstars.wang/2021/03/14/%E5%9B%BE%E5%BD%A2%E7%BC%96%E8%BE%91%E5%99%A8%E5%BC%80%E5%8F%91%EF%BC%881%EF%BC%89%E2%80%94%E2%80%94%E6%A8%A1%E5%9D%97%E8%AE%BE%E8%AE%A1%E4%B8%8E%E8%AE%A4%E8%AF%86/)
+- [前端实现右键自定义菜单](https://blog.fstars.wang/2021/08/26/%E5%89%8D%E7%AB%AF%E5%AE%9E%E7%8E%B0%E5%8F%B3%E9%94%AE%E8%87%AA%E5%AE%9A%E4%B9%89%E8%8F%9C%E5%8D%95/)
 
 
 ## 构建 Electron 应用（不完善）
