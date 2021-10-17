@@ -17,12 +17,13 @@ function initEditor() {
   tools.setCurrentTool(defaultConfig.tool)
   tools.initToolEvent()
 
-  // register shortcut
-  editor.shortcut.register('Undo', 'Cmd+Z', () => { editor.executeCommand('undo') })
+  // 注册全局快捷键
+  // 考虑使用 hotkeys-js https://www.npmjs.com/package/hotkeys-js 貌似很好用
+  editor.shortcut.register('Undo', 'Cmd+Z', () => { editor.executeCommand('undo') }) // 撤销
   editor.shortcut.register('Undo', 'Ctrl+Z', () => { editor.executeCommand('undo') })
-  editor.shortcut.register('Redo', 'Cmd+Shift+Z', () => { editor.executeCommand('redo') })
+  editor.shortcut.register('Redo', 'Cmd+Shift+Z', () => { editor.executeCommand('redo') }) // 重做
   editor.shortcut.register('Redo', 'Ctrl+Shift+Z', () => { editor.executeCommand('redo') })
-  editor.shortcut.register('Delete', 'Backspace', () => {
+  editor.shortcut.register('Delete', 'Backspace', () => { // 删除
     if (editor.activedElsManager.isNoEmpty()) {
       editor.executeCommand('removeElements')
     }
