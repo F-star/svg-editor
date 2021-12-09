@@ -19,10 +19,10 @@ npm run dev
 
 ## 构建 Electron 应用（不完善）
 
-package.json 中没有 electron 相关的依赖，因为 electron 的包太大了而且大多数人不需要构建 electron 应用。所以如果你要构建 electron 应用，需要自己手动开一个分支再安装一个依赖。
+package.json 中没有 electron 相关的依赖，因为 electron 的包太大了而且大多数人不需要构建 electron 应用。所以如果你要构建 electron 应用，需要自己手动全局安装 electron
 
 ```sh
-npm install -D electron
+npm install -g electron
 ```
 
 国内的话需要修改一下 npm config 解决下载问题：
