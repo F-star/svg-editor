@@ -1,3 +1,5 @@
+> 有问题可以关注公众号「前端西瓜哥」并留言
+
 # svg-editor
 
 一款正在开发的简单的 Web 端 SVG 编辑器，基于 TypeScript 技术。
