@@ -16,7 +16,7 @@ npm run dev
 
 ## 项目相关的博客
 
-- [图形编辑器开发（1）——模块设计与认识](https://blog.fstars.wang/2021/03/14/%E5%9B%BE%E5%BD%A2%E7%BC%96%E8%BE%91%E5%99%A8%E5%BC%80%E5%8F%91%EF%BC%881%EF%BC%89%E2%80%94%E2%80%94%E6%A8%A1%E5%9D%97%E8%AE%BE%E8%AE%A1%E4%B8%8E%E8%AE%A4%E8%AF%86/)
+- [图形编辑器开发（1）——模块设计与认识](https://blog.fstars.wang/posts/pic-editor-module-design/)
 
 
 ## 构建 Electron 应用（不完善）
