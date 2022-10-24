@@ -41,6 +41,8 @@ class ScaleMode extends Mode {
     const { x, y, width, height } = this.editor.huds.outlineBoxHud.getBox()
     const elements = this.editor.activedElsManager.getEls()
     this.editor.executeCommand('setAttr', elements, { x, y, width, height })
+    // 计算新的图形位置
+    this.editor.activedElsManager.heighligthEls()
   }
   endOutside() {
     this.editor.huds.outlineBoxHud.clear()
