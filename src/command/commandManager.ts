@@ -40,10 +40,11 @@ class CommandManager {
     this.redoStack.empty()
 
     this.emitEvent()
+    this.editor.contextMenu.hide()
   }
   undo() {
-    if (this.undoStack.size() === 0) {
-      console.log('Undo Stack is Empty')
+    if (this.undoSize() === 0) {
+      console.warn('Undo Stack is Empty')
       return
     }
     const command = this.undoStack.pop()
@@ -52,10 +53,11 @@ class CommandManager {
     command.afterUndo()
 
     this.emitEvent()
+    this.editor.contextMenu.hide()
   }
   redo() {
-    if (this.redoStack.size() === 0) {
-      console.log('Redo Stack is Empty!')
+    if (this.redoSize() === 0) {
+      console.warn('Redo Stack is Empty!')
       return
     }
     const command = this.redoStack.pop()
@@ -64,6 +66,7 @@ class CommandManager {
     command.afterRedo()
 
     this.emitEvent()
+    this.editor.contextMenu.hide()
   }
   go(pos: number) {
     if (pos === 0) {
@@ -100,6 +103,12 @@ class CommandManager {
   }
   off(eventName: 'change', listener: (n: number) => void) {
     this.emitter.off(eventName, listener)
+  }
+  redoSize(): number {
+    return this.redoStack.size()
+  }
+  undoSize(): number {
+    return this.undoStack.size()
   }
 }
 

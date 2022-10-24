@@ -1,3 +1,6 @@
+/**
+ * 通用 command
+ */
 import Editor from '../Editor'
 import { FElement } from '../element/baseElement'
 import { FSVG, IFSVG } from '../element/index'

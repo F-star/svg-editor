@@ -4,18 +4,31 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const TerserPlugin = require('terser-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const webpack = require('webpack')
 
 function createPlugins(env) {
+  let plugins = [
+    new webpack.DefinePlugin({
+      __DEV__: !env.prod
+    }),
+  ]
+
   if (env.prod) {
-    return [
+    plugins = [
+      ...plugins,
       new CleanWebpackPlugin(),
       new HtmlWebpackPlugin({ template: 'src/index.html' }),
       new MiniCssExtractPlugin({
         filename: '[name].[contenthash:8].css',
       }),
     ]
+  } else {
+    plugins = [
+      ...plugins,
+      new HtmlWebpackPlugin({ template: 'src/index.html' })
+    ]
   }
-  return [new HtmlWebpackPlugin({ template: 'src/index.html' })]
+  return plugins
 }
 
 module.exports = (env) => {
