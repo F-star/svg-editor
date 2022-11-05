@@ -9,7 +9,8 @@
     "build": "webpack --env prod",
     "electron": "electron .",
     "electron:package": "cross-env ELECTRON_BUILDER_BINARIES_MIRROR=http://npm.taobao.org/mirrors/electron/ electron-builder build --publish never",
-    "test": "jest"
+    "test": "jest",
+    "prepare": "husky install"
   },
   "keywords": [],
   "author": "fstar",
@@ -26,6 +27,8 @@
     "@babel/core": "^7.12.10",
     "@babel/preset-env": "^7.12.11",
     "@babel/preset-react": "^7.12.10",
+    "@commitlint/cli": "^17.2.0",
+    "@commitlint/config-conventional": "^17.2.0",
     "@types/jest": "^26.0.20",
     "@types/node": "^14.14.20",
     "@types/react": "^17.0.0",
@@ -48,6 +51,7 @@
     "eslint-plugin-react": "^7.31.10",
     "eslint-plugin-react-hooks": "^4.6.0",
     "html-webpack-plugin": "^4.5.0",
+    "husky": "^8.0.1",
     "jest": "^26.6.3",
     "less": "^4.1.1",
     "less-loader": "^10.0.1",
