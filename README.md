@@ -14,12 +14,9 @@ npm install
 npm run dev
 ```
 
-## 项目相关的博客
+## 编辑器系列文章
 
-- [图形编辑器开发（1）——模块设计与认识](https://blog.fstars.wang/posts/pic-editor-module-design/)
-- [来，教你开发一款图形编辑器](https://blog.fstars.wang/posts/graph-editor-tutorial/)
-- [图形编辑器——矩形选区是如何实现选中多个图形的？](https://blog.fstars.wang/posts/graph-editor-how-to-select-shape/)
-- [前端实现右键自定义菜单](https://blog.fstars.wang/posts/custom-contextmenu/)
+https://blog.fstars.wang/categories/%E7%BC%96%E8%BE%91%E5%99%A8/
 
 ## 构建 Electron 应用（不完善）
 
