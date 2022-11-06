@@ -1,4 +1,7 @@
+/* eslint-disable max-len */
 /* eslint-disable @typescript-eslint/no-var-requires */
+/* eslint-env node */
+
 const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
@@ -9,7 +12,7 @@ const webpack = require('webpack')
 function createPlugins(env) {
   let plugins = [
     new webpack.DefinePlugin({
-      __DEV__: !env.prod
+      __DEV__: !env.prod,
     }),
   ]
 
@@ -25,7 +28,7 @@ function createPlugins(env) {
   } else {
     plugins = [
       ...plugins,
-      new HtmlWebpackPlugin({ template: 'src/index.html' })
+      new HtmlWebpackPlugin({ template: 'src/index.html' }),
     ]
   }
   return plugins
@@ -73,9 +76,10 @@ module.exports = (env) => {
           use: [
             env.prod
               ? {
-                  loader: MiniCssExtractPlugin.loader,
-                  options: { publicPath: '' }, // fix issue: https://stackoverflow.com/questions/64294706/webpack5-automatic-publicpath-is-not-supported-in-this-browser
-                }
+                loader: MiniCssExtractPlugin.loader,
+                // fix issue: https://stackoverflow.com/questions/64294706/webpack5-automatic-publicpath-is-not-supported-in-this-browser
+                options: { publicPath: '' },
+              }
               : 'style-loader',
             'css-loader',
             'postcss-loader',
@@ -87,9 +91,10 @@ module.exports = (env) => {
           use: [
             env.prod
               ? {
-                  loader: MiniCssExtractPlugin.loader,
-                  options: { publicPath: '' }, // fix issue: https://stackoverflow.com/questions/64294706/webpack5-automatic-publicpath-is-not-supported-in-this-browser
-                }
+                loader: MiniCssExtractPlugin.loader,
+                // fix issue: https://stackoverflow.com/questions/64294706/webpack5-automatic-publicpath-is-not-supported-in-this-browser
+                options: { publicPath: '' },
+              }
               : 'style-loader',
             'css-loader',
             'postcss-loader',
@@ -113,9 +118,9 @@ module.exports = (env) => {
     plugins: createPlugins(env),
     optimization: env.prod
       ? {
-          minimize: true,
-          minimizer: [new TerserPlugin()],
-        }
+        minimize: true,
+        minimizer: [new TerserPlugin()],
+      }
       : {},
   }
 
