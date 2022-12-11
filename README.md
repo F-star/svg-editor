@@ -14,8 +14,8 @@ DEMO: https://blog.fstars.wang/app/svg-editor/
 ## 运行项目
 
 ```sh
-npm install
-npm run dev
+yarn
+yarn dev
 ```
 
 ## 编辑器系列文章

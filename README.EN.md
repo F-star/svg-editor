@@ -1,14 +1,16 @@
 # svg-editor
 
-A simple web svg editor. Built by Typescript. Developing...
+A simple web SVG editor(work in process). 
+
+Built by React + Typescript
 
 Try the editor: https://blog.fstars.wang/app/svg-editor/
 
 ## Run project
 
 ```sh
-npm install
-npm run dev
+yarn
+yarn dev
 ```
 
 ## Build Electron App
