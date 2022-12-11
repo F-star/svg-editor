@@ -6,7 +6,7 @@
 
 使用 React + TypeScript。
 
-![BLXbVF](https://fe-watermelon.oss-cn-shenzhen.aliyuncs.com/BLXbVF.png)
+![image](https://user-images.githubusercontent.com/18698939/206910372-86a41560-8b52-46b3-ab6e-dab25319fb9e.png)
 
 DEMO: https://blog.fstars.wang/app/svg-editor/
 
