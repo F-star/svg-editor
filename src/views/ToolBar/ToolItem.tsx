@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { FC } from 'react'
 import styled from 'styled-components'
 import Popover from '@material-ui/core/Popover'
 import { makeStyles, createStyles } from '@material-ui/core/styles'
@@ -43,9 +43,9 @@ const useStyles = makeStyles(() =>
   }),
 )
 
-function ToolItem(props: Props) {
+const ToolItem: FC<Props> = (props) => {
   const classes = useStyles()
-  const [anchorEl, setAnchorEl] = React.useState(null)
+  const [anchorEl, setAnchorEl] = React.useState<HTMLElement | null>(null)
 
   const handlePopoverOpen = (event: React.MouseEvent<HTMLElement, MouseEvent>) => {
     setAnchorEl(event.currentTarget)
@@ -64,7 +64,7 @@ function ToolItem(props: Props) {
       onMouseEnter={handlePopoverOpen}
       onMouseLeave={handlePopoverClose}
     >
-      <i className={`svg-editor-iconfont ${props.iconName}`}></i>
+      <i className={`svg-editor-iconfont ${props.iconName}`} />
       <Popover
         className={classes.popover}
         open={open}

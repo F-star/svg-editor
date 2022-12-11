@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { FC } from 'react'
 import styled from 'styled-components'
 
 const Div = styled.div`
@@ -26,10 +26,13 @@ const Div = styled.div`
   }
 `
 
-function CmdBtnItem(props: {
-  label: string,
-  disabled: boolean,
-  onClick: () => void }) {
+type IProps = {
+  label: string;
+  disabled: boolean;
+  onClick: () => void;
+}
+
+const CmdBtnItem: FC<IProps> =(props) => {
   return (
     <Div
       className={props.disabled ? 'disabled' : ''}

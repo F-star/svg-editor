@@ -1,5 +1,4 @@
 const editorDefaultConfig = {
-
   svgRootW: 3000,
   svgRootH: 1500,
   svgStageW: 800,

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { FC } from 'react'
 import styled from 'styled-components'
 import StrokeWidthSetting from '../ToolBar/StrokeWidthSetting'
 import CmdBtnList from './CmdBtnList'
@@ -17,16 +17,14 @@ const StyledHeader = styled.div`
   z-index: 34;
 `
 
-class EditorHeader extends React.Component {
-  render() {
-    return (
-      <StyledHeader>
-        <StrokeWidthSetting></StrokeWidthSetting>
-        <CmdBtnList />
-        <Zoom />
-      </StyledHeader>
-    )
-  }
+const EditorHeader: FC = () =>{
+  return (
+    <StyledHeader>
+      <StrokeWidthSetting />
+      <CmdBtnList />
+      <Zoom />
+    </StyledHeader>
+  )
 }
 
 export default EditorHeader

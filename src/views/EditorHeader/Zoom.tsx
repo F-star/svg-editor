@@ -1,51 +1,37 @@
-import React from 'react'
-import Editor from '../../Editor'
+import React, { FC, useEffect, useState } from 'react'
 import globalVar from '../common/globalVar'
 
-type States = {
-  zoom: string
-}
+const Zoom: FC = () => {
+  const [zoom, setZoom] = useState('100')
+  useEffect(() => {
+    const editor = globalVar.editor
 
-class Zoom extends React.Component<any, States> {
-  editor: Editor
-
-  constructor(props: any) {
-    super(props)
-    this.state = {
-      zoom: '100%',
-    }
-  }
-
-  componentDidMount() {
-    this.editor = globalVar.editor
-
-    this.editor.viewport.onZoomChange(zoom => {
-      this.setState({ zoom: (zoom * 100).toFixed(2) + '%' })
+    editor.viewport.onZoomChange(zoom => {
+      setZoom((zoom * 100).toFixed(2))
     })
-  }
+  })
 
-  render() {
-    return (
-      <>
+  return (
+    <>
       <div style={{ marginLeft: 20, color: '#fff', fontSize: '12px' }}>
-        zoom:
+      zoom:
         <span style={{
           display: 'inline-block',
           marginLeft: 10,
           paddingLeft: 4,
           minWidth: 60,
           backgroundColor: '#fff',
-          color: '#333'
-        }}>{this.state.zoom}</span>
+          color: '#333',
+        }}>{zoom}%</span>
       </div>
       <button
         style={{ marginLeft: 10 }}
-        onClick={() => { this.editor.viewport.zoomOut() }}
+        onClick={() => { globalVar.editor.viewport.zoomOut() }}
       >-</button>
-      <button onClick={() => { this.editor.viewport.zoomIn() }}>+</button>
-      </>
-    )
-  }
+      <button onClick={() => { globalVar.editor.viewport.zoomIn() }}>+</button>
+    </>
+  )
 }
+
 
 export default Zoom

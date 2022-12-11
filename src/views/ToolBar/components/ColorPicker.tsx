@@ -1,9 +1,8 @@
-import React from 'react'
+import React, { FC } from 'react'
 import { PhotoshopPicker } from 'react-color'
 import Popover from '@material-ui/core/Popover'
 
-
-type Props = {
+type IProps = {
   open: boolean,
   anchorEl: Element,
   color: string,
@@ -14,37 +13,33 @@ type Props = {
 }
 
 
-class ColorPicker extends React.Component<Props> {
-  constructor(props: Props) {
-    super(props)
-  }
+const ColorPicker: FC<IProps> = (props) => {
 
-  render() {
-    return (
-      <Popover
-        open={this.props.open}
-        anchorEl={this.props.anchorEl}
-        onClose={() => this.props.onCancel()}
-        anchorOrigin={{
-          vertical: 'center',
-          horizontal: 'right',
-        }}
-        transformOrigin={{
-          vertical: 'center',
-          horizontal: -15,
-        }}
-      >
-        <div>
-          <PhotoshopPicker
-          color={ this.props.pickerColor }
-          onChange={(color: any) => this.props.onChange(color.hex)}
-          onAccept={() => this.props.onAccept(this.props.pickerColor)}
-          onCancel={() => this.props.onCancel()}
+
+  return (
+    <Popover
+      open={props.open}
+      anchorEl={props.anchorEl}
+      onClose={() => props.onCancel()}
+      anchorOrigin={{
+        vertical: 'center',
+        horizontal: 'right',
+      }}
+      transformOrigin={{
+        vertical: 'center',
+        horizontal: -15,
+      }}
+    >
+      <div>
+        <PhotoshopPicker
+          color={ props.pickerColor }
+          onChange={(color: any) => props.onChange(color.hex)}
+          onAccept={() => props.onAccept(props.pickerColor)}
+          onCancel={() => props.onCancel()}
         />
-        </div>
-      </Popover>
-    )
-  }
+      </div>
+    </Popover>
+  )
 }
 
 export default ColorPicker

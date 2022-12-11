@@ -1,11 +1,9 @@
-import React from 'react'
+import React, { FC } from 'react'
 
-class InfoPanel extends React.Component {
-  render() {
-    return (
-      <div>element info</div>
-    )
-  }
+const InfoPanel: FC =() => {
+  return (
+    <div>element info</div>
+  )
 }
 
 export default InfoPanel

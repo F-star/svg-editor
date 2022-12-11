@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { FC, useEffect, useState } from 'react'
 import styled from 'styled-components'
 import globalVar from '../common/globalVar'
 
@@ -35,63 +35,49 @@ const StyleItem = styled.li`
   }
 `
 
-type State = {
-  items: string[],
-  currIndex: number,
-  total: number,
-}
+const HistoryPanel: FC = () => {
+  const [items, setItems] = useState<string[]>([])
+  const [currIndex, setCurrIndex] = useState(-1)
+  const [total, setTotal] = useState(0)
 
-class HistoryPanel extends React.Component<any, State> {
-  constructor(props: any) {
-    super(props)
-    this.state = {
-      items: [],
-      currIndex: -1,
-      total: 0,
-    }
-  }
-
-  componentDidMount() {
+  useEffect(() => {
     const cmdManager = globalVar.editor.commandManager
     cmdManager.on('change', (undos: string[], redos: string[]) => {
-      // TODO: solve string array:  addRect -> add rect, setAttr -> set Attr
-      this.setState({
-        items: [...undos, ...redos],
-        currIndex: undos.length - 1,
-        total: undos.length + redos.length,
-      })
+      setItems([...undos, ...redos])
+      setCurrIndex(undos.length - 1)
+      setTotal(undos.length + redos.length)
     })
-  }
+  }, [])
 
-  changeCurrItem(target: HTMLElement) {
+  const changeCurrItem = (target: HTMLElement) => {
+    if (!target.parentNode) return
     const index = Array.from(target.parentNode.children).indexOf(target)
 
     const cmdManager = globalVar.editor.commandManager
-    if (index === this.state.currIndex) return
-    cmdManager.go(index - this.state.currIndex)
+    if (index === currIndex) return
+    cmdManager.go(index - currIndex)
 
-    this.setState({ currIndex: index })
+    setCurrIndex(index)
   }
 
-  render() {
-    return (
-      <StyledContainer>
-        <StyledTitle>
+
+  return (
+    <StyledContainer>
+      <StyledTitle>
           History
-          <StyledTotal>{this.state.total}</StyledTotal>
-        </StyledTitle>
-        <StyledList onClick={ e => this.changeCurrItem(e.target as HTMLElement) }>
-          {
-            this.state.items.map((item, index) => {
-              return (
-                <StyleItem key={index} className={this.state.currIndex === index ? 'active' : ''}>{item}</StyleItem>
-              )
-            })
-          }
-        </StyledList>
-      </StyledContainer>
-    )
-  }
+        <StyledTotal>{total}</StyledTotal>
+      </StyledTitle>
+      <StyledList onClick={ e => changeCurrItem(e.target as HTMLElement) }>
+        {
+          items.map((item, index) => {
+            return (
+              <StyleItem key={index} className={currIndex === index ? 'active' : ''}>{item}</StyleItem>
+            )
+          })
+        }
+      </StyledList>
+    </StyledContainer>
+  )
 }
 
 export default HistoryPanel
