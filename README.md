@@ -2,7 +2,11 @@
 
 # svg-editor
 
-一款正在开发的简单的 Web 端 SVG 编辑器，基于 TypeScript 技术。
+一款简单的 Web 端 SVG 编辑器（半成品）。
+
+使用 React + TypeScript。
+
+![BLXbVF](https://fe-watermelon.oss-cn-shenzhen.aliyuncs.com/BLXbVF.png)
 
 DEMO: https://blog.fstars.wang/app/svg-editor/
 
