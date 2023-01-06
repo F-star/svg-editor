@@ -1,5 +1,7 @@
 > 有问题可以关注公众号「前端西瓜哥」并留言
 
+（现在主要在写基于 Canvas 实现的图形编辑器：[Suika](https://github.com/F-star/suika)，这边进度会慢一些）
+
 # svg-editor
 
 一款简单的 Web 端 SVG 编辑器（半成品）。
