@@ -1,6 +1,6 @@
-> 有问题可以关注公众号「前端西瓜哥」并留言
+【重要】本项目不再开发，所有精力放在基于 Canvas 的图形编辑器：[Suika](https://github.com/F-star/suika)
 
-（现在主要在写基于 Canvas 实现的图形编辑器：[Suika](https://github.com/F-star/suika)，这边算是不维护状态了）
+> 有问题可以关注公众号「前端西瓜哥」并留言
 
 # svg-editor
 
