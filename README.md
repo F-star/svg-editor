@@ -20,10 +20,6 @@ yarn
 yarn dev
 ```
 
-## 编辑器系列文章
-
-https://blog.fstars.wang/categories/%E7%BC%96%E8%BE%91%E5%99%A8/
-
 ## 构建 Electron 应用（不完善）
 
 package.json 中没有 electron 相关的依赖，因为 electron 的包太大了而且大多数人不需要构建 electron 应用。所以如果你要构建 electron 应用，需要自己手动全局安装 electron
